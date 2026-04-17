@@ -1,0 +1,54 @@
+{
+  "experiment": "random_fixed_axes_stress_test",
+  "description": "Tests whether prescribed axes effect comes from fixation or semantic alignment",
+  "data_seed": 42,
+  "training_seeds": [
+    42,
+    123,
+    777
+  ],
+  "rotation_seeds": [
+    0,
+    1,
+    2
+  ],
+  "epochs": 50,
+  "synthetic": true,
+  "results": {
+    "prescribed": {
+      "best_per_seed": [
+        0.00013132090616477,
+        0.0006373142536878668,
+        0.0006460787372226038
+      ],
+      "mean": 0.0004715712990250802,
+      "std": 0.00024061996512357304,
+      "params": 20038
+    },
+    "random_fixed": {
+      "best_per_seed": [
+        0.00013692338599643686,
+        0.0006225105057462331,
+        0.0006418961360746803
+      ],
+      "mean": 0.0004671100092724501,
+      "std": 0.00023361129440250343,
+      "params": 20038
+    },
+    "free": {
+      "best_per_seed": [
+        0.011794478266516275,
+        0.011520266918498173,
+        0.011526944409859808
+      ],
+      "mean": 0.011613896531624751,
+      "std": 0.00012771966555715,
+      "params": 25033
+    }
+  },
+  "ratios": {
+    "free_over_prescribed": 24.628081809972652,
+    "free_over_random_fixed": 24.86330050968945,
+    "random_fixed_over_prescribed": 0.9905395223122075
+  }
+}
