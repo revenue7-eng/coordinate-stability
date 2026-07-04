@@ -8,7 +8,7 @@ Joint-Embedding Predictive Architectures (JEPA) learn by predicting masked repre
 
 ## What we observe
 
-Across 29 experiments on multiple environments and modalities:
+Across 32 experiments on multiple environments and modalities:
 
 1. **Fixed coordinates consistently outperform learned ones** in the low-data regime (5–222× improvement), regardless of whether the axes carry semantic meaning. Any frozen, normalized basis in the task-relevant subspace works equally well (random ≈ prescribed, ratio 0.97×).
 
@@ -39,7 +39,7 @@ E{NN}_{name}/
 - [EXPERIMENTS.md](EXPERIMENTS.md) — Full registry of all experiments with parameters and key results
 - [EVIDENCE.md](EVIDENCE.md) — Experimentally verified facts, hypotheses with status (confirmed/refuted/open), and contradictions
 
-## Experiments (29)
+## Experiments (32)
 
 | ID | Name | Environment | Key result |
 |---|---|---|---|
@@ -67,11 +67,19 @@ E{NN}_{name}/
 | E27 | Drift correlation | Push-T | Pearson = 0.95 |
 | E28 | Full dim sweep | Push-T | NO crossover at any dimension |
 | E29 | Noise control | Push-T | drift ≠ noise ≠ shift |
+| E30 | Critical window | Push-T | 136× cliff: ~99% of damage in first epoch |
+| E31 | Sub-epoch freeze | Push-T | within epoch 1: SLOPE, not threshold |
+| E32 | Sub-epoch freeze (real) | Push-T | SLOPE confirmed on real physics (R²=0.977) |
 
 ## Current status
 
 - Paper 1: published to GitHub, arxiv submission pending
 - Paper 2: in revision (incorporating E18–E29 results)
+- Drift / hallucination branch (E30–E32): the free-encoder's first-epoch damage is a
+  continuous slope, not a discrete irreversibility event (Ф45, Ф46; Г18). The drift-rate
+  "law" (Г16) is refuted — drift is a front-loaded, self-quenching transient, not steady
+  accumulation. The hallucination bridge lives in the LLM domain (Г17), kept on a leash
+  until the Push-T model system is closed.
 - EB-JEPA (planning task at realistic scale): running
 
 ## Author

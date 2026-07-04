@@ -1,0 +1,124 @@
+{
+  "config": {
+    "experiment": "E30 critical window localization",
+    "method": "analysis of existing freeze@k profile, no training",
+    "data_source": "exp6/exp7 all_results.json (synthetic=false, real pymunk)",
+    "seeds": [
+      42,
+      123,
+      777
+    ],
+    "freeze_ks": [
+      1,
+      2,
+      3,
+      5,
+      7,
+      10
+    ],
+    "freeze0_proxy": "random_fixed from Ф12 = 0.000476"
+  },
+  "baselines": {
+    "prescribed_mean": 0.0025228540517923514,
+    "unfrozen_mean": 0.0811271806732256,
+    "freeze0_random_fixed_F12": 0.000476
+  },
+  "freeze_profile": {
+    "1": {
+      "mean": 0.06485391131095719,
+      "std": 0.011938850949041353,
+      "per_seed": [
+        0.07935300600110438,
+        0.05011193893457714,
+        0.06509678899719004
+      ],
+      "pct_vs_unfrozen": 20.058960791224774
+    },
+    "2": {
+      "mean": 0.07876474108786612,
+      "std": 0.006238134431474679,
+      "per_seed": [
+        0.08691884838698204,
+        0.07760391486318488,
+        0.07177146001343142
+      ],
+      "pct_vs_unfrozen": 2.912019825852463
+    },
+    "3": {
+      "mean": 0.0760477874101254,
+      "std": 0.005287686495328815,
+      "per_seed": [
+        0.08179059276978175,
+        0.0773242254529083,
+        0.06902854400768614
+      ],
+      "pct_vs_unfrozen": 6.261025245730681
+    },
+    "5": {
+      "mean": 0.07497126392105169,
+      "std": 0.005047232860075076,
+      "per_seed": [
+        0.07955547165975237,
+        0.07741736845489133,
+        0.06794095164851138
+      ],
+      "pct_vs_unfrozen": 7.587983091597242
+    },
+    "7": {
+      "mean": 0.07794702948882566,
+      "std": 0.00697377995669205,
+      "per_seed": [
+        0.08244112251620543,
+        0.08330279536414564,
+        0.0680971705861259
+      ],
+      "pct_vs_unfrozen": 3.919957723182013
+    },
+    "10": {
+      "mean": 0.08202534893102813,
+      "std": 0.00407746546385045,
+      "per_seed": [
+        0.08218033836598981,
+        0.08693990495644117,
+        0.0769558034706534
+      ],
+      "pct_vs_unfrozen": -1.1071113902260339
+    }
+  },
+  "sharpness": {
+    "band_means_k1_to_k10": [
+      0.06485391131095719,
+      0.07876474108786612,
+      0.0760477874101254,
+      0.07497126392105169,
+      0.07794702948882566,
+      0.08202534893102813
+    ],
+    "consecutive_diffs": [
+      0.013910829776908926,
+      -0.002716953677740719,
+      -0.001076523489073708,
+      0.002975765567773972,
+      0.004078319442202466
+    ],
+    "biggest_step_between_k": [
+      1,
+      2
+    ],
+    "biggest_step_frac_of_band": 0.8101144519576607
+  },
+  "cliff_localization": {
+    "freeze0_to_freeze1_ratio": 136.24771283814536,
+    "freeze1_to_unfrozen_ratio": 1.2509219418431436,
+    "interpretation": "damage concentrated in epoch 0->1; freeze@k>=1 band is flat by comparison"
+  },
+  "verdict": {
+    "Г18_as_stated_window_0to2_with_threshold": "PARTIAL — profile not flat, but band is narrow (all >=25x worse than prescribed)",
+    "refined": "critical window closes within FIRST epoch: freeze@0->@1 = 136x cliff vs freeze@1->unfrozen = 1.3x",
+    "caveats": [
+      "freeze@0 = random_fixed proxy (Ф12), not a literal freeze@0 run — normalization impl may differ",
+      "3 seeds: signal not proof; sub-epoch resolution absent",
+      "freeze effect is data-dependent (Ф30); holds on real physics, transfer not guaranteed"
+    ]
+  }
+}

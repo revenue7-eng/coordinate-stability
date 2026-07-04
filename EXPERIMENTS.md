@@ -1,7 +1,7 @@
 # Реестр экспериментов: Prescribed Axes
 
 Автор: Andrey Lazarev | Дата начала: март 2026
-Последнее обновление: 15 апреля 2026
+Последнее обновление: 4 июля 2026
 
 ---
 
@@ -413,6 +413,52 @@
 
 ---
 
+## Drift / Hallucination branch (Paper 2 line, 03.07.2026)
+
+### E30. Critical window localization (Push-T, gym-pusht)
+- **Среда:** Push-T (gym-pusht, real pymunk, synthetic=false)
+- **Условия:** Анализ freeze@k-профиля из E06/E07 all_results.json, без новых прогонов. freeze@0 = random_fixed прокси (Ф12 = 0.000476), freeze@k для k ∈ {1,2,3,5,7,10}, unfrozen, prescribed.
+- **Метрика:** best_vp ratio между freeze-точками
+- **Результат:**
+  - freeze@0 → freeze@1 = **136× cliff**; freeze@1 → unfrozen = 1.3× → ~99% повреждения в первой эпохе (Ф45)
+  - band freeze@k≥1 узкий (0.065–0.082), каждый ≥25× хуже prescribed
+  - Механистически замыкает Ф31 (random_fixed ≈ prescribed = freeze@0)
+  - Побочно: Г16 (drift-rate law) ОПРОВЕРГНУТ на тех же данных (finding_drift_rate.docx) — дрейф выгорает за ~3 эпохи, постоянного rate нет
+- **Параметры:** 3 сида (42,123,777), 30 эпох, 200 эпизодов. Анализ, CPU, секунды. Воспроизводится точно (136.25×).
+- **Факты:** Ф45 (candidate → в Г18), Г16 (refuted)
+- **Код:** E30_critical_window/code/analyze_critical_window.py
+- **Данные:** E30_critical_window/results/critical_window_results.json (+ finding_drift_rate.docx)
+
+### E31. Sub-epoch freeze sweep (Push-T, synthetic)
+- **Среда:** Push-T (synthetic, synth())
+- **Условия:** Заморозка free-энкодера на долях батчей эпохи 1: f ∈ {0.0, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.60, 1.0}. Shape-вопрос: порог или склон?
+- **Метрика:** best_vp vs freeze-fraction; verdict от analyze_shape.py (linear-vs-step primary)
+- **Результат:**
+  - **Verdict: SLOPE, не порог.** Над подъёмом f≥0.25 линия лучше best-step в 2.2× (SS 0.085 vs 0.186), linear R²=0.88 (log-space)
+  - Монотонно 3/5 сидов (0 спадов), 2/5 по одному шумовому спаду; резкого скачка нет
+  - Первая четверть эпохи near-harmless; далее ущерб интегрируется непрерывно
+- **Параметры:** 5 сидов (42,123,777,7,99), 20 эпох, 100 эпизодов. CPU, ~45 прогонов, resume-safe.
+- **Факты:** Ф46 (candidate)
+- **Код:** E31_subepoch_freeze/code/subepoch_freeze.py, analyze_shape.py
+- **Данные:** E31_subepoch_freeze/results/subepoch_freeze_results.json, shape_verdict.txt
+
+### E32. Sub-epoch freeze sweep on REAL data (Push-T, gym-pusht)
+- **Среда:** Push-T (real gym-pusht, pymunk 6.2.1). Верный порт freeze_test_standalone.py + collect_gym_data.
+- **Условия:** E31-свип на реальной физике. f ∈ {0.0, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 1.0}. Снять synthetic-оговорку с Ф46.
+- **Метрика:** best_vp vs freeze-fraction; verdict от analyze_shape.py
+- **Результат:**
+  - **Verdict: SLOPE, чище synthetic.** 5/5 сидов строго монотонны (0 спадов)
+  - Pooled linear-vs-step над band f∈[0.25,0.60]: **linear R²=0.977**, step хуже в **10.5×** (breakpoint f=0.50)
+  - E30-style anchor freeze@1.0/@0.0 = 22.1× (per seed 7.2–35.3×) — то же направление, что 136× cliff
+  - **Ф46 → SOLID** (synthetic-оговорка снята)
+- **Параметры:** 5 сидов (7,42,123,777,2024), reduced budget EP=4/NEP=50 (sandbox-предел; shape budget-robust). pymunk 6.2.1 pinned.
+- **Оговорки:** абсолютные gap сжаты (prescribed/unfrozen ~4× vs 222× at scale) — магнитуды НЕ сравнивать с 30-эпоховыми. Sub-0.25 разрешения нет (near-harmless onset качественный). Per-seed raw seed_*.json регенерируются через run_seed.py.
+- **Факты:** Ф46 (solid), Г18 (confirmed)
+- **Код:** E32_subepoch_freeze_real/code/{e32_lib.py, run_seed.py, analyze_shape.py}
+- **Данные:** E32_subepoch_freeze_real/results/{shape_verdict.json, e32_slope.png}
+
+---
+
 ## Сводная таблица
 
 | ID | Название | Среда | Данные | Seeds | Epochs | Episodes | Ключевой результат |
@@ -446,6 +492,9 @@
 | E27 | Drift correlation | Push-T gym | gym | 3 | 30 | 200 | Pearson=0.95 |
 | E28 | Dim sweep full | Push-T syn | syn | 3 | 30 | 200 | NO crossover, prescribed wins 1–11 |
 | E29 | Noise control | Push-T syn | syn | 3 | 30 | 200 | drift≠noise, drift≠shift, free=222× |
+| E30 | Critical window | Push-T gym | gym | 3 | 30 | 200 | 136× cliff: ~99% ущерба в 1-й эпохе |
+| E31 | Sub-epoch freeze | Push-T syn | syn | 5 | 20 | 100 | SLOPE не порог (linear 2.2× best-step) |
+| E32 | Sub-epoch freeze real | Push-T gym | gym | 5 | 4* | 50* | SLOPE, R²=0.977, 5/5 моно, Ф46 solid |
 
 ---
 
@@ -468,6 +517,13 @@
 | tier3_results.json | E24, E25, E26 | 5KB | Tier 3 script |
 | p2_dim_sweep_results.json | E28 | 3KB | П2 resolution |
 | noise_control_results.json | E29 | 8KB | E29 noise control (17.04.2026) |
+| critical_window_results.json | E30 | 4KB | E30 critical window (03.07.2026) |
+| finding_drift_rate.docx | E30 | — | Г16 refuted (03.07.2026) |
+| subepoch_freeze_results.json | E31 | — | E31 sub-epoch (03.07.2026) |
+| shape_verdict.txt | E31 | <1KB | E31 verdict SLOPE |
+| shape_verdict.json | E32 | <1KB | E32 verdict SLOPE (03.07.2026) |
+| e32_slope.png | E32 | — | E32 per-seed кривые |
+| seed_*.json | E32 | — | E32 per-seed raw (регенерируются run_seed.py) |
 
 ---
 
@@ -491,6 +547,9 @@
 | tier3_highdim.py | E24, E25, E26 | Tier 3 (15.04.2026) |
 | p2_dim_sweep_full.py | E28 | П2 resolution (15.04.2026) |
 | noise_control.py | E29 | E29 noise control (17.04.2026) |
+| analyze_critical_window.py | E30 | drift-hallucination (03.07.2026) |
+| subepoch_freeze.py + analyze_shape.py | E31 | drift-hallucination (03.07.2026) |
+| e32_lib.py + run_seed.py + analyze_shape.py | E32 | drift-hallucination (03.07.2026) |
 
 ---
 
