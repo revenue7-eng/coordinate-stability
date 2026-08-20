@@ -1,0 +1,8 @@
+{
+  "success_rate": 0.55,
+  "mean_state_dist": 9.779118998725604,
+  "avg_episode_time": 187.6864140868187,
+  "mode": "free",
+  "epoch": 11,
+  "device": "cuda"
+}

@@ -1,0 +1,44 @@
+Slice 2: bootstrap stability of nodes
+  N_full=80, N_subsample=56, N_bootstrap=20
+  node threshold: >=4/5 single category on a pole of one of the top-15 PCs
+
+==================================================================================
+model    category    baseline   boot %     stable?     
+==================================================================================
+qwen                                                                  (avg nodes per bootstrap: 1.9±1.4)
+         code        0          30         appears (absent in baseline)
+         emotional   0          35         appears (absent in baseline)
+         abstract    1          35         ~ partial   
+         factual     1          10         ✗ unstable  
+gemma                                                                 (avg nodes per bootstrap: 1.2±1.2)
+         code        0          30         appears (absent in baseline)
+         emotional   2          30         ~ partial   
+olmo                                                                  (avg nodes per bootstrap: 2.6±1.7)
+         code        2          60         ~ partial   
+         emotional   1          30         ~ partial   
+         abstract    0          30         appears (absent in baseline)
+         factual     1          25         ✗ unstable  
+falcon                                                                (avg nodes per bootstrap: 2.8±1.6)
+         code        1          70         ✓ stable    
+         emotional   2          40         ~ partial   
+         abstract    2          25         ✗ unstable  
+         factual     1          20         ✗ unstable  
+         spatial     0          35         appears (absent in baseline)
+         logical     1          5          ✗ unstable  
+pythia                                                                (avg nodes per bootstrap: 1.9±1.3)
+         code        0          35         appears (absent in baseline)
+         emotional   2          50         ~ partial   
+         spatial     1          35         ~ partial   
+
+==================================================================================
+Summary: categories that stably form nodes (>=70% of bootstraps)
+==================================================================================
+
+  code         stable in: falcon (1/5 models)
+  emotional    not stable in any model
+  abstract     not stable in any model
+  factual      not stable in any model
+  spatial      not stable in any model
+  logical      not stable in any model
+  narrative    not stable in any model
+  ethical      not stable in any model

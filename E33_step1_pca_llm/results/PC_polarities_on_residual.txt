@@ -1,0 +1,454 @@
+==========================================================================================
+MODEL: QWEN (final layer = 36)
+Top-5 PCs by 1D LDA on residuals after last-token residualization
+==========================================================================================
+
+━━━ PC7 (rank 1, 1D LDA=0.263, orig evr=3.02%) ━━━
+
+  + pole:
+    [     code] (+31.933)  The difference between a list and a tuple in Python is
+    [ abstract] (+21.342)  The nature of mathematical objects is
+    [ abstract] (+15.568)  The relationship between language and thought is
+    [emotional] (+15.122)  The comfort of returning home after a long journey is
+    [ abstract] (+14.032)  The boundary between art and science is
+  − pole:
+    [  logical] (-33.117)  The contrapositive of "if P then Q" is
+    [  logical] (-21.985)  If today is Monday, then three days from now is
+    [  logical] (-21.545)  Every prime number greater than 2 is
+    [emotional] (-16.881)  Betrayal by a close friend causes feelings of
+    [emotional] (-14.900)  The emotion associated with seeing injustice is
+  + categories: code, abstract, abstract, emotional, abstract
+  − categories: logical, logical, logical, emotional, emotional
+
+━━━ PC3 (rank 2, 1D LDA=0.250, orig evr=6.79%) ━━━
+
+  + pole:
+    [     code] (+30.079)  A stack data structure follows the principle of
+    [ abstract] (+27.481)  The relationship between language and thought is
+    [     code] (+21.517)  A hash table provides average lookup time of
+    [     code] (+20.682)  The difference between a list and a tuple in Python is
+    [ abstract] (+20.485)  The meaning of justice in a society is
+  − pole:
+    [  factual] (-26.420)  The capital of France is
+    [  factual] (-25.666)  The largest planet in our solar system is
+    [emotional] (-22.067)  Nostalgia is the feeling of
+    [emotional] (-18.044)  Betrayal by a close friend causes feelings of
+    [  logical] (-17.980)  If today is Monday, then three days from now is
+  + categories: code, abstract, code, code, abstract
+  − categories: factual, factual, emotional, emotional, logical
+
+━━━ PC35 (rank 3, 1D LDA=0.250, orig evr=0.72%) ━━━
+
+  + pole:
+    [  logical] (+19.213)  In a group of 5 people, the minimum number of handshakes is
+    [     code] (+12.205)  To sort a list in Python, you can use
+    [     code] (+9.321)  The time complexity of binary search is
+    [  spatial] (+8.200)  If you are inside a room and walk towards the north wall, the south wall is
+    [  spatial] (+8.146)  The shortest path between two points on a flat surface is
+  − pole:
+    [  logical] (-13.163)  If today is Monday, then three days from now is
+    [     code] (-12.205)  In Git, to create a new branch you use
+    [ abstract] (-11.257)  The relationship between language and thought is
+    [ abstract] (-10.324)  The nature of mathematical objects is
+    [  spatial] (-9.762)  Looking at a clock, when it shows 3:00, the angle between the hands is
+  + categories: logical, code, code, spatial, spatial
+  − categories: logical, code, abstract, abstract, spatial
+
+━━━ PC19 (rank 4, 1D LDA=0.237, orig evr=1.20%) ━━━
+
+  + pole:
+    [  logical] (+19.526)  Every prime number greater than 2 is
+    [  factual] (+12.834)  Water boils at a temperature of
+    [emotional] (+11.450)  Betrayal by a close friend causes feelings of
+    [  spatial] (+11.430)  If you stack three boxes, the bottom box bears the weight of
+    [emotional] (+11.372)  The emotion associated with seeing injustice is
+  − pole:
+    [  logical] (-23.732)  The contrapositive of "if P then Q" is
+    [     code] (-17.537)  A stack data structure follows the principle of
+    [emotional] (-13.875)  Nostalgia is the feeling of
+    [     code] (-8.520)  In object-oriented programming, inheritance means
+    [  spatial] (-8.093)  The shortest path between two points on a flat surface is
+  + categories: logical, factual, emotional, spatial, emotional
+  − categories: logical, code, emotional, code, spatial
+
+━━━ PC1 (rank 5, 1D LDA=0.225, orig evr=11.53%) ━━━
+
+  + pole:
+    [  logical] (+32.532)  The next number in the sequence 2, 4, 8, 16 is
+    [     code] (+31.233)  The purpose of a try-except block is to
+    [     code] (+30.594)  A hash table provides average lookup time of
+    [  logical] (+30.275)  The contrapositive of "if P then Q" is
+    [  factual] (+28.113)  Water boils at a temperature of
+  − pole:
+    [ abstract] (-43.743)  The meaning of justice in a society is
+    [ abstract] (-34.050)  The relationship between language and thought is
+    [ abstract] (-33.961)  The nature of mathematical objects is
+    [emotional] (-33.918)  The comfort of returning home after a long journey is
+    [ abstract] (-33.554)  The boundary between art and science is
+  + categories: logical, code, code, logical, factual
+  − categories: abstract, abstract, abstract, emotional, abstract
+
+
+==========================================================================================
+MODEL: GEMMA (final layer = 26)
+Top-5 PCs by 1D LDA on residuals after last-token residualization
+==========================================================================================
+
+━━━ PC6 (rank 1, 1D LDA=0.350, orig evr=3.57%) ━━━
+
+  + pole:
+    [     code] (+48.161)  A stack data structure follows the principle of
+    [  factual] (+42.928)  The capital of France is
+    [ abstract] (+39.791)  The relationship between language and thought is
+    [     code] (+38.983)  The difference between a list and a tuple in Python is
+    [     code] (+31.973)  The purpose of a try-except block is to
+  − pole:
+    [  spatial] (-28.814)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [  spatial] (-28.542)  If you are inside a room and walk towards the north wall, the south wall is
+    [  spatial] (-27.306)  If you fold a square piece of paper in half diagonally, you get a
+    [     code] (-24.322)  In Git, to create a new branch you use
+    [  logical] (-24.244)  Every prime number greater than 2 is
+  + categories: code, factual, abstract, code, code
+  − categories: spatial, spatial, spatial, code, logical
+
+━━━ PC9 (rank 2, 1D LDA=0.263, orig evr=2.12%) ━━━
+
+  + pole:
+    [     code] (+30.906)  A recursive function must have a
+    [ abstract] (+29.113)  The nature of mathematical objects is
+    [ abstract] (+26.716)  The relationship between language and thought is
+    [     code] (+25.316)  A stack data structure follows the principle of
+    [     code] (+21.125)  The difference between a list and a tuple in Python is
+  − pole:
+    [  factual] (-41.805)  The capital of France is
+    [  spatial] (-30.906)  If you fold a square piece of paper in half diagonally, you get a
+    [emotional] (-21.696)  The feeling of watching a beautiful sunset can be described as
+    [  spatial] (-20.709)  If you are inside a room and walk towards the north wall, the south wall is
+    [emotional] (-16.134)  The comfort of returning home after a long journey is
+  + categories: code, abstract, abstract, code, code
+  − categories: factual, spatial, emotional, spatial, emotional
+
+━━━ PC2 (rank 3, 1D LDA=0.237, orig evr=11.14%) ━━━
+
+  + pole:
+    [  logical] (+71.749)  If today is Monday, then three days from now is
+    [  factual] (+65.948)  The capital of France is
+    [emotional] (+62.485)  Betrayal by a close friend causes feelings of
+    [emotional] (+59.166)  The emotion associated with seeing injustice is
+    [emotional] (+43.466)  The comfort of returning home after a long journey is
+  − pole:
+    [  logical] (-56.575)  If A is bigger than B, and B is bigger than C, then
+    [     code] (-55.950)  A hash table provides average lookup time of
+    [  spatial] (-48.047)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [     code] (-43.714)  The time complexity of binary search is
+    [     code] (-42.807)  The purpose of a try-except block is to
+  + categories: logical, factual, emotional, emotional, emotional
+  − categories: logical, code, spatial, code, code
+
+━━━ PC3 (rank 4, 1D LDA=0.237, orig evr=5.46%) ━━━
+
+  + pole:
+    [     code] (+39.073)  A recursive function must have a
+    [  logical] (+36.908)  In a group of 5 people, the minimum number of handshakes is
+    [  logical] (+30.655)  The next number in the sequence 2, 4, 8, 16 is
+    [  factual] (+26.554)  Water boils at a temperature of
+    [emotional] (+22.147)  The feeling of watching a beautiful sunset can be described as
+  − pole:
+    [     code] (-57.278)  A stack data structure follows the principle of
+    [  spatial] (-39.073)  If you fold a square piece of paper in half diagonally, you get a
+    [ abstract] (-29.233)  Freedom without responsibility leads to
+    [     code] (-24.912)  The difference between a list and a tuple in Python is
+    [  factual] (-24.880)  The largest planet in our solar system is
+  + categories: code, logical, logical, factual, emotional
+  − categories: code, spatial, abstract, code, factual
+
+━━━ PC10 (rank 5, 1D LDA=0.237, orig evr=1.91%) ━━━
+
+  + pole:
+    [emotional] (+34.888)  The emotion associated with seeing injustice is
+    [  factual] (+32.786)  The capital of France is
+    [     code] (+23.188)  To sort a list in Python, you can use
+    [     code] (+22.601)  A stack data structure follows the principle of
+    [ abstract] (+19.790)  Freedom without responsibility leads to
+  − pole:
+    [ abstract] (-28.119)  The boundary between art and science is
+    [  factual] (-23.842)  Water boils at a temperature of
+    [     code] (-23.188)  In Git, to create a new branch you use
+    [narrative] (-20.546)  In the year 2100, humanity had learned to
+    [     code] (-15.943)  A recursive function must have a
+  + categories: emotional, factual, code, code, abstract
+  − categories: abstract, factual, code, narrative, code
+
+
+==========================================================================================
+MODEL: OLMO (final layer = 16)
+Top-5 PCs by 1D LDA on residuals after last-token residualization
+==========================================================================================
+
+━━━ PC2 (rank 1, 1D LDA=0.300, orig evr=9.66%) ━━━
+
+  + pole:
+    [  spatial] (+26.290)  If you fold a square piece of paper in half diagonally, you get a
+    [  factual] (+25.230)  Water boils at a temperature of
+    [  logical] (+25.069)  If today is Monday, then three days from now is
+    [  factual] (+22.716)  The largest planet in our solar system is
+    [emotional] (+19.717)  Betrayal by a close friend causes feelings of
+  − pole:
+    [     code] (-43.243)  A stack data structure follows the principle of
+    [     code] (-35.796)  A hash table provides average lookup time of
+    [     code] (-30.779)  The time complexity of binary search is
+    [     code] (-30.176)  The difference between a list and a tuple in Python is
+    [     code] (-26.290)  A recursive function must have a
+  + categories: spatial, factual, logical, factual, emotional
+  − categories: code, code, code, code, code
+
+━━━ PC16 (rank 2, 1D LDA=0.287, orig evr=1.51%) ━━━
+
+  + pole:
+    [  logical] (+20.964)  Every prime number greater than 2 is
+    [     code] (+15.147)  In Git, to create a new branch you use
+    [emotional] (+13.971)  Achieving a long-sought goal brings a sense of
+    [  logical] (+12.376)  If today is Monday, then three days from now is
+    [  logical] (+7.837)  The next number in the sequence 2, 4, 8, 16 is
+  − pole:
+    [     code] (-18.166)  A hash table provides average lookup time of
+    [     code] (-17.249)  The time complexity of binary search is
+    [     code] (-15.147)  To sort a list in Python, you can use
+    [  spatial] (-10.197)  The shortest path between two points on a flat surface is
+    [     code] (-7.331)  The difference between a list and a tuple in Python is
+  + categories: logical, code, emotional, logical, logical
+  − categories: code, code, code, spatial, code
+
+━━━ PC10 (rank 3, 1D LDA=0.263, orig evr=2.10%) ━━━
+
+  + pole:
+    [     code] (+28.145)  The time complexity of binary search is
+    [     code] (+21.420)  A hash table provides average lookup time of
+    [     code] (+19.855)  A recursive function must have a
+    [  logical] (+12.391)  If today is Monday, then three days from now is
+    [emotional] (+8.518)  The emotion associated with seeing injustice is
+  − pole:
+    [  spatial] (-19.855)  If you fold a square piece of paper in half diagonally, you get a
+    [  spatial] (-14.910)  If you stack three boxes, the bottom box bears the weight of
+    [ abstract] (-9.905)  The boundary between art and science is
+    [  factual] (-9.760)  The chemical formula for water is
+    [     code] (-9.623)  The difference between a list and a tuple in Python is
+  + categories: code, code, code, logical, emotional
+  − categories: spatial, spatial, abstract, factual, code
+
+━━━ PC14 (rank 4, 1D LDA=0.263, orig evr=1.70%) ━━━
+
+  + pole:
+    [  logical] (+12.688)  If today is Monday, then three days from now is
+    [     code] (+12.502)  A stack data structure follows the principle of
+    [  factual] (+12.053)  The capital of France is
+    [     code] (+11.667)  The difference between a list and a tuple in Python is
+    [     code] (+9.818)  The purpose of a try-except block is to
+  − pole:
+    [  spatial] (-15.707)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [  logical] (-15.616)  The contrapositive of "if P then Q" is
+    [  factual] (-11.003)  Water boils at a temperature of
+    [emotional] (-5.977)  The emotion associated with seeing injustice is
+    [  logical] (-5.725)  Every prime number greater than 2 is
+  + categories: logical, code, factual, code, code
+  − categories: spatial, logical, factual, emotional, logical
+
+━━━ PC5 (rank 5, 1D LDA=0.250, orig evr=3.96%) ━━━
+
+  + pole:
+    [  factual] (+25.289)  The capital of France is
+    [emotional] (+24.939)  Achieving a long-sought goal brings a sense of
+    [emotional] (+23.994)  Betrayal by a close friend causes feelings of
+    [  factual] (+18.617)  The largest planet in our solar system is
+    [  factual] (+17.037)  Water boils at a temperature of
+  − pole:
+    [     code] (-32.838)  A hash table provides average lookup time of
+    [     code] (-28.304)  A stack data structure follows the principle of
+    [  spatial] (-14.726)  If you stack three boxes, the bottom box bears the weight of
+    [  spatial] (-12.072)  If you are inside a room and walk towards the north wall, the south wall is
+    [ abstract] (-11.725)  The nature of mathematical objects is
+  + categories: factual, emotional, emotional, factual, factual
+  − categories: code, code, spatial, spatial, abstract
+
+
+==========================================================================================
+MODEL: FALCON (final layer = 22)
+Top-5 PCs by 1D LDA on residuals after last-token residualization
+==========================================================================================
+
+━━━ PC1 (rank 1, 1D LDA=0.250, orig evr=8.69%) ━━━
+
+  + pole:
+    [     code] (+40.712)  A hash table provides average lookup time of
+    [  logical] (+26.563)  The next number in the sequence 2, 4, 8, 16 is
+    [     code] (+26.293)  The time complexity of binary search is
+    [  spatial] (+26.243)  Imagine a cube. The number of faces it has is
+    [  logical] (+22.318)  If A is bigger than B, and B is bigger than C, then
+  − pole:
+    [emotional] (-33.077)  The comfort of returning home after a long journey is
+    [emotional] (-31.899)  The emotion associated with seeing injustice is
+    [emotional] (-30.413)  Nostalgia is the feeling of
+    [emotional] (-28.099)  Betrayal by a close friend causes feelings of
+    [emotional] (-27.484)  Achieving a long-sought goal brings a sense of
+  + categories: code, logical, code, spatial, logical
+  − categories: emotional, emotional, emotional, emotional, emotional
+
+━━━ PC3 (rank 2, 1D LDA=0.250, orig evr=4.86%) ━━━
+
+  + pole:
+    [     code] (+25.963)  A stack data structure follows the principle of
+    [  factual] (+16.030)  The chemical formula for water is
+    [     code] (+15.569)  The time complexity of binary search is
+    [  logical] (+14.255)  Every prime number greater than 2 is
+    [  logical] (+10.056)  If today is Monday, then three days from now is
+  − pole:
+    [ abstract] (-20.903)  Freedom without responsibility leads to
+    [ abstract] (-15.481)  The meaning of justice in a society is
+    [ abstract] (-14.834)  The relationship between language and thought is
+    [ abstract] (-14.059)  The boundary between art and science is
+    [emotional] (-13.133)  The comfort of returning home after a long journey is
+  + categories: code, factual, code, logical, logical
+  − categories: abstract, abstract, abstract, abstract, emotional
+
+━━━ PC8 (rank 3, 1D LDA=0.250, orig evr=2.59%) ━━━
+
+  + pole:
+    [     code] (+28.118)  The time complexity of binary search is
+    [ abstract] (+20.952)  Freedom without responsibility leads to
+    [     code] (+20.836)  A hash table provides average lookup time of
+    [  spatial] (+12.036)  Imagine a cube. The number of faces it has is
+    [  spatial] (+9.438)  If you fold a square piece of paper in half diagonally, you get a
+  − pole:
+    [     code] (-13.212)  The purpose of a try-except block is to
+    [  logical] (-11.929)  The contrapositive of "if P then Q" is
+    [  ethical] (-11.157)  The trolley problem asks whether it is right to
+    [emotional] (-9.621)  Nostalgia is the feeling of
+    [     code] (-9.438)  A recursive function must have a
+  + categories: code, abstract, code, spatial, spatial
+  − categories: code, logical, ethical, emotional, code
+
+━━━ PC15 (rank 4, 1D LDA=0.250, orig evr=1.67%) ━━━
+
+  + pole:
+    [  logical] (+19.220)  Every prime number greater than 2 is
+    [emotional] (+12.084)  Achieving a long-sought goal brings a sense of
+    [  logical] (+11.895)  In a group of 5 people, the minimum number of handshakes is
+    [  logical] (+11.107)  The contrapositive of "if P then Q" is
+    [emotional] (+10.455)  Nostalgia is the feeling of
+  − pole:
+    [  factual] (-15.945)  The largest planet in our solar system is
+    [  factual] (-14.259)  The chemical formula for water is
+    [     code] (-13.914)  The time complexity of binary search is
+    [     code] (-12.617)  The difference between a list and a tuple in Python is
+    [     code] (-11.395)  A hash table provides average lookup time of
+  + categories: logical, emotional, logical, logical, emotional
+  − categories: factual, factual, code, code, code
+
+━━━ PC9 (rank 5, 1D LDA=0.237, orig evr=2.34%) ━━━
+
+  + pole:
+    [     code] (+20.813)  The time complexity of binary search is
+    [  logical] (+20.436)  Every prime number greater than 2 is
+    [     code] (+17.724)  A hash table provides average lookup time of
+    [  spatial] (+14.070)  Imagine a cube. The number of faces it has is
+    [     code] (+10.198)  A stack data structure follows the principle of
+  − pole:
+    [  factual] (-19.659)  The largest planet in our solar system is
+    [  factual] (-17.509)  The capital of France is
+    [  factual] (-16.243)  The chemical formula for water is
+    [  factual] (-12.674)  Water boils at a temperature of
+    [  logical] (-9.836)  If today is Monday, then three days from now is
+  + categories: code, logical, code, spatial, code
+  − categories: factual, factual, factual, factual, logical
+
+
+==========================================================================================
+MODEL: PYTHIA (final layer = 32)
+Top-5 PCs by 1D LDA on residuals after last-token residualization
+==========================================================================================
+
+━━━ PC3 (rank 1, 1D LDA=0.263, orig evr=5.84%) ━━━
+
+  + pole:
+    [emotional] (+27.320)  Betrayal by a close friend causes feelings of
+    [emotional] (+23.004)  The comfort of returning home after a long journey is
+    [emotional] (+20.118)  Achieving a long-sought goal brings a sense of
+    [emotional] (+19.407)  The feeling of watching a beautiful sunset can be described as
+    [emotional] (+16.118)  Nostalgia is the feeling of
+  − pole:
+    [     code] (-32.445)  A stack data structure follows the principle of
+    [  logical] (-21.179)  The contrapositive of "if P then Q" is
+    [  logical] (-20.024)  If today is Monday, then three days from now is
+    [     code] (-17.524)  A hash table provides average lookup time of
+    [  logical] (-17.001)  In a group of 5 people, the minimum number of handshakes is
+  + categories: emotional, emotional, emotional, emotional, emotional
+  − categories: code, logical, logical, code, logical
+
+━━━ PC12 (rank 2, 1D LDA=0.250, orig evr=1.92%) ━━━
+
+  + pole:
+    [emotional] (+15.718)  Nostalgia is the feeling of
+    [ abstract] (+10.475)  The boundary between art and science is
+    [emotional] (+10.097)  Achieving a long-sought goal brings a sense of
+    [     code] (+9.794)  In Git, to create a new branch you use
+    [ abstract] (+9.122)  The relationship between language and thought is
+  − pole:
+    [     code] (-21.864)  A hash table provides average lookup time of
+    [     code] (-20.728)  The time complexity of binary search is
+    [     code] (-9.794)  To sort a list in Python, you can use
+    [  spatial] (-9.721)  Imagine a cube. The number of faces it has is
+    [  logical] (-9.204)  Every prime number greater than 2 is
+  + categories: emotional, abstract, emotional, code, abstract
+  − categories: code, code, code, spatial, logical
+
+━━━ PC5 (rank 3, 1D LDA=0.237, orig evr=3.56%) ━━━
+
+  + pole:
+    [  factual] (+32.015)  The chemical formula for water is
+    [  factual] (+16.742)  Water boils at a temperature of
+    [ abstract] (+15.019)  Freedom without responsibility leads to
+    [  logical] (+14.799)  In a group of 5 people, the minimum number of handshakes is
+    [  spatial] (+10.796)  If you fold a square piece of paper in half diagonally, you get a
+  − pole:
+    [     code] (-21.262)  A stack data structure follows the principle of
+    [     code] (-18.908)  The difference between a list and a tuple in Python is
+    [ abstract] (-14.589)  The relationship between language and thought is
+    [ abstract] (-14.337)  The nature of mathematical objects is
+    [     code] (-11.941)  The purpose of a try-except block is to
+  + categories: factual, factual, abstract, logical, spatial
+  − categories: code, code, abstract, abstract, code
+
+━━━ PC15 (rank 4, 1D LDA=0.225, orig evr=1.66%) ━━━
+
+  + pole:
+    [  factual] (+22.800)  The chemical formula for water is
+    [emotional] (+17.712)  Achieving a long-sought goal brings a sense of
+    [  logical] (+17.187)  The contrapositive of "if P then Q" is
+    [  spatial] (+8.898)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [  logical] (+8.468)  If today is Monday, then three days from now is
+  − pole:
+    [     code] (-16.716)  A hash table provides average lookup time of
+    [  factual] (-14.727)  The largest planet in our solar system is
+    [     code] (-12.717)  The time complexity of binary search is
+    [narrative] (-8.589)  In the year 2100, humanity had learned to
+    [     code] (-8.168)  A recursive function must have a
+  + categories: factual, emotional, logical, spatial, logical
+  − categories: code, factual, code, narrative, code
+
+━━━ PC8 (rank 5, 1D LDA=0.212, orig evr=2.91%) ━━━
+
+  + pole:
+    [  factual] (+28.462)  The chemical formula for water is
+    [ abstract] (+22.077)  Freedom without responsibility leads to
+    [     code] (+10.787)  A recursive function must have a
+    [     code] (+10.662)  The difference between a list and a tuple in Python is
+    [     code] (+9.842)  To sort a list in Python, you can use
+  − pole:
+    [  spatial] (-24.526)  If you are inside a room and walk towards the north wall, the south wall is
+    [  spatial] (-17.992)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [  ethical] (-15.242)  The trolley problem asks whether it is right to
+    [  spatial] (-14.743)  If you stack three boxes, the bottom box bears the weight of
+    [  spatial] (-11.473)  The shortest path between two points on a flat surface is
+  + categories: factual, abstract, code, code, code
+  − categories: spatial, spatial, ethical, spatial, spatial
+

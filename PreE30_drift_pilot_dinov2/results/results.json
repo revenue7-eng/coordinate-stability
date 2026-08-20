@@ -1,0 +1,40 @@
+{
+  "config": {
+    "n_images": 500,
+    "seed": 42,
+    "models": [
+      "dinov2-small",
+      "dinov2-base"
+    ],
+    "dataset": "CIFAR-100 test split (random subset)"
+  },
+  "metrics": {
+    "procrustes_r2_raw": 0.6449998021125793,
+    "procrustes_r2_frob_norm": 0.6495317816734314,
+    "linear_cka_pca_reduced": 0.7639772295951843,
+    "linear_cka_full_dim": 0.7656345367431641
+  },
+  "sanity": {
+    "r2_self_small": 1.0,
+    "cka_vs_random": 0.30461616934119745
+  },
+  "explained_variance": {
+    "small_top384_of_384": 1.0,
+    "base_top384_of_768": 0.9833084940910339
+  },
+  "sanity_v2": {
+    "note": "Shuffled-pairs baselines computed 20 Aug 2026 from results/embeddings.npz. The original cka_vs_random control used np.random.randn, which is not a valid null: it shares neither the spectrum nor the scale of the embeddings.",
+    "method": "row permutation of emb_base, 20 draws, rng seed 42, PCA-384 on both sides",
+    "shuffled_floor": {
+      "procrustes_r2_raw": 0.2029,
+      "procrustes_r2_frob": 0.2112,
+      "linear_cka": 0.2556
+    },
+    "normalized_above_floor": {
+      "procrustes_r2_raw": 0.5546,
+      "procrustes_r2_frob": 0.5557,
+      "linear_cka": 0.6829
+    },
+    "conclusion": "CKA exceeds Procrustes R2 both raw (0.119) and after floor normalization (0.128). The direction of the pilot's finding survives correction. The positive floor is specific to this geometry: n/d = 1.3. On low-dimensional latents with large n the same estimator has a floor near -0.9."
+  }
+}

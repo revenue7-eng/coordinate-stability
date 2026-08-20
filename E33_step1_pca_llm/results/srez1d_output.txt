@@ -1,0 +1,16 @@
+Slice 1d: cohesion vs asymmetric loading frequency
+
+category       cohesion  asym count
+------------------------------------
+abstract          0.083           4
+code              0.086           8
+emotional         0.128           7
+ethical          -0.018           0
+factual           0.015           3
+logical           0.002           2
+narrative        -0.000           0
+spatial           0.086           1
+
+Spearman ρ = 0.826  (p = 0.0114)
+Pearson  r = 0.746  (p = 0.0335)
+N = 8 categories

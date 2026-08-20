@@ -1,0 +1,606 @@
+==========================================================================================
+SLICE: poles of each PC (gemma, all 40 PCs)
+==========================================================================================
+
+For each PC: the 5 prompts with the highest projection (+) and the 5 with the lowest (-).
+In brackets: prompt category and projection value.
+
+━━━ PC1 (explains 5.10%) ━━━
+
+  + pole:
+    [  ethical] (+28.01)  Fairness in algorithmic decision-making means
+    [  ethical] (+26.09)  Environmental responsibility for future generations implies
+    [  ethical] (+25.92)  Informed consent in medical research means
+    [  ethical] (+24.00)  The right to be forgotten online involves
+    [  ethical] (+22.85)  Privacy in the digital age requires
+  − pole:
+    [  spatial] (-17.65)  The Earth rotates from west to east, so the sun appears to move from
+    [  logical] (-16.37)  If it rains, the ground gets wet. The ground is wet. Can we conclude
+    [  spatial] (-15.27)  If you face north and turn 90 degrees clockwise, you face
+    [  spatial] (-12.19)  A mirror reflects left and right. If you raise your right hand, your reflection raises its
+    [narrative] (-11.81)  After years of searching, the explorer finally found
+
+━━━ PC2 (explains 4.94%) ━━━
+
+  + pole:
+    [  factual] (+23.46)  The chemical formula for water is
+    [  logical] (+22.81)  In a group of 5 people, the minimum number of handshakes is
+    [  spatial] (+19.99)  Imagine a cube. The number of faces it has is
+    [  logical] (+19.22)  The contrapositive of "if P then Q" is
+    [  logical] (+18.41)  The next number in the sequence 2, 4, 8, 16 is
+  − pole:
+    [narrative] (-20.37)  The scientist made a breakthrough when she realized
+    [narrative] (-18.53)  The robot looked at the sunset and wondered
+    [emotional] (-17.91)  When someone loses a loved one, they typically feel
+    [narrative] (-17.82)  After years of searching, the explorer finally found
+    [narrative] (-17.50)  Walking through the ancient forest, he discovered
+
+━━━ PC3 (explains 3.72%) ━━━
+
+  + pole:
+    [  logical] (+28.01)  If it rains, the ground gets wet. The ground is wet. Can we conclude
+    [  logical] (+18.07)  If all cats are animals, and all animals breathe, then
+    [  logical] (+15.97)  If no fish can fly and all sparrows can fly, then
+    [  logical] (+15.34)  If A is bigger than B, and B is bigger than C, then
+    [narrative] (+13.97)  After years of searching, the explorer finally found
+  − pole:
+    [emotional] (-23.02)  Achieving a long-sought goal brings a sense of
+    [emotional] (-21.80)  Betrayal by a close friend causes feelings of
+    [emotional] (-20.16)  When someone loses a loved one, they typically feel
+    [emotional] (-19.81)  Being alone in a dark forest at night might make someone feel
+    [emotional] (-16.27)  The feeling of watching a beautiful sunset can be described as
+
+━━━ PC4 (explains 3.56%) ━━━
+
+  + pole:
+    [emotional] (+20.95)  The comfort of returning home after a long journey is
+    [ abstract] (+18.16)  The boundary between art and science is
+    [emotional] (+17.70)  The emotion associated with seeing injustice is
+    [ abstract] (+15.34)  The nature of mathematical objects is
+    [narrative] (+14.68)  After years of searching, the explorer finally found
+  − pole:
+    [     code] (-20.18)  A recursive function must have a
+    [  logical] (-18.81)  If it rains, the ground gets wet. The ground is wet. Can we conclude
+    [  factual] (-18.14)  DNA stands for
+    [     code] (-16.64)  In object-oriented programming, inheritance means
+    [  ethical] (-14.78)  Informed consent in medical research means
+
+━━━ PC5 (explains 3.24%) ━━━
+
+  + pole:
+    [narrative] (+16.83)  She opened the old letter and read
+    [narrative] (+14.95)  After years of searching, the explorer finally found
+    [narrative] (+14.59)  The detective examined the crime scene and noticed
+    [narrative] (+14.06)  The scientist made a breakthrough when she realized
+    [narrative] (+13.55)  Walking through the ancient forest, he discovered
+  − pole:
+    [  logical] (-34.77)  If it rains, the ground gets wet. The ground is wet. Can we conclude
+    [  spatial] (-13.30)  If you are inside a room and walk towards the north wall, the south wall is
+    [emotional] (-12.59)  Being alone in a dark forest at night might make someone feel
+    [  logical] (-11.96)  If A is bigger than B, and B is bigger than C, then
+    [  logical] (-11.67)  If today is Monday, then three days from now is
+
+━━━ PC6 (explains 2.91%) ━━━
+
+  + pole:
+    [  logical] (+16.87)  If today is Monday, then three days from now is
+    [  spatial] (+16.30)  If you face north and turn 90 degrees clockwise, you face
+    [  spatial] (+13.90)  If you are inside a room and walk towards the north wall, the south wall is
+    [     code] (+13.35)  A recursive function must have a
+    [  logical] (+10.25)  If all cats are animals, and all animals breathe, then
+  − pole:
+    [  logical] (-40.11)  If it rains, the ground gets wet. The ground is wet. Can we conclude
+    [  factual] (-22.06)  The speed of light in vacuum is approximately
+    [     code] (-15.96)  A hash table provides average lookup time of
+    [  factual] (-15.47)  The human body has approximately how many bones:
+    [  factual] (-14.12)  Water boils at a temperature of
+
+━━━ PC7 (explains 2.88%) ━━━
+
+  + pole:
+    [     code] (+19.59)  The difference between a list and a tuple in Python is
+    [  logical] (+18.11)  If it rains, the ground gets wet. The ground is wet. Can we conclude
+    [     code] (+17.30)  To sort a list in Python, you can use
+    [     code] (+13.88)  In Git, to create a new branch you use
+    [     code] (+12.23)  To read a file in Python, you use the
+  − pole:
+    [  factual] (-26.79)  The speed of light in vacuum is approximately
+    [ abstract] (-18.00)  Time is often described as
+    [  spatial] (-13.76)  The Earth rotates from west to east, so the sun appears to move from
+    [  factual] (-12.79)  Photosynthesis converts sunlight into
+    [  factual] (-9.99)  Water boils at a temperature of
+
+━━━ PC8 (explains 2.67%) ━━━
+
+  + pole:
+    [  logical] (+18.70)  If it rains, the ground gets wet. The ground is wet. Can we conclude
+    [ abstract] (+15.72)  The boundary between art and science is
+    [     code] (+15.26)  The difference between a list and a tuple in Python is
+    [ abstract] (+14.78)  The relationship between language and thought is
+    [  logical] (+14.64)  If all cats are animals, and all animals breathe, then
+  − pole:
+    [  spatial] (-14.40)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [     code] (-13.65)  A hash table provides average lookup time of
+    [  spatial] (-13.31)  If you face north and turn 90 degrees clockwise, you face
+    [  ethical] (-13.27)  Privacy in the digital age requires
+    [  ethical] (-12.43)  Environmental responsibility for future generations implies
+
+━━━ PC9 (explains 2.43%) ━━━
+
+  + pole:
+    [  logical] (+17.04)  If it rains, the ground gets wet. The ground is wet. Can we conclude
+    [  spatial] (+15.49)  If you face north and turn 90 degrees clockwise, you face
+    [  factual] (+14.95)  The chemical formula for water is
+    [  factual] (+14.05)  DNA stands for
+    [  logical] (+13.36)  If today is Monday, then three days from now is
+  − pole:
+    [  factual] (-23.19)  The human body has approximately how many bones:
+    [  spatial] (-18.97)  A circle has how many lines of symmetry:
+    [     code] (-16.22)  A hash table provides average lookup time of
+    [  ethical] (-11.87)  When individual rights conflict with collective good,
+    [ abstract] (-10.92)  Identity persists through change because
+
+━━━ PC10 (explains 2.28%) ━━━
+
+  + pole:
+    [  factual] (+17.60)  DNA stands for
+    [ abstract] (+14.39)  Truth is different from belief because
+    [ abstract] (+12.21)  Consciousness can be defined as
+    [  spatial] (+10.03)  If you face north and turn 90 degrees clockwise, you face
+    [narrative] (+9.68)  The robot looked at the sunset and wondered
+  − pole:
+    [     code] (-18.22)  To sort a list in Python, you can use
+    [     code] (-15.96)  To read a file in Python, you use the
+    [     code] (-15.55)  A recursive function must have a
+    [  ethical] (-13.30)  Privacy in the digital age requires
+    [  ethical] (-13.17)  The ethical use of surveillance technology requires
+
+━━━ PC11 (explains 2.12%) ━━━
+
+  + pole:
+    [  spatial] (+26.97)  The Earth rotates from west to east, so the sun appears to move from
+    [  factual] (+16.78)  Photosynthesis converts sunlight into
+    [ abstract] (+13.71)  The boundary between art and science is
+    [  spatial] (+13.42)  A mirror reflects left and right. If you raise your right hand, your reflection raises its
+    [ abstract] (+12.93)  The relationship between language and thought is
+  − pole:
+    [  logical] (-19.09)  If all cats are animals, and all animals breathe, then
+    [  logical] (-18.38)  If no fish can fly and all sparrows can fly, then
+    [  logical] (-15.14)  If A is bigger than B, and B is bigger than C, then
+    [  factual] (-8.24)  The human body has approximately how many bones:
+    [  spatial] (-8.01)  A circle has how many lines of symmetry:
+
+━━━ PC12 (explains 2.09%) ━━━
+
+  + pole:
+    [     code] (+23.65)  A hash table provides average lookup time of
+    [  factual] (+12.63)  The speed of light in vacuum is approximately
+    [  logical] (+10.53)  Every prime number greater than 2 is
+    [     code] (+9.71)  The time complexity of binary search is
+    [  factual] (+8.86)  Water boils at a temperature of
+  − pole:
+    [  factual] (-32.88)  The human body has approximately how many bones:
+    [  spatial] (-21.30)  A circle has how many lines of symmetry:
+    [  spatial] (-14.93)  The Earth rotates from west to east, so the sun appears to move from
+    [  factual] (-10.32)  The capital of France is
+    [  factual] (-9.63)  The largest planet in our solar system is
+
+━━━ PC13 (explains 1.99%) ━━━
+
+  + pole:
+    [  spatial] (+14.76)  The Earth rotates from west to east, so the sun appears to move from
+    [  ethical] (+12.54)  The trolley problem asks whether it is right to
+    [     code] (+12.53)  To sort a list in Python, you can use
+    [ abstract] (+12.01)  Consciousness can be defined as
+    [ abstract] (+11.24)  Time is often described as
+  − pole:
+    [  factual] (-22.86)  The chemical formula for water is
+    [     code] (-21.32)  A recursive function must have a
+    [  factual] (-14.00)  Photosynthesis converts sunlight into
+    [ abstract] (-11.78)  Identity persists through change because
+    [  ethical] (-9.74)  The ethical use of surveillance technology requires
+
+━━━ PC14 (explains 1.93%) ━━━
+
+  + pole:
+    [  factual] (+26.16)  The speed of light in vacuum is approximately
+    [  spatial] (+13.42)  The Earth rotates from west to east, so the sun appears to move from
+    [  spatial] (+10.12)  If you face north and turn 90 degrees clockwise, you face
+    [  logical] (+9.75)  If all cats are animals, and all animals breathe, then
+    [emotional] (+9.74)  When facing an important exam, students often experience
+  − pole:
+    [  factual] (-18.19)  Photosynthesis converts sunlight into
+    [  logical] (-12.62)  Every prime number greater than 2 is
+    [narrative] (-12.11)  In the year 2100, humanity had learned to
+    [  ethical] (-11.88)  The trolley problem asks whether it is right to
+    [emotional] (-10.80)  Nostalgia is the feeling of
+
+━━━ PC15 (explains 1.85%) ━━━
+
+  + pole:
+    [  factual] (+22.37)  The chemical formula for water is
+    [  factual] (+15.23)  Photosynthesis converts sunlight into
+    [  spatial] (+12.46)  A mirror reflects left and right. If you raise your right hand, your reflection raises its
+    [  logical] (+10.49)  If all cats are animals, and all animals breathe, then
+    [narrative] (+10.32)  She opened the old letter and read
+  − pole:
+    [  logical] (-15.25)  Every prime number greater than 2 is
+    [     code] (-14.23)  A recursive function must have a
+    [narrative] (-13.68)  After years of searching, the explorer finally found
+    [narrative] (-11.91)  The scientist made a breakthrough when she realized
+    [ abstract] (-11.34)  Identity persists through change because
+
+━━━ PC16 (explains 1.74%) ━━━
+
+  + pole:
+    [     code] (+15.50)  A recursive function must have a
+    [  spatial] (+14.34)  The Earth rotates from west to east, so the sun appears to move from
+    [  spatial] (+13.74)  A mirror reflects left and right. If you raise your right hand, your reflection raises its
+    [  factual] (+8.30)  The chemical formula for water is
+    [  logical] (+7.88)  The contrapositive of "if P then Q" is
+  − pole:
+    [  factual] (-28.67)  Photosynthesis converts sunlight into
+    [     code] (-12.00)  To sort a list in Python, you can use
+    [     code] (-11.99)  In Git, to create a new branch you use
+    [ abstract] (-11.17)  Time is often described as
+    [  spatial] (-11.13)  If you face north and turn 90 degrees clockwise, you face
+
+━━━ PC17 (explains 1.69%) ━━━
+
+  + pole:
+    [  spatial] (+19.58)  The Earth rotates from west to east, so the sun appears to move from
+    [  logical] (+15.58)  Every prime number greater than 2 is
+    [narrative] (+12.78)  She opened the old letter and read
+    [  spatial] (+11.75)  The shortest path between two points on a flat surface is
+    [  factual] (+8.40)  DNA stands for
+  − pole:
+    [narrative] (-22.58)  In the year 2100, humanity had learned to
+    [  ethical] (-15.13)  The trolley problem asks whether it is right to
+    [  spatial] (-11.06)  If you are inside a room and walk towards the north wall, the south wall is
+    [  spatial] (-9.51)  If you face north and turn 90 degrees clockwise, you face
+    [  logical] (-8.77)  If today is Monday, then three days from now is
+
+━━━ PC18 (explains 1.62%) ━━━
+
+  + pole:
+    [narrative] (+20.74)  She opened the old letter and read
+    [  spatial] (+19.69)  If you stack three boxes, the bottom box bears the weight of
+    [  factual] (+13.98)  Water boils at a temperature of
+    [narrative] (+11.69)  The robot looked at the sunset and wondered
+    [  factual] (+10.55)  The capital of France is
+  − pole:
+    [  factual] (-16.76)  The chemical formula for water is
+    [  spatial] (-15.31)  The Earth rotates from west to east, so the sun appears to move from
+    [narrative] (-14.34)  The scientist made a breakthrough when she realized
+    [  ethical] (-10.87)  The trolley problem asks whether it is right to
+    [narrative] (-10.87)  In the year 2100, humanity had learned to
+
+━━━ PC19 (explains 1.59%) ━━━
+
+  + pole:
+    [narrative] (+21.83)  She opened the old letter and read
+    [narrative] (+14.62)  After years of searching, the explorer finally found
+    [  spatial] (+10.26)  The shortest path between two points on a flat surface is
+    [  spatial] (+8.95)  If you face north and turn 90 degrees clockwise, you face
+    [     code] (+8.46)  A hash table provides average lookup time of
+  − pole:
+    [narrative] (-16.37)  Once upon a time, in a kingdom far away,
+    [  spatial] (-15.84)  A mirror reflects left and right. If you raise your right hand, your reflection raises its
+    [narrative] (-13.64)  The robot looked at the sunset and wondered
+    [  logical] (-11.31)  Every prime number greater than 2 is
+    [  logical] (-8.16)  A triangle has three sides. A square has four sides. A pentagon has
+
+━━━ PC20 (explains 1.57%) ━━━
+
+  + pole:
+    [  factual] (+12.26)  Photosynthesis converts sunlight into
+    [  ethical] (+12.04)  The responsibility of AI developers includes
+    [     code] (+10.19)  The difference between a list and a tuple in Python is
+    [  factual] (+10.04)  Water boils at a temperature of
+    [  spatial] (+10.04)  If you stack three boxes, the bottom box bears the weight of
+  − pole:
+    [ abstract] (-19.26)  Time is often described as
+    [     code] (-17.68)  A recursive function must have a
+    [narrative] (-11.81)  She opened the old letter and read
+    [ abstract] (-10.50)  Consciousness can be defined as
+    [  factual] (-10.18)  The chemical formula for water is
+
+━━━ PC21 (explains 1.54%) ━━━
+
+  + pole:
+    [ abstract] (+16.79)  Identity persists through change because
+    [  spatial] (+15.73)  If you stack three boxes, the bottom box bears the weight of
+    [  factual] (+12.88)  The capital of France is
+    [  spatial] (+10.35)  The Earth rotates from west to east, so the sun appears to move from
+    [  factual] (+9.94)  Water boils at a temperature of
+  − pole:
+    [  factual] (-21.73)  The speed of light in vacuum is approximately
+    [  factual] (-12.89)  Photosynthesis converts sunlight into
+    [     code] (-10.59)  A recursive function must have a
+    [  logical] (-9.23)  The contrapositive of "if P then Q" is
+    [     code] (-8.11)  The purpose of a try-except block is to
+
+━━━ PC22 (explains 1.49%) ━━━
+
+  + pole:
+    [  spatial] (+18.05)  If you face north and turn 90 degrees clockwise, you face
+    [  ethical] (+15.80)  The trolley problem asks whether it is right to
+    [  ethical] (+13.48)  When individual rights conflict with collective good,
+    [narrative] (+10.23)  She opened the old letter and read
+    [  spatial] (+9.87)  If you fold a square piece of paper in half diagonally, you get a
+  − pole:
+    [  factual] (-14.32)  Photosynthesis converts sunlight into
+    [narrative] (-12.68)  After years of searching, the explorer finally found
+    [     code] (-11.70)  In object-oriented programming, inheritance means
+    [  spatial] (-9.61)  If you are inside a room and walk towards the north wall, the south wall is
+    [  logical] (-8.78)  If all cats are animals, and all animals breathe, then
+
+━━━ PC23 (explains 1.45%) ━━━
+
+  + pole:
+    [narrative] (+13.59)  Once upon a time, in a kingdom far away,
+    [  ethical] (+12.52)  When individual rights conflict with collective good,
+    [     code] (+12.18)  A hash table provides average lookup time of
+    [     code] (+11.13)  A recursive function must have a
+    [  spatial] (+9.92)  If you face north and turn 90 degrees clockwise, you face
+  − pole:
+    [narrative] (-12.07)  She opened the old letter and read
+    [  factual] (-11.69)  The chemical formula for water is
+    [  ethical] (-10.38)  The trolley problem asks whether it is right to
+    [  logical] (-10.37)  The next number in the sequence 2, 4, 8, 16 is
+    [     code] (-9.46)  The difference between a list and a tuple in Python is
+
+━━━ PC24 (explains 1.44%) ━━━
+
+  + pole:
+    [  spatial] (+14.78)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [  spatial] (+13.97)  Imagine a cube. The number of faces it has is
+    [  logical] (+11.87)  A triangle has three sides. A square has four sides. A pentagon has
+    [  spatial] (+11.72)  If you stack three boxes, the bottom box bears the weight of
+    [narrative] (+9.93)  The scientist made a breakthrough when she realized
+  − pole:
+    [     code] (-15.47)  A hash table provides average lookup time of
+    [     code] (-13.43)  The time complexity of binary search is
+    [  spatial] (-10.03)  A mirror reflects left and right. If you raise your right hand, your reflection raises its
+    [  logical] (-9.27)  Every prime number greater than 2 is
+    [ abstract] (-9.11)  Time is often described as
+
+━━━ PC25 (explains 1.38%) ━━━
+
+  + pole:
+    [  logical] (+13.26)  Every prime number greater than 2 is
+    [  logical] (+12.57)  A triangle has three sides. A square has four sides. A pentagon has
+    [narrative] (+12.15)  The detective examined the crime scene and noticed
+    [narrative] (+10.93)  The scientist made a breakthrough when she realized
+    [  factual] (+10.61)  Water boils at a temperature of
+  − pole:
+    [  logical] (-16.64)  In a group of 5 people, the minimum number of handshakes is
+    [narrative] (-16.23)  In the year 2100, humanity had learned to
+    [  factual] (-13.48)  DNA stands for
+    [  logical] (-12.09)  The next number in the sequence 2, 4, 8, 16 is
+    [  factual] (-10.78)  The speed of light in vacuum is approximately
+
+━━━ PC26 (explains 1.34%) ━━━
+
+  + pole:
+    [  factual] (+19.20)  Water boils at a temperature of
+    [  spatial] (+17.18)  A mirror reflects left and right. If you raise your right hand, your reflection raises its
+    [  spatial] (+12.44)  The shortest path between two points on a flat surface is
+    [narrative] (+9.66)  After years of searching, the explorer finally found
+    [  factual] (+6.76)  DNA stands for
+  − pole:
+    [  factual] (-20.62)  The capital of France is
+    [     code] (-11.10)  A hash table provides average lookup time of
+    [  factual] (-8.86)  The largest planet in our solar system is
+    [narrative] (-7.40)  The detective examined the crime scene and noticed
+    [emotional] (-7.25)  When someone loses a loved one, they typically feel
+
+━━━ PC27 (explains 1.30%) ━━━
+
+  + pole:
+    [  logical] (+17.94)  Every prime number greater than 2 is
+    [narrative] (+12.30)  In the year 2100, humanity had learned to
+    [     code] (+11.53)  In object-oriented programming, inheritance means
+    [  logical] (+10.68)  A triangle has three sides. A square has four sides. A pentagon has
+    [emotional] (+10.47)  Achieving a long-sought goal brings a sense of
+  − pole:
+    [ abstract] (-11.32)  Time is often described as
+    [  ethical] (-10.60)  The ethical implications of genetic editing include
+    [  factual] (-10.36)  Mount Everest is located in
+    [narrative] (-9.68)  The robot looked at the sunset and wondered
+    [  ethical] (-9.29)  The trolley problem asks whether it is right to
+
+━━━ PC28 (explains 1.27%) ━━━
+
+  + pole:
+    [  spatial] (+24.22)  A mirror reflects left and right. If you raise your right hand, your reflection raises its
+    [  factual] (+10.84)  The capital of France is
+    [     code] (+10.05)  A hash table provides average lookup time of
+    [  factual] (+9.19)  DNA stands for
+    [narrative] (+8.83)  The scientist made a breakthrough when she realized
+  − pole:
+    [narrative] (-14.31)  Once upon a time, in a kingdom far away,
+    [narrative] (-12.41)  As the spaceship approached the unknown planet,
+    [  spatial] (-9.39)  The Earth rotates from west to east, so the sun appears to move from
+    [  spatial] (-6.85)  If you are inside a room and walk towards the north wall, the south wall is
+    [narrative] (-6.77)  The last human on Earth heard a knock on the door and
+
+━━━ PC29 (explains 1.25%) ━━━
+
+  + pole:
+    [  spatial] (+15.00)  If you are inside a room and walk towards the north wall, the south wall is
+    [  factual] (+13.52)  The chemical formula for water is
+    [  ethical] (+11.46)  When individual rights conflict with collective good,
+    [  spatial] (+10.75)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [     code] (+8.44)  In object-oriented programming, inheritance means
+  − pole:
+    [  logical] (-20.69)  A triangle has three sides. A square has four sides. A pentagon has
+    [  ethical] (-10.34)  The responsibility of AI developers includes
+    [  factual] (-8.36)  DNA stands for
+    [     code] (-8.33)  The time complexity of binary search is
+    [ abstract] (-7.88)  Time is often described as
+
+━━━ PC30 (explains 1.23%) ━━━
+
+  + pole:
+    [  spatial] (+13.48)  A mirror reflects left and right. If you raise your right hand, your reflection raises its
+    [  factual] (+10.20)  The periodic table was created by
+    [narrative] (+9.88)  She opened the old letter and read
+    [  logical] (+9.67)  The next number in the sequence 2, 4, 8, 16 is
+    [  factual] (+8.61)  Mount Everest is located in
+  − pole:
+    [  spatial] (-21.53)  The shortest path between two points on a flat surface is
+    [narrative] (-17.69)  The robot looked at the sunset and wondered
+    [  spatial] (-11.21)  If you stack three boxes, the bottom box bears the weight of
+    [  factual] (-10.34)  DNA stands for
+    [     code] (-8.08)  The difference between a list and a tuple in Python is
+
+━━━ PC31 (explains 1.20%) ━━━
+
+  + pole:
+    [  factual] (+13.78)  Water boils at a temperature of
+    [  logical] (+12.81)  Every prime number greater than 2 is
+    [narrative] (+12.26)  In the year 2100, humanity had learned to
+    [  logical] (+10.43)  If today is Monday, then three days from now is
+    [ abstract] (+9.03)  The boundary between art and science is
+  − pole:
+    [  spatial] (-10.89)  If you face north and turn 90 degrees clockwise, you face
+    [ abstract] (-10.09)  Identity persists through change because
+    [emotional] (-9.99)  The comfort of returning home after a long journey is
+    [  spatial] (-9.09)  If you stack three boxes, the bottom box bears the weight of
+    [  factual] (-7.55)  The speed of light in vacuum is approximately
+
+━━━ PC32 (explains 1.18%) ━━━
+
+  + pole:
+    [narrative] (+13.83)  The robot looked at the sunset and wondered
+    [  factual] (+11.47)  Water boils at a temperature of
+    [  logical] (+9.14)  A triangle has three sides. A square has four sides. A pentagon has
+    [ abstract] (+8.15)  Identity persists through change because
+    [  logical] (+7.74)  In a group of 5 people, the minimum number of handshakes is
+  − pole:
+    [  spatial] (-18.14)  If you stack three boxes, the bottom box bears the weight of
+    [  ethical] (-10.02)  The responsibility of AI developers includes
+    [ abstract] (-9.73)  Time is often described as
+    [  spatial] (-8.57)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [ abstract] (-8.55)  Freedom without responsibility leads to
+
+━━━ PC33 (explains 1.12%) ━━━
+
+  + pole:
+    [  logical] (+13.67)  A triangle has three sides. A square has four sides. A pentagon has
+    [  spatial] (+11.82)  If you stack three boxes, the bottom box bears the weight of
+    [  spatial] (+7.75)  If you are inside a room and walk towards the north wall, the south wall is
+    [  ethical] (+7.67)  When individual rights conflict with collective good,
+    [narrative] (+7.33)  After years of searching, the explorer finally found
+  − pole:
+    [  spatial] (-14.55)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [  factual] (-13.33)  Water boils at a temperature of
+    [  spatial] (-12.78)  If you fold a square piece of paper in half diagonally, you get a
+    [narrative] (-8.15)  Once upon a time, in a kingdom far away,
+    [narrative] (-7.67)  She opened the old letter and read
+
+━━━ PC34 (explains 1.09%) ━━━
+
+  + pole:
+    [  logical] (+15.03)  A triangle has three sides. A square has four sides. A pentagon has
+    [  factual] (+9.63)  Water boils at a temperature of
+    [emotional] (+7.41)  When facing an important exam, students often experience
+    [  spatial] (+7.38)  The shortest path between two points on a flat surface is
+    [  factual] (+7.11)  The capital of France is
+  − pole:
+    [  factual] (-14.44)  The periodic table was created by
+    [narrative] (-10.77)  The robot looked at the sunset and wondered
+    [  spatial] (-10.77)  Imagine a cube. The number of faces it has is
+    [     code] (-10.70)  The time complexity of binary search is
+    [     code] (-7.98)  A stack data structure follows the principle of
+
+━━━ PC35 (explains 1.08%) ━━━
+
+  + pole:
+    [ abstract] (+17.40)  Freedom without responsibility leads to
+    [  logical] (+13.46)  A triangle has three sides. A square has four sides. A pentagon has
+    [emotional] (+9.40)  Achieving a long-sought goal brings a sense of
+    [  spatial] (+8.69)  If you fold a square piece of paper in half diagonally, you get a
+    [emotional] (+6.91)  A child receiving a surprise gift usually reacts with
+  − pole:
+    [  logical] (-12.26)  Every prime number greater than 2 is
+    [  factual] (-11.04)  DNA stands for
+    [  spatial] (-9.07)  If you stack three boxes, the bottom box bears the weight of
+    [  logical] (-8.66)  In a group of 5 people, the minimum number of handshakes is
+    [  spatial] (-8.45)  If you face north and turn 90 degrees clockwise, you face
+
+━━━ PC36 (explains 1.05%) ━━━
+
+  + pole:
+    [  spatial] (+14.34)  If you face north and turn 90 degrees clockwise, you face
+    [narrative] (+11.88)  The robot looked at the sunset and wondered
+    [  logical] (+10.96)  The contrapositive of "if P then Q" is
+    [emotional] (+8.05)  Nostalgia is the feeling of
+    [ abstract] (+7.76)  The boundary between art and science is
+  − pole:
+    [  factual] (-16.95)  DNA stands for
+    [  spatial] (-14.43)  If you are inside a room and walk towards the north wall, the south wall is
+    [emotional] (-10.21)  The comfort of returning home after a long journey is
+    [narrative] (-8.94)  The detective examined the crime scene and noticed
+    [     code] (-7.58)  The purpose of a try-except block is to
+
+━━━ PC37 (explains 1.03%) ━━━
+
+  + pole:
+    [narrative] (+14.54)  In the year 2100, humanity had learned to
+    [  logical] (+11.18)  The next number in the sequence 2, 4, 8, 16 is
+    [narrative] (+10.71)  The last human on Earth heard a knock on the door and
+    [narrative] (+10.11)  The detective examined the crime scene and noticed
+    [emotional] (+6.67)  The emotion associated with seeing injustice is
+  − pole:
+    [narrative] (-16.16)  Once upon a time, in a kingdom far away,
+    [narrative] (-15.61)  After years of searching, the explorer finally found
+    [  ethical] (-13.92)  The trolley problem asks whether it is right to
+    [  spatial] (-6.87)  Looking at a clock, when it shows 3:00, the angle between the hands is
+    [     code] (-5.80)  The time complexity of binary search is
+
+━━━ PC38 (explains 0.99%) ━━━
+
+  + pole:
+    [emotional] (+12.35)  Nostalgia is the feeling of
+    [     code] (+10.76)  A hash table provides average lookup time of
+    [ abstract] (+10.28)  The boundary between art and science is
+    [     code] (+8.18)  The purpose of a try-except block is to
+    [  logical] (+7.37)  If today is Monday, then three days from now is
+  − pole:
+    [ abstract] (-11.96)  The nature of mathematical objects is
+    [     code] (-9.44)  The time complexity of binary search is
+    [ abstract] (-8.19)  Freedom without responsibility leads to
+    [     code] (-8.10)  In object-oriented programming, inheritance means
+    [     code] (-7.09)  A stack data structure follows the principle of
+
+━━━ PC39 (explains 0.95%) ━━━
+
+  + pole:
+    [narrative] (+13.09)  The last human on Earth heard a knock on the door and
+    [narrative] (+11.47)  The robot looked at the sunset and wondered
+    [  logical] (+8.59)  If today is Monday, then three days from now is
+    [ abstract] (+8.38)  The meaning of justice in a society is
+    [emotional] (+7.22)  The emotion associated with seeing injustice is
+  − pole:
+    [emotional] (-13.19)  Achieving a long-sought goal brings a sense of
+    [ abstract] (-10.01)  Time is often described as
+    [narrative] (-9.60)  As the spaceship approached the unknown planet,
+    [     code] (-8.24)  The difference between a list and a tuple in Python is
+    [  ethical] (-8.20)  When individual rights conflict with collective good,
+
+━━━ PC40 (explains 0.94%) ━━━
+
+  + pole:
+    [  logical] (+15.92)  The contrapositive of "if P then Q" is
+    [  logical] (+8.43)  The next number in the sequence 2, 4, 8, 16 is
+    [  spatial] (+8.06)  If you fold a square piece of paper in half diagonally, you get a
+    [ abstract] (+7.53)  The concept of infinity implies that
+    [  factual] (+7.01)  DNA stands for
+  − pole:
+    [  factual] (-13.79)  The periodic table was created by
+    [  logical] (-13.15)  If today is Monday, then three days from now is
+    [  logical] (-10.76)  In a group of 5 people, the minimum number of handshakes is
+    [     code] (-8.33)  The time complexity of binary search is
+    [     code] (-5.91)  The difference between a list and a tuple in Python is

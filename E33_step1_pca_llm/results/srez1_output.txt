@@ -1,0 +1,102 @@
+Prompts: 80, categories: 8
+Entropy threshold calibration (normalized by log(8)):
+  distribution 5: H_norm = 0.000
+  distribution 4+1: H_norm = 0.241
+  distribution 3+2: H_norm = 0.324
+  distribution 2+2+1: H_norm = 0.507
+  distribution 1+1+1+1+1: H_norm = 0.774
+
+==============================================================================
+PC count per type out of 40 (entropy threshold 0.3)
+==============================================================================
+
+model    | PCA raw                      | PCA on residuals            
+         |   PAIRED   ASYM   RAND   sum |   PAIRED   ASYM   RAND   sum
+------------------------------------------------------------------------
+qwen     |        1      6     33    40 |        0      2     38    40
+gemma    |        2      5     33    40 |        0      4     36    40
+olmo     |        3      3     34    40 |        0      6     34    40
+falcon   |        4      2     34    40 |        0      7     33    40
+pythia   |        1      2     37    40 |        0      6     34    40
+
+==============================================================================
+Top paired PCs on residuals (most symmetrically homogeneous)
+==============================================================================
+
+QWEN: 0 paired PCs out of 40 on residuals
+
+GEMMA: 0 paired PCs out of 40 on residuals
+
+OLMO: 0 paired PCs out of 40 on residuals
+
+FALCON: 0 paired PCs out of 40 on residuals
+
+PYTHIA: 0 paired PCs out of 40 on residuals
+
+==============================================================================
+Distribution change after residualization
+==============================================================================
+  qwen     ΔPAIRED=-1  ΔASYM=-4  ΔRAND=+5
+  gemma    ΔPAIRED=-2  ΔASYM=-1  ΔRAND=+3
+  olmo     ΔPAIRED=-3  ΔASYM=+3  ΔRAND=+0
+  falcon   ΔPAIRED=-4  ΔASYM=+5  ΔRAND=-1
+  pythia   ΔPAIRED=-1  ΔASYM=+4  ΔRAND=-3
+
+
+Raw statistics: {
+  "qwen": {
+    "raw_summary": {
+      "ASYMMETRIC": 6,
+      "RANDOM": 33,
+      "PAIRED": 1
+    },
+    "res_summary": {
+      "ASYMMETRIC": 2,
+      "RANDOM": 38
+    }
+  },
+  "gemma": {
+    "raw_summary": {
+      "ASYMMETRIC": 5,
+      "RANDOM": 33,
+      "PAIRED": 2
+    },
+    "res_summary": {
+      "RANDOM": 36,
+      "ASYMMETRIC": 4
+    }
+  },
+  "olmo": {
+    "raw_summary": {
+      "ASYMMETRIC": 3,
+      "PAIRED": 3,
+      "RANDOM": 34
+    },
+    "res_summary": {
+      "RANDOM": 34,
+      "ASYMMETRIC": 6
+    }
+  },
+  "falcon": {
+    "raw_summary": {
+      "RANDOM": 34,
+      "PAIRED": 4,
+      "ASYMMETRIC": 2
+    },
+    "res_summary": {
+      "ASYMMETRIC": 7,
+      "RANDOM": 33
+    }
+  },
+  "pythia": {
+    "raw_summary": {
+      "RANDOM": 37,
+      "ASYMMETRIC": 2,
+      "PAIRED": 1
+    },
+    "res_summary": {
+      "ASYMMETRIC": 6,
+      "RANDOM": 34
+    }
+  }
+}

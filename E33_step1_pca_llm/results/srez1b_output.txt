@@ -1,0 +1,48 @@
+==============================================================================
+Which categories load asymmetrically on residuals
+==============================================================================
+
+QWEN: 2 asymmetric PCs
+  PC1   -pole = 4/5 abstract   (H+=0.51 H-=0.24)
+  PC13  -pole = 4/5 factual    (H+=0.64 H-=0.24)
+
+GEMMA: 4 asymmetric PCs
+  PC4   +pole = 4/5 emotional  (H+=0.24 H-=0.64)
+  PC13  -pole = 4/5 emotional  (H+=0.64 H-=0.24)
+  PC17  -pole = 4/5 abstract   (H+=0.64 H-=0.24)
+  PC29  -pole = 4/5 code       (H+=0.51 H-=0.24)
+
+OLMO: 6 asymmetric PCs
+  PC2   -pole = 5/5 code       (H+=0.64 H-=0.00)
+  PC4   +pole = 4/5 emotional  (H+=0.24 H-=0.46)
+  PC7   -pole = 4/5 factual    (H+=0.51 H-=0.24)
+  PC9   -pole = 4/5 code       (H+=0.64 H-=0.24)
+  PC16  -pole = 4/5 code       (H+=0.46 H-=0.24)
+  PC20  -pole = 4/5 logical    (H+=0.51 H-=0.24)
+
+FALCON: 7 asymmetric PCs
+  PC1   -pole = 5/5 emotional  (H+=0.51 H-=0.00)
+  PC3   -pole = 4/5 abstract   (H+=0.51 H-=0.24)
+  PC4   +pole = 4/5 emotional  (H+=0.24 H-=0.64)
+  PC5   +pole = 4/5 abstract   (H+=0.24 H-=0.51)
+  PC7   -pole = 4/5 code       (H+=0.64 H-=0.24)
+  PC9   -pole = 4/5 factual    (H+=0.46 H-=0.24)
+  PC11  +pole = 4/5 logical    (H+=0.24 H-=0.64)
+
+PYTHIA: 6 asymmetric PCs
+  PC1   +pole = 4/5 emotional  (H+=0.24 H-=0.64)
+  PC3   +pole = 5/5 emotional  (H+=0.00 H-=0.32)
+  PC8   -pole = 4/5 spatial    (H+=0.46 H-=0.24)
+  PC16  +pole = 5/5 code       (H+=0.00 H-=0.46)
+  PC19  +pole = 4/5 code       (H+=0.24 H-=0.51)
+  PC21  -pole = 4/5 code       (H+=0.46 H-=0.24)
+
+==============================================================================
+Asymmetric loading count per category (across all 5 models)
+==============================================================================
+  code         8 times
+  emotional    7 times
+  abstract     4 times
+  factual      3 times
+  logical      2 times
+  spatial      1 time
