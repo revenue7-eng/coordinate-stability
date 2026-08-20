@@ -1,832 +1,835 @@
-# Prescribed Axes: Факты и гипотезы
+# Prescribed Axes: Facts and Hypotheses
 
 Andrey Lazarev | Independent Researcher
 
-Последнее обновление: 20 августа 2026 — слияние апрельской ветки (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) с июльской (Ф45, Ф46, Г16–Г18). Апрельские E- и Г-номера перенумерованы, июльские сохранены. См. ТАБЛИЦЫ СООТВЕТСТВИЯ в конце файла.
+Last updated: 20 August 2026 — merge of the April branch (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) with the July branch (Ф45, Ф46, Г16–Г18). April E- and Г-numbers were reassigned, July ones kept. See MAPPING TABLES at the end of the file.
 
-Протокол:
-- **Факты (Ф)** — экспериментально проверенные результаты, наши или из изученных источников. Для наших — указывается код, среда, параметры, seeds. Для внешних — указывается источник (книга, статья с DOI/arXiv, страница или раздел). Включение внешнего факта в реестр — кураторское решение: считается установленным, когда подтверждено независимыми работами или принято в качестве рабочей основы для текущей программы.
-- **Наблюдения (Н)** — single-seed или underpowered результаты. Не факты по протоколу программы. Регистрируются для сигнала и аудита, не как опора для гипотез.
-- **Гипотезы (Г)** — помечены статусом (подтверждена / опровергнута / открыта).
+Protocol:
+- **Facts (Ф)** — experimentally verified results, ours or from sources we have studied. For ours: code, environment, parameters and seeds are given. For external ones: the source is given (book, paper with DOI/arXiv, page or section). Admitting an external fact to the registry is a curatorial decision: it counts as established once independent work confirms it, or once it is adopted as a working basis for the current programme.
+- **Observations (Н)** — single-seed or underpowered results. Not facts under the programme protocol. Recorded for signal and audit, not as support for hypotheses.
+- **Hypotheses (Г)** — carry a status (confirmed / refuted / open).
 
 ---
 
-## ФАКТЫ
+## FACTS
 
-### Среда: Push-T (3 степени свободы: x_block, y_block, θ_block)
+### Environment: Push-T (3 degrees of freedom: x_block, y_block, θ_block)
 
-**Ф1. Prescribed (3D) vs Free (5D→3D): prescribed лучше в 38×**
-- Prescribed: 0.004, Free: 0.157 (val loss)
-- 3 сида, 50 эпох, 200 эпизодов
-- Статья 1, Experiment 3 (LeWM State)
+**Ф1. Prescribed (3D) vs free (5D→3D): prescribed better by 38×**
+- Prescribed: 0.004, free: 0.157 (val loss)
+- 3 seeds, 50 epochs, 200 episodes
+- Paper 1, Experiment 3 (LeWM State)
 
-**Ф2. Prescribed (3D, 20K params) vs Free CNN (96×96 pixels, 744K params): prescribed лучше в 14.8×**
-- CNN плато на эпохе 7 из 50
-- Статья 1, Experiment 4 (LeWM Pixel)
+**Ф2. Prescribed (3D, 20K params) vs free CNN (96×96 pixels, 744K params): prescribed better by 14.8×**
+- The CNN plateaus at epoch 7 of 50
+- Paper 1, Experiment 4 (LeWM Pixel)
 
-**Ф3. Speech JEPA: prescribed (frozen cluster anchors) лучше free на +18–20pp entropy**
+**Ф3. Speech JEPA: prescribed (frozen cluster anchors) beats free by +18–20pp entropy**
 - 2×2 factorial: {GMM, k-means} × {soft, hard}
-- Все prescribed условия лучше free
-- Доминирующий фактор: frozen structure, не метод кластеризации
-- Пилотное исследование, метрика — entropy (codebook utilization)
-- Статья 1, Experiment 1
+- Every prescribed condition beats free
+- Dominant factor: frozen structure, not the clustering method
+- Pilot study; metric is entropy (codebook utilization)
+- Paper 1, Experiment 1
 
-**Ф4. Shov-JEPA (Vision): 3 prescribed оси лучше 64 free: 72.5% vs 67.5%**
+**Ф4. Shov-JEPA (vision): 3 prescribed axes beat 64 free ones, 72.5% vs 67.5%**
 - Rico dataset, 398 UI screenshots
-- Пилотное (398 samples, single seed, +5%)
-- Статья 1, Experiment 2
+- Pilot (398 samples, single seed, +5%)
+- Paper 1, Experiment 2
 
 **Ф5. Random fixed axes (3D) ≈ prescribed**
-- Random fixed: 0.61× от prescribed (чуть лучше) при 200 ep
-- Random fixed: 1.00× при 500 ep
-- Free 3D same input: 4.47× хуже prescribed при 200 ep
-- Фиксация важнее семантики осей
-- Источник 0.61×: random_axes_control, 200 ep, 30 epochs, 3 seeds, no SIGReg (Ф39)
-- Источник 1.00×: random_axes_control, 500 ep, 50 epochs, 9 runs (Ф39)
-- Статья 1, Section 4.6 + random_axes_control/RESULTS.md
+- Random fixed: 0.61× of prescribed (slightly better) at 200 ep
+- Random fixed: 1.00× at 500 ep
+- Free 3D same input: 4.47× worse than prescribed at 200 ep
+- Fixedness matters more than the semantics of the axes
+- Source of 0.61×: random_axes_control, 200 ep, 30 epochs, 3 seeds, no SIGReg (Ф39)
+- Source of 1.00×: random_axes_control, 500 ep, 50 epochs, 9 runs (Ф39)
+- Paper 1, Section 4.6 + random_axes_control/RESULTS.md
 
-**Ф6. Equal-input control: free с тем же входом (x,y,θ) хуже prescribed в 7.6×**
-- Prescribed: 0.000472, Free 3D same input: 0.003570
-- Преимущество — от фиксации, не от доступа к информации
-- Статья 1, Reviewer response
+**Ф6. Equal-input control: free with the same input (x, y, θ) is 7.6× worse than prescribed**
+- Prescribed: 0.000472, free 3D same input: 0.003570
+- The advantage comes from fixedness, not from access to information
+- Paper 1, reviewer response
 
-**Ф7. SIGReg на prescribed: эффект 0.6%. На free: эффект 1.9×**
-- Removing SIGReg *улучшает* free encoder (0.006 vs 0.012)
-- SIGReg лечит то, что prescribed предотвращает
-- Статья 1, Reviewer response
+**Ф7. SIGReg on prescribed: effect 0.6%. On free: effect 1.9×**
+- Removing SIGReg *improves* the free encoder (0.006 vs 0.012)
+- SIGReg treats what prescribed prevents
+- Paper 1, reviewer response
 
-**Ф8. SIGReg может вредить free encoder**
-- Free без SIGReg: 0.037, Free с SIGReg: 0.156 (4.2× хуже)
-- SIGReg форсирует изотропию, задача анизотропна
-- Eigenvalues prescribed: [0.098, 0.078, 0.064] — отражает структуру задачи
-- Eigenvalues free+SIGReg: [0.98, 0.93, 0.85] — искусственная изотропия
-- Статья 2, Section 6.2
+**Ф8. SIGReg can harm the free encoder**
+- Free without SIGReg: 0.037, free with SIGReg: 0.156 (4.2× worse)
+- SIGReg forces isotropy; the task is anisotropic
+- Eigenvalues, prescribed: [0.098, 0.078, 0.064] — reflects the structure of the task
+- Eigenvalues, free+SIGReg: [0.98, 0.93, 0.85] — artificial isotropy
+- Paper 2, Section 6.2
 
-**Ф9. Free encoder имеет full rank (2.99/3) и isotropy (0.86) — и проигрывает prescribed в 233×**
+**Ф9. The free encoder has full rank (2.99/3) and isotropy (0.86) — and loses to prescribed by 233×**
 - Prescribed: rank 2.91, isotropy 0.66
-- Rank collapse — не причина деградации
-- Статья 2, Section 3
+- Rank collapse is not the cause of the degradation
+- Paper 2, Section 3
 
-**Ф10. Free encoder дрейфует: R² transfer < −62 после одной эпохи**
-- Seed 42: −16.9, Seed 123: −62.2, Seed 777: −25.4
-- Линейный декодер эпохи t катастрофически неверен на эпохе t+1
-- 80% дрейфа — структурный (после Procrustes alignment)
-- К эпохе 2→3: R² восстанавливается до 0.73–0.76
-- Статья 2, Section 4.2
+**Ф10. The free encoder drifts: R² transfer < −62 after a single epoch**
+- Seed 42: −16.9, seed 123: −62.2, seed 777: −25.4
+- A linear decoder from epoch t is catastrophically wrong at epoch t+1
+- 80% of the drift is structural (after Procrustes alignment)
+- By epoch 2→3 R² recovers to 0.73–0.76
+- Paper 2, Section 4.2
 
-**Ф11. Freeze@1 улучшает free на 20%**
-- Free unfrozen: 0.081, Freeze@1: 0.065
-- Freeze@2: +2.9%, Freeze@10: −1.1% (нейтрально)
-- Каузальное свидетельство: стабилизация encoder помогает
-- Но freeze@1 (0.065) всё ещё 25× хуже prescribed (0.0025)
-- Stability alone не sufficient
-- Статья 2, Section 5.1
+**Ф11. Freeze@1 improves free by 20%**
+- Free unfrozen: 0.081, freeze@1: 0.065
+- Freeze@2: +2.9%, freeze@10: −1.1% (neutral)
+- Causal evidence: stabilizing the encoder helps
+- But freeze@1 (0.065) is still 25× worse than prescribed (0.0025)
+- Stability alone is not sufficient
+- Paper 2, Section 5.1
 
-**Ф12. Random fixed encoder лучше free в 17×**
-- Random fixed: 0.000476, Free: 0.008282
+**Ф12. A random fixed encoder beats free by 17×**
+- Random fixed: 0.000476, free: 0.008282
 - Random fixed = frozen random orthogonal projection, zero semantic content
-- Стабильность без alignment даёт порядковое преимущество
-- Статья 2, Section 5.4
+- Stability without alignment already gives an order-of-magnitude advantage
+- Paper 2, Section 5.4
 
-**Ф13. Prescribed лучше random fixed в 13×**
-- Prescribed: 0.000036, Random fixed: 0.000476
-- Alignment даёт дополнительное преимущество поверх stability
-- Статья 2, Section 5.4
+**Ф13. Prescribed beats random fixed by 13×**
+- Prescribed: 0.000036, random fixed: 0.000476
+- Alignment adds a further advantage on top of stability
+- Paper 2, Section 5.4
 
 **Ф14. Rotated prescribed ≈ prescribed (1.09×)**
-- Интерпретируемость осей не имеет значения
-- Важно: фиксированность + правильное подпространство
-- Статья 2, Section 5.4
+- Interpretability of the axes does not matter
+- What matters: fixedness + the right subspace
+- Paper 2, Section 5.4
 
-**Ф15. Aligned-but-drifting ≈ free (или хуже)**
-- Aligned-drifting linear: 0.012849 (хуже free 0.008282 в 1.55×)
+**Ф15. Aligned-but-drifting ≈ free (or worse)**
+- Aligned-drifting linear: 0.012849 (1.55× worse than free at 0.008282)
 - Aligned-drifting MLP: 0.008380 (≈ free)
-- Encoder инициализирован на идеальных координатах → позволен дрейф → преимущество полностью потеряно
-- Alignment без stability бесполезен
-- Статья 2, Section 5.5
+- Encoder initialized at the ideal coordinates → drift allowed → the advantage is lost entirely
+- Alignment without stability is useless
+- Paper 2, Section 5.5
 
-**Ф16. Stability × Alignment — не независимы, а иерархичны**
+**Ф16. Stability × alignment are not independent but hierarchical**
 - 2×2 factorial:
-  - Stable+Aligned (prescribed): 0.000039
-  - Stable+Unaligned (random fixed): 0.000473
-  - Unstable+Aligned (aligned-drifting): 0.012849
-  - Unstable+Unaligned (free): 0.008282
-- Stability effect среди aligned: 330×
-- Stability effect среди unaligned: 17.5×
-- Разница в 19× → сильное взаимодействие
-- Stability — prerequisite. Alignment добавляет 12× только при наличии stability
-- Статья 2, Section 5.5
+  - Stable+aligned (prescribed): 0.000039
+  - Stable+unaligned (random fixed): 0.000473
+  - Unstable+aligned (aligned-drifting): 0.012849
+  - Unstable+unaligned (free): 0.008282
+- Stability effect among aligned: 330×
+- Stability effect among unaligned: 17.5×
+- A 19× difference → strong interaction
+- Stability is the prerequisite. Alignment adds 12× only when stability is present
+- Paper 2, Section 5.5
 
-**Ф17. Prescribed 11D хуже prescribed 3D в 20×, но лучше free 11D в 42×**
-- Prescribed_3: 0.000036, Prescribed_11: 0.000732 (20× хуже prescribed_3)
-- Free_11: 0.030509 (42× хуже prescribed_11)
-- Оригинальные данные (E12, другой setup): free_11 (0.000060) лучше prescribed_11 (0.000381) в 6×
-- Расхождение: E12 использовал фиксированный predictor hidden=128; E28 использует max(128, dim*8)
-- С правильным predictor capacity prescribed_11 побеждает free_11
-- Избыточные prescribed оси ухудшают prescribed (20× vs prescribed_3), но не настолько чтобы free победил
-- Верифицировано: p2_dim_sweep_results.json (E28)
-- 200 эпизодов, 30 эпох, 3 сида
+**Ф17. Prescribed 11D is 20× worse than prescribed 3D, but 42× better than free 11D**
+- prescribed_3: 0.000036, prescribed_11: 0.000732 (20× worse than prescribed_3)
+- free_11: 0.030509 (42× worse than prescribed_11)
+- Original data (E12, a different setup): free_11 (0.000060) beat prescribed_11 (0.000381) by 6×
+- Source of the discrepancy: E12 used a fixed predictor hidden=128; E28 uses max(128, dim*8)
+- With the right predictor capacity, prescribed_11 wins over free_11
+- Redundant prescribed axes degrade prescribed (20× vs prescribed_3), but not enough for free to win
+- Verified: p2_dim_sweep_results.json (E28)
+- 200 episodes, 30 epochs, 3 seeds
 
-**Ф18. ~~Sweep dim 1→15: prescribed побеждает только при dim ≤ 3~~ ОПРОВЕРГНУТ**
-- Оригинальные данные (100 ep, 20 epochs, 2 seeds) показывали crossover при dim=4
-- **Полный перезапуск (200 ep, 30 epochs, 3 seeds) опроверг crossover:**
+**Ф18. ~~Sweep dim 1→15: prescribed wins only at dim ≤ 3~~ REFUTED**
+- The original data (100 ep, 20 epochs, 2 seeds) showed a crossover at dim=4
+- **A full rerun (200 ep, 30 epochs, 3 seeds) refuted the crossover:**
 - dim=1: 60×, dim=2: 1820×, dim=3: 228×, dim=4: 114×, dim=5: 66×, dim=7: 57×, dim=11: 42×
-- Prescribed побеждает на ВСЕХ размерностях 1–11
-- Gap монотонно убывает с ростом dim (228× → 42×), но не исчезает
-- dim=2 аномально высокий (1820×) — prescribed [x_b, y_b] идеально matched
-- dim=5 совпадает с Tier 3 E25 (66.3× vs 66.2× — полная воспроизводимость)
-- Оригинальный результат был артефактом underpowered setup
-- Верифицировано: p2_dim_sweep_results.json, per-seed breakdown
-- Эксперимент E28 (15.04.2026)
+- Prescribed wins at ALL dimensions 1–11
+- The gap shrinks monotonically as dim grows (228× → 42×) but does not vanish
+- dim=2 is anomalously high (1820×) — prescribed [x_b, y_b] is a perfect match
+- dim=5 agrees with Tier 3 E25 (66.3× vs 66.2× — full reproducibility)
+- The original result was an artefact of an underpowered setup
+- Verified: p2_dim_sweep_results.json, per-seed breakdown
+- Experiment E28 (15.04.2026)
 
-**Ф19. Prescribed не выигрывает ни при какой dim (1–5)**
-- Free лучше при всех размерностях
-- Prescribed и free получают одинаковый 2D вход
-- 100 эпизодов, 20 эпох, 3 сида
-- Эксперимент 15.04.2026
+**Ф19. Prescribed does not win at any dim (1–5)**
+- Free is better at every dimension
+- Prescribed and free receive the same 2D input
+- 100 episodes, 20 epochs, 3 seeds
+- Experiment, 15.04.2026
 
-**Ф21. Непредсказуемая ось убивает prescribed катастрофически (1106×)**
-- prescribed_4_noise (x,y,θ + frozen random): 0.021534
-- prescribed_3 (x,y,θ): 0.000019
-- Предиктор обязан предсказать непредсказуемое → полный провал
-- 200 эпизодов, 30 эпох, 3 сида
-- Эксперимент 15.04.2026 (fragility test)
+**Ф21. An unpredictable axis destroys prescribed catastrophically (1106×)**
+- prescribed_4_noise (x, y, θ + frozen random): 0.021534
+- prescribed_3 (x, y, θ): 0.000019
+- The predictor is required to predict the unpredictable → total failure
+- 200 episodes, 30 epochs, 3 seeds
+- Experiment 15.04.2026 (fragility test)
 
-**Ф22. Оси из того же подпространства вредят меньше, чем из другого**
-- prescribed_4_sin (x,y,θ + sinθ): 0.000093 (4.8× vs p3) — redundant, same subspace
-- prescribed_4_dist (x,y,θ + d_agent_block): 0.000160 (8.2× vs p3) — redundant, cross-subspace
-- prescribed_4_agent (x,y,θ + agent_x): 0.000154 (7.9× vs p3) — independent, cross-subspace
-- sin(θ) ≈ вдвое лучше чем dist и agent_x
-- Подпространство имеет значение: ось из того же субпространства (блок) менее вредна
-- 200 эпизодов, 30 эпох, 3 сида
-- Эксперимент 15.04.2026 (fragility test)
+**Ф22. Axes from the same subspace do less damage than axes from another**
+- prescribed_4_sin (x, y, θ + sinθ): 0.000093 (4.8× vs p3) — redundant, same subspace
+- prescribed_4_dist (x, y, θ + d_agent_block): 0.000160 (8.2× vs p3) — redundant, cross-subspace
+- prescribed_4_agent (x, y, θ + agent_x): 0.000154 (7.9× vs p3) — independent, cross-subspace
+- sin(θ) is roughly twice as good as dist and agent_x
+- The subspace matters: an axis from the same subspace (the block) is less harmful
+- 200 episodes, 30 epochs, 3 seeds
+- Experiment 15.04.2026 (fragility test)
 
-**Ф23. Избыточность vs независимость 4-й оси: эффект одинаковый при cross-subspace**
+**Ф23. Redundancy vs independence of the 4th axis: the effect is the same cross-subspace**
 - prescribed_4_dist (redundant, cross-subspace): 0.000160 (8.2×)
 - prescribed_4_agent (independent, cross-subspace): 0.000154 (7.9×)
-- Разница менее 5% → дело не в избыточности как таковой, а в расширении подпространства
-- 200 эпизодов, 30 эпох, 3 сида
-- Эксперимент 15.04.2026 (fragility test)
+- Under 5% apart → the issue is not redundancy as such but the widening of the subspace
+- 200 episodes, 30 epochs, 3 seeds
+- Experiment 15.04.2026 (fragility test)
 
-### Среда: Двойной маятник (4 степени свободы: θ1, ω1, θ2, ω2)
+### Environment: double pendulum (4 degrees of freedom: θ1, ω1, θ2, ω2)
 
-**Ф20. ~~Prescribed выигрывает только при dim=1~~ ОПРОВЕРГНУТ — нормализация решает**
-- Оригинал (без нормализации): prescribed проигрывает free при dim ≥ 2
-- **С нормализацией [0,1]: prescribed побеждает free на ВСЕХ dim 1–8:**
+**Ф20. ~~Prescribed wins only at dim=1~~ REFUTED — normalization settles it**
+- Original (no normalization): prescribed loses to free at dim ≥ 2
+- **With [0,1] normalization prescribed beats free at ALL dims 1–8:**
   - dim=1: 9.8×, dim=2: 16.8×, dim=3: 12.3×, dim=4: 19.1×
-- Нормализация даёт 37–166× улучшение prescribed encoder
-- Prescribed raw: 0.05–0.21, prescribed norm: 0.001–0.003, free: 0.014–0.035
-- Prescribed и free получают одинаковый 4D вход — нет отбора
-- **П1 ЗАКРЫТ: различие Push-T vs маятники было в нормализации**
-- 200 эпизодов, 30 эпох, 3 сида, per-seed verified
-- Эксперимент E16 fix (15.04.2026)
-- Данные: fix_e16_results.json
+- Normalization gives a 37–166× improvement to the prescribed encoder
+- Prescribed raw: 0.05–0.21, prescribed normalized: 0.001–0.003, free: 0.014–0.035
+- Prescribed and free receive the same 4D input — no selection
+- **П1 CLOSED: the Push-T vs pendulum difference was normalization**
+- 200 episodes, 30 epochs, 3 seeds, per-seed verified
+- Experiment E16 fix (15.04.2026)
+- Data: fix_e16_results.json
 
-### Tier 1 тесты (критические тесты гипотез, 15.04.2026)
+### Tier 1 tests (critical tests of hypotheses, 15.04.2026)
 
-**Ф24. Ранний drift (ep 0→1) уничтожает информацию — даже MLP decoder ломается**
-- Epoch 0→1: MLP decoder R² transfer = −283 (среднее по 3 seeds)
-- Linear decoder R² transfer = −71 (среднее по 3 seeds)
-- MLP self R²: 0.80–0.95 (хорошо обучен на epoch t)
-- MLP decoder НЕ может восстановить GT из embeddings epoch t+1
-- Информация реально уничтожена, не просто линейно нечитаема
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+**Ф24. Early drift (ep 0→1) destroys information — even an MLP decoder breaks**
+- Epoch 0→1: MLP decoder R² transfer = −283 (mean over 3 seeds)
+- Linear decoder R² transfer = −71 (mean over 3 seeds)
+- MLP self R²: 0.80–0.95 (well fitted at epoch t)
+- The MLP decoder CANNOT recover the ground truth from epoch t+1 embeddings
+- The information is genuinely destroyed, not merely unreadable by a linear map
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 1 / T1
 
-**Ф25. Поздний drift (ep 2+) сохраняет информацию в нелинейно изменённой форме**
+**Ф25. Late drift (ep 2+) preserves information in a non-linearly deformed form**
 - Epoch 5→6: MLP decoder R² transfer = 0.79, linear = 0.69
 - Epoch 29→30: MLP decoder R² transfer = 0.81, linear = 0.69
-- MLP advantage (late epochs): +0.12 R² в среднем
-- Информация есть, но линейно нечитаема — MLP восстанавливает
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+- MLP advantage (late epochs): +0.12 R² on average
+- The information is present but not linearly readable — the MLP recovers it
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 1 / T1
 
-**Ф26. Differential LR (encoder 100× медленнее) сокращает gap на 72%, но 62× gap остаётся**
+**Ф26. Differential LR (encoder 100× slower) closes 72% of the gap, but 62× remains**
 - Prescribed: 0.000037
 - Free K=1: 0.008282 (222×)
 - Free diffLR 100× (enc LR=3e-6): 0.002303 (62×)
-- Extra predictor steps (K=3): 0.010399 — ХУЖЕ чем K=1
+- Extra predictor steps (K=3): 0.010399 — WORSE than K=1
 - Extra predictor steps (K=5): 0.006377 (171×)
-- DiffLR 10× (enc LR=3e-5): 0.007612 (204×) — слабый эффект
-- Проблема НЕ чисто optimization lag
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+- diffLR 10× (enc LR=3e-5): 0.007612 (204×) — weak effect
+- The problem is NOT purely optimization lag
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 1 / T2
 
-**Ф27. PCA canonicalization не помогает — drift нелинейный**
-- PCA ухудшает R² transfer на большинстве эпох
-- Epoch 0→1: raw = −71.4, PCA = −69.1 (минимальная разница)
-- Epoch 2→3: raw = 0.678, PCA = −0.376 (PCA ХУЖЕ)
-- Epoch 29→30: raw = 0.690, PCA = 0.298 (PCA ХУЖЕ)
-- Drift — нелинейная деформация, не rotation/scaling
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+**Ф27. PCA canonicalization does not help — the drift is non-linear**
+- PCA degrades R² transfer at most epochs
+- Epoch 0→1: raw = −71.4, PCA = −69.1 (negligible difference)
+- Epoch 2→3: raw = 0.678, PCA = −0.376 (PCA WORSE)
+- Epoch 29→30: raw = 0.690, PCA = 0.298 (PCA WORSE)
+- Drift is a non-linear deformation, not rotation/scaling
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 1 / T3
 
-**Ф28. Drift rate коррелирует с val loss: Pearson = 0.95**
-- Корреляция доминируется epoch 0→1 (outlier)
-- Spearman = 0.51 (слабее — зависимость нелинейная)
-- Два режима: "зона катастрофы" (drift > 0.3) и "зона насыщения" (drift < 0.1)
-- После эпохи 3 drift перестаёт быть bottleneck, доминирует alignment
-- R² потолок free encoder ≈ 0.75 (linear), prescribed ≈ 1.0
-- Данные из all_results.json (gym-pusht), 3 сида, 30 эпох
+**Ф28. Drift rate correlates with val loss: Pearson = 0.95**
+- The correlation is dominated by epoch 0→1 (an outlier)
+- Spearman = 0.51 (weaker — the dependence is non-linear)
+- Two regimes: a "catastrophe zone" (drift > 0.3) and a "saturation zone" (drift < 0.1)
+- After epoch 3 drift stops being the bottleneck and alignment dominates
+- The R² ceiling of the free encoder is ≈ 0.75 (linear); prescribed ≈ 1.0
+- Data from all_results.json (gym-pusht), 3 seeds, 30 epochs
 - Tier 1 / T8
 
-### Tier 2 тесты (confound tests, 15.04.2026)
+### Tier 2 tests (confound tests, 15.04.2026)
 
-**Ф29. SIGReg стабилизирует aligned-drifting linear (не уничтожает)**
-- Aligned-linear с SIGReg: 0.013314 (стабильно по seeds: 0.013, 0.016, 0.011)
-- Aligned-linear без SIGReg: 0.470604 (нестабильно: 0.016, 1.393, 0.003)
-- Seed 123 без SIGReg: 1.39 — catastrophic divergence
-- SIGReg предотвращает divergence линейного encoder
-- Но ни с SIGReg (356×), ни без — aligned-drifting не приближается к prescribed
-- Free с SIGReg: 0.008282, Free без SIGReg: 0.007345 (SIGReg слегка вредит free — подтверждает Ф8)
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+**Ф29. SIGReg stabilizes aligned-drifting linear (it does not destroy it)**
+- Aligned-linear with SIGReg: 0.013314 (stable across seeds: 0.013, 0.016, 0.011)
+- Aligned-linear without SIGReg: 0.470604 (unstable: 0.016, 1.393, 0.003)
+- Seed 123 without SIGReg: 1.39 — catastrophic divergence
+- SIGReg prevents divergence of the linear encoder
+- But neither with SIGReg (356×) nor without does aligned-drifting come near prescribed
+- Free with SIGReg: 0.008282, free without: 0.007345 (SIGReg mildly harms free — consistent with Ф8)
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 2 / T4
 
-**Ф30. Optimizer reset в freeze test — НЕ confound**
-- freeze@1 new optimizer: 0.008785 (−6.1% vs unfrozen)
-- freeze@1 keep state: 0.008701 (−5.1% vs unfrozen)
-- Разница: 1.0%
-- freeze@3 new optimizer: 0.007108 (+14.2%)
-- freeze@3 keep state: 0.006898 (+16.7%)
-- Разница: 2.9%
-- Optimizer state preservation не меняет результат freeze test
-- НО: freeze@1 на synthetic данных ухудшает (−6%), а не улучшает (+20% на gym-pusht)
-- Freeze эффект зависит от данных, но optimizer confound отсутствует
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+**Ф30. The optimizer reset in the freeze test is NOT a confound**
+- freeze@1, new optimizer: 0.008785 (−6.1% vs unfrozen)
+- freeze@1, keep state: 0.008701 (−5.1% vs unfrozen)
+- Difference: 1.0%
+- freeze@3, new optimizer: 0.007108 (+14.2%)
+- freeze@3, keep state: 0.006898 (+16.7%)
+- Difference: 2.9%
+- Preserving optimizer state does not change the freeze-test result
+- HOWEVER: freeze@1 on synthetic data makes things worse (−6%) rather than better (+20% on gym-pusht)
+- The freeze effect depends on the data, but there is no optimizer confound
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 2 / T5
 
-**Ф31. Random fixed 3D (из блочных координат) ≈ prescribed = rotated prescribed**
+**Ф31. Random fixed 3D (from block coordinates) ≈ prescribed = rotated prescribed**
 - prescribed: 0.000037
 - rotated_prescribed: 0.000039 (1.05×)
 - random_fixed_3d: 0.000036 (0.97×)
-- Все три ≈ одинаковы
-- Любой стабильный ортогональный базис в правильном подпространстве = prescribed
-- Alignment осей внутри подпространства не имеет значения
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+- All three are ≈ equal
+- Any stable orthogonal basis in the right subspace equals prescribed
+- Alignment of the axes within the subspace does not matter
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 2 / T7
 
-**Ф32. Random fixed 5D (из всех координат, без нормализации) — взрывается**
-- random_fixed_5d: 376,053 (среднее; per seed: 977K, 25K, 125K)
-- Ненормализованная проекция из полного пространства нестабильна
-- Оригинальный "17× stability advantage" из Paper 2 (Ф12) был получен на конкретных seeds с другой реализацией random_fixed
+**Ф32. Random fixed 5D (from all coordinates, unnormalized) blows up**
+- random_fixed_5d: 376,053 (mean; per seed: 977K, 25K, 125K)
+- An unnormalized projection from the full space is unstable
+- The original "17× stability advantage" from Paper 2 (Ф12) was obtained on particular seeds with a different random_fixed implementation
 - Tier 2 / T7
 
-### Tier 3 тесты (generalization, 15.04.2026)
+### Tier 3 tests (generalization, 15.04.2026)
 
-**Ф33. Prescribed vs Free gap воспроизводится в 3D, 5D и 16D**
+**Ф33. The prescribed vs free gap reproduces in 3D, 5D and 16D**
 - 3D: prescribed 0.000050, free 0.008503, gap 169×
 - 5D: prescribed 0.000354, free 0.023431, gap 66×
 - 16D: prescribed 0.000747, free 0.037105, gap 50×
-- Gap уменьшается с ростом размерности, но остаётся порядковым
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+- The gap narrows as dimension grows but stays order-of-magnitude
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 3 / T9a, T9b
 
-**Ф34. Random fixed ≈ prescribed в 5D (0.92×), начинает отставать в 16D (1.53×)**
-- 5D: random_fixed = 0.000324, prescribed = 0.000354 (random чуть лучше!)
-- 16D: random_fixed = 0.001142, prescribed = 0.000747 (prescribed лучше в 1.53×)
-- В 5D (линейные координаты): alignment внутри подпространства не важен
-- В 16D (нелинейные features): alignment начинает иметь значение
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+**Ф34. Random fixed ≈ prescribed in 5D (0.92×), starts to fall behind in 16D (1.53×)**
+- 5D: random_fixed = 0.000324, prescribed = 0.000354 (random is slightly better)
+- 16D: random_fixed = 0.001142, prescribed = 0.000747 (prescribed better by 1.53×)
+- In 5D (linear coordinates) alignment within the subspace does not matter
+- In 16D (non-linear features) alignment starts to matter
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 3 / T9a, T9b
 
-**Ф35. Drift усиливается с размерностью**
+**Ф35. Drift grows with dimension**
 - 3D: drift_01 = 1.53, R² transfer = −70
 - 5D: drift_01 = 1.91, R² transfer = −65
 - 16D: drift_01 = 3.58, R² transfer = −596
-- R² transfer в 16D в 8.5× хуже чем в 3D
-- Больше размерность → больше "плоских направлений" → сильнее drift
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+- R² transfer in 16D is 8.5× worse than in 3D
+- More dimensions → more "flat directions" → stronger drift
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 3 / T9a, T9b
 
-**Ф36. 5D prescribed (все координаты, без отбора) работает — gap 66×**
-- Prescribed_5d = normalize(все 5 координат), free_5d = MLP 5→5
-- Prescribed НЕ выбирает подпространство — берёт всё
-- Gap 66× — меньше чем 3D (169×), но всё ещё порядковый
-- Contradict Ф19 (маятники): там prescribed на полном входе не работает
-- Разница: Push-T 5D prescribed нормализует, маятники — нет (?)
-- Или: Push-T содержит "лишние" координаты (agent), маятники — нет
-- 200 эпизодов, 30 эпох, 3 сида, synthetic
+**Ф36. 5D prescribed (all coordinates, no selection) works — gap 66×**
+- prescribed_5d = normalize(all 5 coordinates), free_5d = MLP 5→5
+- Prescribed does NOT pick a subspace — it takes everything
+- Gap 66× — smaller than 3D (169×), still order-of-magnitude
+- Contradicts Ф19 (pendulum), where prescribed on the full input does not work
+- The difference: Push-T 5D prescribed normalizes, the pendulum does not (?)
+- Or: Push-T contains "extra" coordinates (the agent), the pendulum does not
+- 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 3 / T9a
 
-### Верифицированные из архива Paper 1 (15.04.2026)
+### Verified from the Paper 1 archive (15.04.2026)
 
-**Ф37. Gauge fixing free encoder не помогает (1.08× ≈ free)**
+**Ф37. Gauge fixing the free encoder does not help (1.08× ≈ free)**
 - prescribed: 0.000472, free: 0.011614, gauge_fixed_free: 0.012581
-- linear_free: 16009 (взрыв)
-- Gauge fixing (фиксация симметрии через training) не решает drift
+- linear_free: 16009 (blow-up)
+- Gauge fixing (pinning the symmetry through training) does not solve drift
 - Data seed 42, training seeds [42, 123, 777], 50 epochs, synthetic
-- Дата: 12.04.2026
-- Источник: 1.rar/gauge_fix_results/results.json
-- Не был включён в реестр фактов ранее
+- Date: 12.04.2026
+- Source: 1.rar/gauge_fix_results/results.json
+- Was not previously included in the fact registry
 
-**Ф38. При 500 эпизодах free encoder побеждает prescribed в 695,000×**
+**Ф38. At 500 episodes the free encoder beats prescribed by 695,000×**
 - prescribed: 8.513×10⁻⁴ (3 seeds, std 8.4×10⁻⁷)
 - random_fixed: 8.514×10⁻⁴ (9 runs: 3 rotation seeds × 3 training seeds, std 2.1×10⁻⁶)
 - free_3d: 1.225×10⁻⁹ (3 seeds, std 3.7×10⁻¹⁰)
 - free_5d: 2.916×10⁻⁹ (3 seeds, std 7.8×10⁻¹⁰)
-- Fixed encoders (prescribed и random) плато на ~8.5×10⁻⁴ — irreducible error от min-max нормализации
-- Free encoder сходится к ~10⁻⁹ (фактически нулю)
-- **Prescribed axes = sample efficiency, не абсолютное преимущество**
-- 500 эпизодов, 50 эпох, synthetic, no SIGReg
-- Верифицировано из JSON: exp5_random_axes/all_results.json (18 runs)
+- Fixed encoders (prescribed and random) plateau at ~8.5×10⁻⁴ — irreducible error from min-max normalization
+- The free encoder converges to ~10⁻⁹ (effectively zero)
+- **Prescribed axes buy sample efficiency, not an absolute advantage**
+- 500 episodes, 50 epochs, synthetic, no SIGReg
+- Verified from JSON: exp5_random_axes/all_results.json (18 runs)
 - Paper 1, random_axes_control/RESULTS.md
 
-**Ф39. Random_fixed ≈ prescribed при обоих масштабах данных**
-- 200 ep: random 0.61× (чуть лучше prescribed) — 3 seeds, 30 epochs
-- 500 ep: random 1.00× (идентично) — 9 runs vs 3 runs
-- Axis semantics вторичны при любом количестве данных
-- Верифицировано из JSON: random_fixed_results/results.json (200ep), all_results_500ep.json (500ep)
+**Ф39. random_fixed ≈ prescribed at both data scales**
+- 200 ep: random 0.61× (slightly better than prescribed) — 3 seeds, 30 epochs
+- 500 ep: random 1.00× (identical) — 9 runs vs 3 runs
+- Axis semantics are secondary at any amount of data
+- Verified from JSON: random_fixed_results/results.json (200ep), all_results_500ep.json (500ep)
 - Paper 1, random_axes_control/RESULTS.md
 
-**Ф40. Isotropic normalization (zero-mean, unit-variance) ухудшает в 15×**
+**Ф40. Isotropic normalization (zero-mean, unit-variance) degrades by 15×**
 - prescribed_iso: 0.010250 vs prescribed: 0.000673 (15.2×)
 - random_fixed_iso: 0.007019 vs random_fixed: 0.000408 (17.2×)
-- Min-max [0,1] нормализация критична; standardization вредит
-- 200 эпизодов, 20 epochs, synthetic
+- Min-max [0,1] normalization is critical; standardization hurts
+- 200 episodes, 20 epochs, synthetic
 - Paper 1, random_axes_control/RESULTS.md
 
 ### Noise control (E29, 17.04.2026)
 
-**Ф41i. i.i.d. noise при drift-matched амплитуде (ep 0→1, σ≈0.90) разрушает prescribed в 851×**
+**Ф41i. i.i.d. noise at drift-matched amplitude (ep 0→1, σ≈0.90) destroys prescribed by 851×**
 - noise_early: 0.031781, prescribed: 0.000037
-- Free encoder: 0.008282 (222×) — лучше i.i.d. noise в 4×
-- Drift не сводится к random perturbation
-- 3 seeds, 200 эпизодов, 30 эпох, synthetic
+- Free encoder: 0.008282 (222×) — 4× better than i.i.d. noise
+- Drift does not reduce to a random perturbation
+- 3 seeds, 200 episodes, 30 epochs, synthetic
 - E29
 
-**Ф42i. Correlated noise (constant shift per epoch) почти не вредит prescribed: 1.3× даже при катастрофической амплитуде**
+**Ф42i. Correlated noise (a constant shift per epoch) barely harms prescribed: 1.3× even at catastrophic amplitude**
 - correlated_schedule: 0.000050, prescribed: 0.000037
-- Predictor компенсирует constant displacement: разности между timesteps сохраняются
-- 3 seeds, 200 эпизодов, 30 эпох, synthetic
+- The predictor compensates for a constant displacement: differences between timesteps are preserved
+- 3 seeds, 200 episodes, 30 epochs, synthetic
 - E29
 
-**Ф43i. Free encoder (222×) в 167× хуже correlated noise (1.3×) при matched амплитуде**
+**Ф43i. The free encoder (222×) is 167× worse than correlated noise (1.3×) at matched amplitude**
 - free: 0.008282, correlated_schedule: 0.000050
-- Drift ≠ global coordinate shift. Data-dependent деформация.
-- 3 seeds, 200 эпизодов, 30 эпох, synthetic
+- Drift ≠ a global coordinate shift. It is a data-dependent deformation.
+- 3 seeds, 200 episodes, 30 epochs, synthetic
 - E29
 
-**Ф44i. Спектр деградации: prescribed (1×) < correlated (1.3×) < noise_mid (6.2×) < FREE (222×) < noise_early (851×)**
-- Free encoder ближе к i.i.d. noise, чем к correlated shift
-- Drift вносит несогласованность внутри context window, не просто глобальный сдвиг
-- 3 seeds, 200 эпизодов, 30 эпох, synthetic
+**Ф44i. Degradation spectrum: prescribed (1×) < correlated (1.3×) < noise_mid (6.2×) < FREE (222×) < noise_early (851×)**
+- The free encoder sits closer to i.i.d. noise than to a correlated shift
+- Drift introduces inconsistency *within* the context window, not merely a global offset
+- 3 seeds, 200 episodes, 30 epochs, synthetic
 - E29
 
-### Критическое окно / sub-epoch (drift-hallucination ветка, 03.07.2026)
+### Critical window / sub-epoch (drift-hallucination branch, 03.07.2026)
 
-**Ф45. Критическое окно повреждения free-энкодера = внутри первой эпохи (E30)**
-- freeze@0 (random_fixed прокси, Ф12 = 0.000476) → freeze@1 (0.06485, gym-pusht) = **136× cliff**
-- freeze@1 → unfrozen (0.08113) = **1.3×** (пренебрежимо на фоне cliff)
-- ~99% повреждения free-энкодера наносится в первую эпоху; обрыв между эпохой 0 и 1, не позже
-- band freeze@k≥1 (k=1,2,3,5,7,10) узкий: 0.065–0.082, каждый ≥25× хуже prescribed (0.00252)
-- Механистически замыкает Ф31: random_fixed ≈ prescribed, т.к. оба = freeze@0 (представление ДО катастрофической первой эпохи)
-- Метод: анализ уже записанного freeze@k-профиля из E06/E07 all_results.json, без новых прогонов; воспроизводится точно (repro 136.25× = shipped)
-- Среда: Push-T (gym-pusht, real pymunk, synthetic=false), 3 сида, 30 эпох, 200 эпизодов
-- Оговорки: freeze@0 = прокси (Ф12), не литеральный прогон (нормализация может отличаться); 3 сида — сигнал, не доказательство; sub-epoch разрешения нет; freeze data-dependent (Ф30)
-- Артефакт: E30_critical_window/ (README + code + results, воспроизводимо из all_results.json)
+**Ф45. The critical window for damage to the free encoder lies inside the first epoch (E30)**
+- freeze@0 (random_fixed as proxy, Ф12 = 0.000476) → freeze@1 (0.06485, gym-pusht) = **136× cliff**
+- freeze@1 → unfrozen (0.08113) = **1.3×** (negligible against the cliff)
+- ~99% of the damage to the free encoder is done in the first epoch; the break is between epoch 0 and 1, not later
+- The freeze@k≥1 band (k=1,2,3,5,7,10) is narrow: 0.065–0.082, each ≥25× worse than prescribed (0.00252)
+- Mechanistically closes Ф31: random_fixed ≈ prescribed because both are freeze@0 (the representation BEFORE the catastrophic first epoch)
+- Method: analysis of the already recorded freeze@k profile from E06/E07 all_results.json, no new runs; reproduces exactly (repro 136.25× = shipped)
+- Environment: Push-T (gym-pusht, real pymunk, synthetic=false), 3 seeds, 30 epochs, 200 episodes
+- Caveats: freeze@0 is a proxy (Ф12), not a literal run (normalization may differ); 3 seeds are a signal, not proof; there is no sub-epoch resolution; freeze is data-dependent (Ф30)
+- Artefact: E30_critical_window/ (README + code + results, reproducible from all_results.json)
 - E30
 
-**Ф46. Внутри первой эпохи повреждение — непрерывный СКЛОН, не дискретный порог (E31 synthetic → E32 real, SOLID)**
-- Вопрос: внутри эпохи 1 ущерб появляется на резком пороге (дискретный момент невозврата) или накапливается как склон? Энкодер замораживается на долях батчей эпохи 1.
-- **E31 (synthetic, 5 сидов):** verdict SLOPE (от analyze_shape.py). Linear-vs-step над подъёмом f≥0.25: линия лучше в 2.2× (SS 0.085 vs 0.186), linear R²=0.88. Монотонно 3/5 сидов (0 спадов), 2/5 по одному шумовому спаду.
-- **E32 (real gym-pusht, 5 сидов {7,42,123,777,2024}):** verdict SLOPE, ЧИЩЕ synthetic. **5/5 сидов строго монотонны** (0 спадов любого рода). Pooled linear-vs-step над band f∈[0.25,0.60] (per-seed min-max норм.): **linear R²=0.977**; лучший single-breakpoint step хуже в **10.5×** (SS_step 1.047 vs SS_lin 0.100, breakpoint f=0.50). Raw per-seed кривые слегка выпуклы (инкременты растут к f=0.60). E30-style anchor на реальных данных: freeze@1.0/@0.0 = **22.1×** (per seed 7.2–35.3×) — то же направление, что 136× cliff E30.
-- Первая четверть эпохи (f≤0.25) near-harmless; далее повреждение интегрируется непрерывно, ускоряясь к концу
-- Против дискретного события необратимости; за непрерывный дрейф. E32 снимает единственную (synthetic) оговорку с Ф46 → **SOLID**.
-- Среда: E31 — Push-T synthetic (synth(), 20 epoch/100 ep); E32 — Push-T real gym-pusht (reduced budget EP=4/NEP=50, pymunk 6.2.1 pinned)
-- Оговорки (E32): reduced budget сжимает АБСОЛЮТНЫЕ gap (prescribed/unfrozen ~4× здесь vs 222× at scale; anchor cliff 22× vs 136× у E30) — числа масштаба НЕ сравнивать с 30-эпоховыми прогонами; **shape verdict budget-robust** (кривая монотонна и slope-shaped независимо от бюджета). pymunk 6.2.1 (gym_pusht просит ≥6.6, но 6.6+/7.x ломают add_collision_handler). Full-fidelity rerun (EP=15,NEP=200) = one-line change.
-- [ЗАМЕТКА для сверки] Разрешения в (0.0, 0.25) в этих артефактах НЕТ (grid {0.0, 0.25…0.60, 1.0}); near-harmless onset здесь качественный (f≤0.25). Формулировка «зона [0.00–0.20] slope≈1.25 vs [0.25–0.60] slope≈13.04, ratio 10.4×» требует отдельного higher-resolution прогона (sub-0.25) и этими файлами не подтверждена. Числа выше — из shipped shape_verdict.json.
-- Артефакты: E31_subepoch_freeze/, E32_subepoch_freeze_real/ (verdict в shape_verdict.txt / shape_verdict.json)
+**Ф46. Within the first epoch the damage is a continuous SLOPE, not a discrete threshold (E31 synthetic → E32 real, SOLID)**
+- Question: inside epoch 1, does the damage appear at a sharp threshold (a discrete point of no return) or accumulate as a slope? The encoder is frozen at fractions of the batches of epoch 1.
+- **E31 (synthetic, 5 seeds):** verdict SLOPE (from analyze_shape.py). Linear-vs-step over the rise f≥0.25: the line is 2.2× better (SS 0.085 vs 0.186), linear R²=0.88. Monotone in 3/5 seeds (0 dips), 2/5 with a single noise dip.
+- **E32 (real gym-pusht, 5 seeds {7,42,123,777,2024}):** verdict SLOPE, CLEANER than synthetic. **5/5 seeds strictly monotone** (0 dips of any kind). Pooled linear-vs-step over the band f∈[0.25,0.60] (per-seed min-max normalized): **linear R²=0.977**; the best single-breakpoint step is **10.5×** worse (SS_step 1.047 vs SS_lin 0.100, breakpoint f=0.50). Raw per-seed curves are slightly convex (increments grow toward f=0.60). E30-style anchor on real data: freeze@1.0/@0.0 = **22.1×** (per seed 7.2–35.3×) — the same direction as E30's 136× cliff.
+- The first quarter of the epoch (f≤0.25) is near-harmless; after that the damage integrates continuously, accelerating toward the end
+- Against a discrete irreversibility event; in favour of continuous drift. E32 removes the single (synthetic) caveat from Ф46 → **SOLID**.
+- Environment: E31 — Push-T synthetic (synth(), 20 epoch/100 ep); E32 — Push-T real gym-pusht (reduced budget EP=4/NEP=50, pymunk 6.2.1 pinned)
+- Caveats (E32): the reduced budget compresses the ABSOLUTE gaps (prescribed/unfrozen ~4× here vs 222× at scale; anchor cliff 22× vs E30's 136×) — do NOT compare these magnitudes with the 30-epoch runs; **the shape verdict is budget-robust** (the curve is monotone and slope-shaped regardless of budget). pymunk 6.2.1 (gym_pusht asks for ≥6.6, but 6.6+/7.x break add_collision_handler). A full-fidelity rerun (EP=15, NEP=200) is a one-line change.
+- [NOTE for cross-checking] These artefacts contain NO resolution in (0.0, 0.25) (grid {0.0, 0.25…0.60, 1.0}); the near-harmless onset here is qualitative (f≤0.25). The claim "band [0.00–0.20] slope≈1.25 vs [0.25–0.60] slope≈13.04, ratio 10.4×" requires a separate higher-resolution run (sub-0.25) and is not supported by these files. The numbers above come from the shipped shape_verdict.json.
+- Artefacts: E31_subepoch_freeze/, E32_subepoch_freeze_real/ (verdict in shape_verdict.txt / shape_verdict.json)
 - E31, E32
 
 ---
 ---
 
-### Среда: LLM activations (residual stream, last token position)
+### Environment: LLM activations (residual stream, last token position)
 
-Активации внутренних слоёв декодерных языковых моделей (transformer residual stream) на позиции последнего токена входного промпта. Среда: декодерные LLM, обученные next-token prediction; промпты как стимулы; активации фиксированы (не дообучаются). Метрики: PCA, LDA, residualization по one-hot вспомогательных признаков, косинусная сплочённость, bootstrap-устойчивость.
+Internal-layer activations of decoder language models (transformer residual stream) at the last token position of the input prompt. Environment: decoder LLMs trained on next-token prediction; prompts as stimuli; activations are fixed (not fine-tuned). Metrics: PCA, LDA, residualization against one-hot auxiliary features, cosine cohesion, bootstrap stability.
 
-**Наши прогоны:** 5 LLM (Qwen2.5-3B, Gemma2-2B, OLMo-1B, Falcon-1B, Pythia-1.4B); 80 промптов × 8 категорий (factual, logical, spatial, emotional, abstract, code, ethical, narrative); PCA(40) на residual stream позиции последнего токена; residualization linear regression на one-hot last token (41 уникальный токен); LDA 5-fold stratified CV; bootstrap 20 ресэмплингов 70% (seed=42). Источник активаций — yadro_phase2 (Step 0, 12 апреля 2026).
+**Our runs:** 5 LLMs (Qwen2.5-3B, Gemma2-2B, OLMo-1B, Falcon-1B, Pythia-1.4B); 80 prompts × 8 categories (factual, logical, spatial, emotional, abstract, code, ethical, narrative); PCA(40) on the residual stream at the last token position; residualization by linear regression on the one-hot last token (41 unique tokens); LDA with 5-fold stratified CV; bootstrap of 30 resamples at 70% (seed=42). The activations come from yadro_phase2 (Step 0, 12 April 2026).
 
-**Ф47. R²(last token) на топ-7 PC монотонно падает с глубиной у всех 5 LLM**
-- Layer 0 → финальный слой: Δ = −0.24 ÷ −0.32
-- Все 5 моделей: 4/4 шагов вниз у Qwen/Gemma/OLMo/Falcon, 3/4 у Pythia
-- На layer 0 R²=1.000 у всех (identity: эмбеддинг последнего токена = последний токен)
-- На финале R²=0.68–0.76 — last token остаётся доминантным признаком в первых 7 PC
+**Ф47. R²(last token) on the top-7 PCs falls monotonically with depth in all 5 LLMs**
+- Layer 0 → final layer: Δ = −0.24 to −0.32
+- All 5 models: 4/4 steps down for Qwen/Gemma/OLMo/Falcon, 3/4 for Pythia
+- At layer 0, R²=1.000 everywhere (identity: the last token's embedding *is* the last token)
+- At the final layer R²=0.68–0.76 — the last token remains the dominant feature in the first 7 PCs
 - E33 (Path 2)
 
-**Ф48. LDA на 15 PC после residualization по last token монотонно растёт с глубиной у всех 5 LLM**
-- Layer 0 → финальный слой: Δ = +0.18 ÷ +0.25
-- Финальный слой: 0.40–0.48; серединный слой: 0.34–0.40
-- Полная монотонность (4/4) у OLMo и Falcon; частичная у Qwen, Gemma, Pythia
+**Ф48. LDA on 15 PCs after residualization by last token rises monotonically with depth in all 5 LLMs**
+- Layer 0 → final layer: Δ = +0.18 to +0.25
+- Final layer: 0.40–0.48; middle layer: 0.34–0.40
+- Full monotonicity (4/4) for OLMo and Falcon; partial for Qwen, Gemma, Pythia
 - E33 (Path 2)
 
-**Ф49. Step 1 PCA делался на серединных слоях у всех 5 моделей**
+**Ф49. Step 1 PCA was computed on middle layers in all 5 models**
 - Qwen 18/36, Gemma 13/26, OLMo 8/16, Falcon 11/22, Pythia 16/32
-- Это согласованный выбор по протоколу Step 0, не специфика Qwen
-- Серединный слой даёт LDA на остатках 0.34–0.40, финальный — 0.42–0.48
-- Step 1 был сделан в субоптимальном слое для интерпретации семантики
+- This is a consistent choice under the Step 0 protocol, not a Qwen-specific quirk
+- The middle layer gives LDA on residuals of 0.34–0.40, the final layer 0.42–0.48
+- Step 1 was carried out in a suboptimal layer for interpreting semantics
 - E33 (Path 2)
 
-**Ф50. Положение пика семантического сигнала на остатках различается между LLM**
-- Финальный слой: Qwen, OLMo, Falcon
-- Mid-layer + плато: Gemma (с layer 13)
-- ≈0.75 от глубины: Pythia (layer 24)
-- Это межмодельное различие, держится на любом дизайне промптов
+**Ф50. The location of the semantic-signal peak on residuals differs between LLMs**
+- Final layer: Qwen, OLMo, Falcon
+- Mid-layer + plateau: Gemma (from layer 13)
+- ≈0.75 of depth: Pythia (layer 24)
+- This is a between-model difference and holds under any prompt design
 - E33 (Path 2)
 
-**Ф51. Парная дуальность полюсов PC на остатках = 0 у всех 5 LLM**
-- Критерий PAIRED: обе стороны полюса однородны (нормированная энтропия категорий H<0.3)
-- На сыром PCA: 1–4 PAIRED PC у разных моделей
-- На остатках после residualization: 0 у всех 5
-- "Дуальные оси" — артефакт last-token confound
-- E33 (Срез 1)
+**Ф51. Paired duality of PC poles on residuals = 0 in all 5 LLMs**
+- PAIRED criterion: both sides of the pole are homogeneous (normalized category entropy H<0.3)
+- On raw PCA: 1–4 PAIRED PCs across models
+- On residuals after residualization: 0 in all 5
+- "Dual axes" are an artefact of the last-token confound
+- E33 (Slice 1)
 
-**Ф52. Асимметричное выделение полюсов на остатках есть, но распределено по категориям неравномерно**
-- ASYMMETRIC PC (один полюс однороден): 2–7 у разных моделей
-- Суммарно по 5 моделям: code 8, emotional 7, abstract 4, factual 3, logical 2, spatial 1, narrative 0, ethical 0
-- E33 (Срез 1b)
+**Ф52. Asymmetric pole selection on residuals exists, but is distributed unevenly across categories**
+- ASYMMETRIC PCs (one pole homogeneous): 2–7 across models
+- Summed over 5 models: code 8, emotional 7, abstract 4, factual 3, logical 2, spatial 1, narrative 0, ethical 0
+- E33 (Slice 1b)
 
-**Ф53. Внутрикатегориальная косинусная сплочённость на остатках финального слоя ранжирует категории**
-- Усреднено по 5 моделям: emotional 0.128, spatial 0.086, code 0.086, abstract 0.083, factual 0.015, logical 0.003, narrative 0.000, ethical −0.019
-- Сплочённость ≠ "качество категории" — это структурное свойство активаций
-- E33 (Срез 1c)
+**Ф53. Within-category cosine cohesion on final-layer residuals ranks the categories**
+- Averaged over 5 models: emotional 0.128, spatial 0.086, code 0.086, abstract 0.083, factual 0.015, logical 0.003, narrative 0.000, ethical −0.019
+- Cohesion is not "category quality" — it is a structural property of the activations
+- E33 (Slice 1c)
 
-**Ф54. Сплочённость значимо коррелирует с частотой асимметричного выделения, но spatial — выброс**
-- Spearman ρ = 0.826 (p = 0.0114), Pearson r = 0.750 (p = 0.0320), N = 8
-- Spatial: высокая сплочённость (0.086), но только 1 асимметричное появление — outlier
-- Без spatial связь практически точная; со spatial значимая, но не идеальная
-- E33 (Срез 1d)
+**Ф54. Cohesion is positively associated with the frequency of asymmetric selection; the significance is not robust**
+- Spearman ρ = 0.826, Pearson r = 0.746, N = 8 under exact decomposition (`svd_solver='full'`)
+- Permutation null (200 label shuffles at fixed geometry, 163 valid, seed 42): mean −0.056, sd 0.397, q95 = 0.577, max = 0.764. No permutation reached the observed value; p_perm = 0.006 under the conservative (1+k)/(1+n) estimate. The association is not produced by a random partition
+- The direction is stable: leave-one-model-out over the five models gives ρ 0.675–0.819, with no sign change on any subset
+- The parametric p from `spearmanr` is not claimed at N = 8: across LOO it wanders over 0.013–0.066 and crosses 0.05 in two cases out of five
+- The rank of spatial relative to code is decided by a cohesion gap of 1.267e−4 against a between-model SEM of 0.012 (code) and 0.018 (spatial), i.e. roughly 120× below the noise. This is a tie, not an outlier: swapping the two categories gives ρ = 0.7066. Dropping spatial takes N down to 7 and raises the significance threshold
+- Consistent with Ф55
+- E33 (Slices 1d, 1e), commit `a4bf9a7`
 
-**Ф55. Категории как "узлы" на полюсах PC не устойчивы к bootstrap у 4 из 5 LLM**
-- 20 ресэмплингов 70% промптов, топ-15 PC после PCA+residualization, threshold ≥4/5 одной категории на полюсе
-- Code устойчив (≥70% bootstrap'ов) только у Falcon
-- Emotional не устойчив ни у одной модели
-- Категориальные "узлы" в текущем датасете — выборочные эффекты, не структурное свойство активаций
-- E33 (Срез 2)
+**Ф55. Categories as "nodes" at PC poles are not bootstrap-stable in 4 of 5 LLMs**
+- 30 resamples of 70% of prompts (`N_BOOT=30`), PCA on 25 components (`N_PCA_COMP=25`), top-15 PCs after PCA+residualization, threshold ≥4/5 of one category at a pole
+- Code is stable (≥70% of bootstraps) only in Falcon
+- Emotional is stable in no model
+- Categorical "nodes" in the current dataset are sampling effects, not a structural property of the activations
+- E33 (Slice 2)
 
 ---
 
-### Среда: EB-JEPA Two Rooms (НАБЛЮДЕНИЯ, НЕ ФАКТЫ)
+### Environment: EB-JEPA Two Rooms (OBSERVATIONS, NOT FACTS)
 
-Среда EB-JEPA Two Rooms (Meta FAIR, 2602.03604): goal-conditioned navigation в среде из двух комнат, разделённых вертикальной стеной с дверью. wall_x и door_y рандомизированы между trajectory (fix_wall=False в default config). Planning через MPPI в latent space.
+The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navigation in a two-room environment separated by a vertical wall with a door. wall_x and door_y are randomized between trajectories (fix_wall=False in the default config). Planning is done via MPPI in latent space.
 
-**Запуски E34 — single seed (seed=1), 12 эпох, ничего не повторено независимо. По протоколу программы это НЕ ФАКТЫ, а наблюдения. Записаны как Н1–Н4 для регистрации сигнала, не как опорные результаты.**
+**The E34 runs are single-seed (seed=1), 12 epochs, with nothing independently repeated. Under the programme protocol these are NOT FACTS but observations. They are recorded as Н1–Н4 to register the signal, not as load-bearing results.**
 
-**Н1. Single-seed prescribed_2 (только x_a, y_a) даёт SR=0%, free (pixels) — SR=55% на Two Rooms**
-- 12 эпох, batch=64, seed=1, 100K episodes
+**Н1. Single-seed prescribed_2 (only x_a, y_a) gives SR=0%, free (pixels) gives SR=55% on Two Rooms**
+- 12 epochs, batch=64, seed=1, 100K episodes
 - Prescribed encoder: MLP 2→256→256→512, 199K params
 - Free encoder: ImpalaEncoder, 1.43M params
-- Probe loss prescribed (0.006) лучше free (0.072) в 12× — координаты identifiable
-- Pred loss free (0.024) лучше prescribed (0.051) в 2.2× — predictor выучил динамику в обоих случаях
-- **Условия не дотягивают до факта по протоколу программы:**
-  - 1 seed (минимум 3)
-  - 12 эпох (LeCun et al. репортируют ~97% SR — возможно при больших epochs или другой конфигурации)
-  - Variance не оценивалась
-- Альтернативные объяснения 0% prescribed:
-  (a) недостаточная размерность координат (тестируется в E35 prescribed_4)
-  (b) недостаточная длительность обучения
-  (c) mismatch архитектур (MLP vs CNN на одном predictor)
-  (d) sim_loss специфически вреден prescribed (см. Н3)
+- Probe loss for prescribed (0.006) beats free (0.072) by 12× — the coordinates are identifiable
+- Pred loss for free (0.024) beats prescribed (0.051) by 2.2× — the predictor learned the dynamics in both cases
+- **The conditions fall short of a fact under the programme protocol:**
+  - 1 seed (minimum 3)
+  - 12 epochs (LeCun et al. report ~97% SR — possibly at larger epoch counts or a different configuration)
+  - Variance was not estimated
+- Alternative explanations for the 0% of prescribed:
+  (a) insufficient coordinate dimensionality (tested in E35 prescribed_4)
+  (b) insufficient training length
+  (c) architecture mismatch (MLP vs CNN on the same predictor)
+  (d) sim_loss is specifically harmful to prescribed (see Н3)
 - E34
 
-**Н2. Распределение дистанций prescribed_2 эпизодов в planning eval бимодально**
-- 4/20 эпизодов с dist<20 (близко к цели)
-- 16/20 эпизодов с dist>20 (далеко от цели)
-- Гипотеза: успехи когда start и goal в одной комнате, провал когда нужно через дверь
-- **Требует верификации с координатами start/goal каждого эпизода** — без этой проверки это распределение, не доказательство гипотезы
-- Эта гипотеза — мотивация для E35 prescribed_4 (дать encoder'у явную информацию о стене и двери)
+**Н2. The distance distribution of prescribed_2 episodes in planning eval is bimodal**
+- 4/20 episodes with dist<20 (close to the goal)
+- 16/20 episodes with dist>20 (far from the goal)
+- Hypothesis: successes occur when start and goal are in the same room, failures when the door must be used
+- **Requires verification against the start/goal coordinates of each episode** — without that check this is a distribution, not evidence for the hypothesis
+- This hypothesis is the motivation for E35 prescribed_4 (giving the encoder explicit information about the wall and the door)
 - E34
 
-**Н3. sim_loss prescribed_2 растёт по эпохам тогда как pred_loss падает**
+**Н3. sim_loss for prescribed_2 rises across epochs while pred_loss falls**
 - sim_loss: epoch 0 = 0.010, epoch 11 = 0.017
 - pred_loss: epoch 0 = 0.174, epoch 11 = 0.051
-- Структурный аналог Ф7/Ф8 (SIGReg вреден для anisotropic prescribed на Push-T)
-- Кандидат на ablation `prescribed_no_sim` — но на single seed нельзя считать фактом
-- Free encoder показывает обратное: sim_loss падает (0.016→0.008) вместе с pred_loss
+- A structural analogue of Ф7/Ф8 (SIGReg is harmful to anisotropic prescribed on Push-T)
+- A candidate for a `prescribed_no_sim` ablation — but on a single seed this cannot count as a fact
+- The free encoder shows the opposite: sim_loss falls (0.016→0.008) together with pred_loss
 - E34
 
-**Н4. Mean of distribution shift — free относительно нормы больше, чем prescribed**
+**Н4. Mean-of-distribution shift — free shifts more relative to its norm than prescribed**
 - Relative shift |Δμ(0,t)|/|μ_t|: free 0.69–0.78, prescribed 0.50–0.63
-- К ep11: cosine(μ_0, μ_11) — prescribed 0.91, free 0.69
-- Step-by-step pairwise consistency (avg cos): prescribed −0.02, free −0.05 (оба некогерентны, "блуждание")
-- **Caveat:** агрегаты по 20 of 512 dim после LayerNorm encoder'а; **не сопоставимы** с per-sample R² transfer drift из E18
-- Direction совпадает с Paper 2 thesis (free дрейфует сильнее), но не строгий аналог
-- E34 (post-hoc анализ encoder_stats.json, 30.04.2026)
+- By ep11: cosine(μ_0, μ_11) — prescribed 0.91, free 0.69
+- Step-by-step pairwise consistency (avg cos): prescribed −0.02, free −0.05 (both incoherent, "wandering")
+- **Caveat:** these are aggregates over 20 of 512 dims after the encoder's LayerNorm; **not comparable** with the per-sample R² transfer drift from E18
+- The direction agrees with the Paper 2 thesis (free drifts more), but it is not a strict analogue
+- E34 (post-hoc analysis of encoder_stats.json, 30.04.2026)
 
 ---
 
-## ГИПОТЕЗЫ
+## HYPOTHESES
 
-### Подтверждённые (на одной среде)
+### Confirmed (on a single environment)
 
-**Г1. Фиксация осей важнее семантики осей**
-- Подтверждено: random fixed ≈ prescribed (Ф5, Ф12, Ф31)
-- Усилено: random_fixed_3d ≈ prescribed ≈ rotated_prescribed (Ф31) — alignment внутри подпространства не имеет значения
-- Воспроизведено в 5D (Ф34: random ≈ prescribed, 0.92×)
-- В 16D начинает ослабевать (Ф34: 1.53×) — при нелинейных features alignment появляется
-- Среда: Push-T (3D, 5D)
-- Статус: ПОДТВЕРЖДЕНА на Push-T, с оговоркой для high-dim
+**Г1. Fixing the axes matters more than the semantics of the axes**
+- Confirmed: random fixed ≈ prescribed (Ф5, Ф12, Ф31)
+- Strengthened: random_fixed_3d ≈ prescribed ≈ rotated_prescribed (Ф31) — alignment within the subspace does not matter
+- Reproduced in 5D (Ф34: random ≈ prescribed, 0.92×)
+- Begins to weaken in 16D (Ф34: 1.53×) — with non-linear features, alignment starts to appear
+- Environment: Push-T (3D, 5D)
+- Status: CONFIRMED on Push-T, with a caveat for high dimensions
 
-**Г2. Дрейф координат — причина деградации free encoder**
-- Подтверждено: R² < −62 (Ф10), freeze@1 +20% (Ф11), aligned-but-drifting ≈ free (Ф15)
-- Усилено (Tier 1):
-  - Ранний drift уничтожает информацию — MLP decoder тоже ломается (Ф24)
-  - Поздний drift сохраняет информацию нелинейно (Ф25)
-  - Drift нелинейный — PCA не может исправить (Ф27)
-  - diffLR 100× оставляет 62× gap — не optimization lag (Ф26)
-- Freeze test confound отсутствует (Ф30)
-- Drift усиливается с размерностью (Ф35)
-- Среда: Push-T (3D, 5D, 16D)
-- Статус: ПОДТВЕРЖДЕНА, усилена
+**Г2. Coordinate drift is the cause of free-encoder degradation**
+- Confirmed: R² < −62 (Ф10), freeze@1 +20% (Ф11), aligned-but-drifting ≈ free (Ф15)
+- Strengthened (Tier 1):
+  - Early drift destroys information — the MLP decoder breaks too (Ф24)
+  - Late drift preserves information non-linearly (Ф25)
+  - The drift is non-linear — PCA cannot fix it (Ф27)
+  - diffLR 100× still leaves a 62× gap — not optimization lag (Ф26)
+- No confound in the freeze test (Ф30)
+- Drift grows with dimension (Ф35)
+- Environment: Push-T (3D, 5D, 16D)
+- Status: CONFIRMED, strengthened
 
-**Г3. Rank collapse — не главная причина деградации free encoder**
-- Подтверждено: full rank 2.99 + isotropy 0.86 → всё равно 233× хуже (Ф9)
-- Среда: Push-T
-- Статус: ПОДТВЕРЖДЕНА на Push-T
+**Г3. Rank collapse is not the main cause of free-encoder degradation**
+- Confirmed: full rank 2.99 + isotropy 0.86 → still 233× worse (Ф9)
+- Environment: Push-T
+- Status: CONFIRMED on Push-T
 
-**Г4. Stability — prerequisite, alignment — дополнительный фактор**
-- Подтверждено: 2×2 factorial (Ф16), aligned-but-drifting ≈ free (Ф15)
-- Уточнено (Tier 2): alignment *внутри подпространства* не важен (Ф31)
-- Alignment = выбор правильного подпространства + нормализация, не ориентация осей
-- Среда: Push-T
-- Статус: ПОДТВЕРЖДЕНА, уточнена — "alignment" переопределено как "subspace selection"
+**Г4. Stability is the prerequisite, alignment an additional factor**
+- Confirmed: 2×2 factorial (Ф16), aligned-but-drifting ≈ free (Ф15)
+- Refined (Tier 2): alignment *within the subspace* does not matter (Ф31)
+- Alignment = choosing the right subspace + normalization, not the orientation of the axes
+- Environment: Push-T
+- Status: CONFIRMED, refined — "alignment" redefined as "subspace selection"
 
-**Г19. Residual stream LLM на позиции последнего токена постепенно отдаляется от identity токена и переходит к семантическому представлению с глубиной**
-- R²(token) на топ-7 PC монотонно падает с глубиной у всех 5 LLM (Ф47)
-- LDA по категориям на 15 PC после residualization монотонно растёт (Ф48)
-- На layer 0: PCA = identity токена (R²=1.000); на финале — токен ослаблен, семантика усилена
-- Следствие: финальные слои предпочтительнее серединных для семантической интерпретации
-- Среда: 5 LLM (Qwen2.5-3B, Gemma2-2B, OLMo-1B, Falcon-1B, Pythia-1.4B)
-- Статус: ПОДТВЕРЖДЕНА на одной среде (E33)
+**Г19. The LLM residual stream at the last token position moves away from the token identity and toward a semantic representation with depth**
+- R²(token) on the top-7 PCs falls monotonically with depth in all 5 LLMs (Ф47)
+- Category LDA on 15 PCs after residualization rises monotonically (Ф48)
+- At layer 0 PCA = token identity (R²=1.000); at the final layer the token is weakened and semantics strengthened
+- Consequence: final layers are preferable to middle layers for semantic interpretation
+- Environment: 5 LLMs (Qwen2.5-3B, Gemma2-2B, OLMo-1B, Falcon-1B, Pythia-1.4B)
+- Status: CONFIRMED on a single environment (E33)
 
-**Г20. Видимая категориальная структура в первых PC residual stream — артефакт last-token эффекта плюс выборочной компактности категорий**
-- Парных дуальных полюсов на остатках нет (Ф51): на сыром PCA 1–4 PAIRED PC, на остатках 0 у всех 5 моделей
-- Асимметричные узлы есть (Ф52), и их частота значимо коррелирует с внутрикатегориальной сплочённостью (Ф53, Ф54): Spearman ρ=0.83
-- Но узлы не устойчивы к bootstrap у 4 из 5 моделей (Ф55) — зависят от выборки промптов
-- Следствие: интерпретации Step 1 в формате "geometry X-centric" / "factorized geometry" не подкреплены данными после контроля last-token confound
-- Среда: 5 LLM, текущий датасет yadro_phase2 (80 промптов, разнородные синтаксические концовки)
-- Статус: ПОДТВЕРЖДЕНА на одной среде, с оговоркой что результат может частично зависеть от выбора промптов (E33)
+**Г20. The apparent categorical structure in the leading PCs of the residual stream is an artefact of the last-token effect plus sampling compactness of the categories**
+- There are no paired dual poles on the residuals (Ф51): 1–4 PAIRED PCs on raw PCA, 0 on residuals in all 5 models
+- Asymmetric nodes do exist (Ф52), and their frequency is positively associated with within-category cohesion (Ф53, Ф54): Spearman ρ≈0.83, significance not robust at N = 8, see Ф54
+- But the nodes are not bootstrap-stable in 4 of 5 models (Ф55) — they depend on the prompt sample
+- Consequence: Step 1 interpretations of the "geometry X-centric" / "factorized geometry" kind are not supported by the data once the last-token confound is controlled
+- Environment: 5 LLMs, the current yadro_phase2 dataset (80 prompts, heterogeneous syntactic endings)
+- Status: CONFIRMED on a single environment, with the caveat that the result may depend in part on the choice of prompts (E33)
 
-**Г21. Положение пика семантического сигнала в residual stream — межмодельное различие, не методологический артефакт**
-- Финал у Qwen, OLMo, Falcon; mid+плато у Gemma; ≈0.75 у Pythia (Ф50)
-- Держится после residualization по last token, на одних и тех же промптах
-- Среда: 5 LLM
-- Статус: ПОДТВЕРЖДЕНА на одной среде, требует дальнейшей проверки на большем числе моделей и контролируемых промптах (E33)
+**Г21. The location of the semantic-signal peak in the residual stream is a between-model difference, not a methodological artefact**
+- Final layer for Qwen, OLMo, Falcon; mid+plateau for Gemma; ≈0.75 for Pythia (Ф50)
+- Holds after residualization by last token, on the same prompts
+- Environment: 5 LLMs
+- Status: CONFIRMED on a single environment; needs further checking on more models and on controlled prompts (E33)
 
-**Г18. Критическое окно повреждения free-энкодера = внутри первой эпохи; форма — непрерывный склон, не дискретный порог**
-- Уточняет Г15 (двухфазная модель): фаза 1 — не «эпохи 0–2», а «внутри первой эпохи».
-- Опора: Ф45 (E30) — ~99% повреждения в первой эпохе (freeze@0→@1 = 136× cliff vs freeze@1→unfrozen = 1.3×); Ф46 (E31 synthetic + E32 real) — внутри первой эпохи это склон (SLOPE verdict от кода: E32 R²=0.977, step хуже 10.5×, 5/5 монотонны).
-- Первая четверть эпохи (f≤0.25) near-harmless; далее непрерывная интеграция ущерба, ускоряясь к концу.
-- **Корректная формулировка (важно для галлюцинационного моста):** «early, continuously-integrated divergence that later training does not undo» — НЕ «irreversible event». Слово «необратимое» не должно читаться как дискретность: необратимость — свойство терминального состояния эпохи 1 относительно позднего обучения (E30/Ф45), достигаемое непрерывным накоплением (E31/E32/Ф46). Склон прямо опровергает дискретный порог.
-- Мост к галлюцинациям: общая ось — уверенный выход при незаземлённом состоянии (НЕ механизм-тождество). Настоящий тест домена — LLM (Г17, epiplexity ⊥ identifiability), вне Push-T. Держать на поводке.
-- Среда: Push-T (synthetic E31 + real gym-pusht E32). Домен галлюцинаций — отдельно (Г17).
-- Статус: ПОДТВЕРЖДЕНА на Push-T (E30 real + E31 synthetic + E32 real). Оговорка E32: reduced budget → абсолютные магнитуды сжаты, shape verdict budget-robust.
+**Г18. The critical window for free-encoder damage is inside the first epoch; the shape is a continuous slope, not a discrete threshold**
+- Refines Г15 (the two-phase model): phase 1 is not "epochs 0–2" but "inside the first epoch".
+- Support: Ф45 (E30) — ~99% of the damage in the first epoch (freeze@0→@1 = 136× cliff vs freeze@1→unfrozen = 1.3×); Ф46 (E31 synthetic + E32 real) — inside the first epoch it is a slope (SLOPE verdict from code: E32 R²=0.977, step 10.5× worse, 5/5 monotone).
+- The first quarter of the epoch (f≤0.25) is near-harmless; after that the damage integrates continuously, accelerating toward the end.
+- **The correct formulation (important for the hallucination bridge):** "early, continuously-integrated divergence that later training does not undo" — NOT "irreversible event". The word "irreversible" must not be read as discreteness: irreversibility is a property of the terminal state of epoch 1 with respect to later training (E30/Ф45), reached by continuous accumulation (E31/E32/Ф46). The slope directly refutes a discrete threshold.
+- Bridge to hallucination: the shared axis is confident output from an ungrounded state (NOT an identity of mechanism). The real domain test is the LLM (Г17, epiplexity ⊥ identifiability), outside Push-T. Keep it on the leash.
+- Environment: Push-T (synthetic E31 + real gym-pusht E32). The hallucination domain is separate (Г17).
+- Status: CONFIRMED on Push-T (E30 real + E31 synthetic + E32 real). E32 caveat: reduced budget → absolute magnitudes compressed, shape verdict budget-robust.
 
 ---
 
 
-### Опровергнутые
+### Refuted
 
-**Г5. Crossover prescribed/free = внутренняя размерность задачи**
-- Push-T: ~~crossover 3→4~~ НЕТ CROSSOVER на полных данных (E28). Prescribed wins 1–11.
-- Маятник: crossover нет, внутр. dim=2 — (данные Ф19, не верифицированы с полными параметрами)
-- Двойной маятник: crossover 1→2, внутр. dim=4 — (данные Ф20, перезапускается)
-- Оригинальный crossover на Push-T был артефактом underpowered E13 (100 ep, 20 epochs, 2 seeds)
-- Статус: ОПРОВЕРГНУТА (crossover не существует на Push-T при полных параметрах)
+**Г5. The prescribed/free crossover equals the intrinsic dimension of the task**
+- Push-T: ~~crossover 3→4~~ NO CROSSOVER on full data (E28). Prescribed wins at 1–11.
+- Pendulum: no crossover, intrinsic dim=2 — (data from Ф19, not verified with full parameters)
+- Double pendulum: crossover 1→2, intrinsic dim=4 — (data from Ф20, being rerun)
+- The original Push-T crossover was an artefact of the underpowered E13 (100 ep, 20 epochs, 2 seeds)
+- Status: REFUTED (no crossover exists on Push-T at full parameters)
 
-**Г6. 11 осей (по аналогии с M-теорией) дадут лучший результат**
-- Prescribed_11 хуже prescribed_3 в 20× (Ф17)
-- Статус: ОПРОВЕРГНУТА
+**Г6. 11 axes (by analogy with M-theory) will give a better result**
+- prescribed_11 is 20× worse than prescribed_3 (Ф17)
+- Status: REFUTED
 
-**Г10. Prescribed advantage = чистый stability effect (17× × 13× = 233× decomposition)**
-- Decomposition из Paper 2 невалидна:
-  - random_fixed_5d (из Ф12) нестабилен — взрывается на новых seeds (Ф32)
-  - random_fixed_3d (из правильного подпространства) ≈ prescribed (Ф31)
-  - "17× stability" был артефактом конкретной реализации random_fixed
-- Правильная decomposition: subspace selection + normalization + freeze
-- Alignment осей внутри подпространства не фактор
-- Статус: ОПРОВЕРГНУТА (decomposition, не thesis)
+**Г10. The prescribed advantage is a pure stability effect (17× × 13× = 233× decomposition)**
+- The Paper 2 decomposition is invalid:
+  - random_fixed_5d (from Ф12) is unstable — it blows up on new seeds (Ф32)
+  - random_fixed_3d (from the correct subspace) ≈ prescribed (Ф31)
+  - The "17× stability" was an artefact of one particular random_fixed implementation
+- The correct decomposition: subspace selection + normalization + freeze
+- Alignment of the axes within the subspace is not a factor
+- Status: REFUTED (the decomposition, not the thesis)
 
-**Г11. Проблема free encoder — optimization lag (решается scheduler/LR)**
-- diffLR 100× помогает на 72%, но 62× gap остаётся (Ф26)
-- Extra predictor steps (K=3) УХУДШАЮТ результат (Ф26)
-- EMA (decay=0.996) не помогает (Paper 2, 6.1×)
-- Статус: ОПРОВЕРГНУТА — optimization lag частичный фактор, не главная причина
+**Г11. The free-encoder problem is optimization lag (solved by scheduler/LR)**
+- diffLR 100× helps by 72%, but a 62× gap remains (Ф26)
+- Extra predictor steps (K=3) make it WORSE (Ф26)
+- EMA (decay=0.996) does not help (Paper 2, 6.1×)
+- Status: REFUTED — optimization lag is a partial factor, not the main cause
 
-**Г12. Drift — rotation/scaling, решается PCA canonicalization**
-- PCA ухудшает R² transfer на большинстве эпох (Ф27)
-- Drift нелинейный
-- Статус: ОПРОВЕРГНУТА
+**Г12. Drift is rotation/scaling, solved by PCA canonicalization**
+- PCA degrades R² transfer at most epochs (Ф27)
+- The drift is non-linear
+- Status: REFUTED
 
-**Г13. SIGReg разрушает aligned initialization**
-- SIGReg стабилизирует aligned-drifting linear, предотвращает divergence (Ф29)
-- Без SIGReg: seed 123 → catastrophic divergence (1.39)
-- Статус: ОПРОВЕРГНУТА — SIGReg стабилизирует, не разрушает
+**Г13. SIGReg destroys the aligned initialization**
+- SIGReg stabilizes aligned-drifting linear and prevents divergence (Ф29)
+- Without SIGReg: seed 123 → catastrophic divergence (1.39)
+- Status: REFUTED — SIGReg stabilizes, it does not destroy
 
-**Г22. Step 1 PCA на yadro_phase2 показывает чистую семантическую геометрию категорий LLM**
-- На сыром PCA финального и серединного слоёв первые PC объясняются last token на 68–86% (Ф47)
-- LDA по категориям после residualization падает в ~2 раза на 7 PC и в ~1.5–2 раза на 15 PC
-- Параметры PC, по которым делались интерпретации Step 1, доминированы first-order эффектом, не семантикой
-- Статус: ОПРОВЕРГНУТА — Step 1 PCA в текущем виде показывает смешанный сигнал; чистая семантика на остатках слабее first-order артефакта (E33, все срезы)
+**Г22. Step 1 PCA on yadro_phase2 shows clean semantic geometry of LLM categories**
+- On raw PCA of the final and middle layers, the leading PCs are 68–86% explained by the last token (Ф47)
+- Category LDA after residualization falls by ~2× on 7 PCs and by ~1.5–2× on 15 PCs
+- The PC parameters on which the Step 1 interpretations were built are dominated by a first-order effect, not by semantics
+- Status: REFUTED — Step 1 PCA in its current form shows a mixed signal; the clean semantics on residuals is weaker than the first-order artefact (E33, all slices)
 
-**Г23. Категории формируют дуальные пары на полюсах PC residual stream LLM**
-- На остатках после residualization PAIRED PC = 0 у всех 5 моделей (Ф51)
-- На сыром PCA 1–4 PAIRED PC у разных моделей — но это объясняется групповой структурой last tokens категорий, не семантикой
-- Конкретные ранее предполагавшиеся пары ("ethical↔spatial", "logical↔emotional") на остатках не воспроизводятся (Ф51, Ф52)
-- Статус: ОПРОВЕРГНУТА — парность исчезает после контроля last-token confound (E33, Срез 1)
+**Г23. Categories form dual pairs at the poles of LLM residual-stream PCs**
+- On residuals after residualization, PAIRED PCs = 0 in all 5 models (Ф51)
+- On raw PCA there are 1–4 PAIRED PCs across models — but this is explained by the group structure of the categories' last tokens, not by semantics
+- The specific pairs previously conjectured ("ethical↔spatial", "logical↔emotional") do not reproduce on residuals (Ф51, Ф52)
+- Status: REFUTED — the pairing disappears once the last-token confound is controlled (E33, Slice 1)
 
-**Г24. Категориальные узлы на полюсах PC — структурное свойство активаций LLM**
-- На полной выборке узлы есть (асимметричные, Ф52)
-- Bootstrap-проверка (20 ресэмплингов 70%, ≥70% порог): code устойчив только у Falcon (1/5 моделей), все остальные категории и модели — не устойчивы (Ф55)
-- Узлы зависят от выборки промптов, не отражают структурное свойство активаций
-- Статус: ОПРОВЕРГНУТА на текущем датасете — для проверки на структурном уровне нужны контролируемые промпты с большим числом примеров на категорию (E33, Срез 2)
+**Г24. Categorical nodes at PC poles are a structural property of LLM activations**
+- On the full sample the nodes exist (asymmetric, Ф52)
+- Bootstrap check (30 resamples at 70%, ≥70% threshold): code is stable only in Falcon (1/5 models); every other category and model is unstable (Ф55)
+- The nodes depend on the prompt sample and do not reflect a structural property of the activations
+- Status: REFUTED on the current dataset — testing this at the structural level requires controlled prompts with more examples per category (E33, Slice 2)
 
-**Г16. Free-латент имеет характеризуемую скорость дрейфа (drift-rate law)**
-- Импорт из INS/GNSS-denied (SBG Systems, триаж 07.2026): dead-reckoning моделирует дрейф как error-growth — накопленная ошибка = drift-rate × время-с-момента-изъятия-якоря. Перенос: накопленное отклонение базиса free-энкодера растёт как функция числа эпох без prescribed-ограничения.
-- Частично уже наблюдается (сырьё для rate-fit существует, 3 seeds):
-  - Ф10: per-epoch R² transfer (seed 42 −16.9, 123 −62.2, 777 −25.4; восстановление к ep 2→3)
-  - Г15: двухфазная модель, drift rate ≈ 0.3 как граница фаз (из T8 scatter)
-- Новое предсказание (тестируемо на Push-T): накопленное отклонение базиса (Procrustes к якорной истине) — монотонная функция эпох-с-изъятия-якоря с оцениваемым rate; drift-rate(free) >> drift-rate(prescribed ≈ random_fixed ≈ 0).
-- Метод измерения (импорт из SBG):
-  - ablation-by-withholding: якорь изъят у энкодера, сохранён как ground truth для замера (аналог Qinertia GNSS rejection module — симуляция outage без физического отключения)
-  - мерить траекторию базиса по эпохам, НЕ эндпоинт: эндпоинт-метрика (напр. финальный Procrustes R²=−15.7) маскирует дрейф процесса — прямой аналог конфаунда «петли и повороты маскируют дрейф курса» и last-token confound E33
-- Горизонт-конъектура (НЕ тестируется на Push-T, cross-domain — не факт): превышение порога накопленного дрейфа = переход в hallucination basin (2604.04743, статические basins). drift-rate × t → порог даёт динамику перехода. Отдельная статья drift→hallucination.
-- Среда: Push-T (rate-fit возможен из существующих E-данных Ф10/Г15). Горизонт-часть — вне среды.
-- **ОПРОВЕРЖЕНИЕ (03.07.2026, проверка на all_results.json, без новых прогонов):**
-  - [FACT] free raw_drift падает 1.43 (ep1) → 0.001 (ep30); отношение поздний/ранний = 0.002 — дрейф выгорает за ~3 эпохи.
-  - [FACT] Кумулятивный fit: linear (постоянный rate) R²=0.821 < sqrt (диффузия) 0.920 < log (насыщение) 0.977. Постоянного rate НЕТ — дрейф это затухающий front-loaded transient, не накопление.
-  - [INFERENCE] Аналогия INS/GNSS dead-reckoning ложна: у INS ошибка растёт неограниченно во времени, здесь — самозатухает. «drift-rate × t → порог» строить не на чем.
-  - [INFERENCE] Данные подтверждают Ф24/Ф25 (двухфазная модель), НЕ Г16.
-  - Оговорка: «log R²=0.977» ≠ «логарифмический закон» — артефакт front-loading; prescribed=0 вырожден.
-  - Артефакт: E30_critical_window/finding_drift_rate.docx
-- Статус: **ОПРОВЕРГНУТА** — rate-форма (постоянный/характеризуемый rate) не подтверждена данными; дрейф — front-loaded затухающий transient (фаза 1 Ф24/Ф25). Горизонт-конъектура drift→hallucination лишается кинематической опоры в этой форме.
+**Г16. The free latent has a characterizable drift rate (drift-rate law)**
+- Imported from INS/GNSS-denied work (SBG Systems, triage 07.2026): dead reckoning models drift as error growth — accumulated error = drift rate × time since the anchor was removed. Transfer: the accumulated deviation of the free encoder's basis grows as a function of the number of epochs without a prescribed constraint.
+- Partly observed already (raw material for a rate fit exists, 3 seeds):
+  - Ф10: per-epoch R² transfer (seed 42 −16.9, 123 −62.2, 777 −25.4; recovery by ep 2→3)
+  - Г15: the two-phase model, drift rate ≈ 0.3 as the phase boundary (from the T8 scatter)
+- New prediction (testable on Push-T): the accumulated basis deviation (Procrustes to the anchor truth) is a monotone function of epochs-since-anchor-removal with an estimable rate; drift-rate(free) >> drift-rate(prescribed ≈ random_fixed ≈ 0).
+- Measurement method (imported from SBG):
+  - ablation-by-withholding: the anchor is withheld from the encoder but kept as ground truth for measurement (analogous to the Qinertia GNSS rejection module — simulating an outage without physically switching anything off)
+  - measure the trajectory of the basis across epochs, NOT the endpoint: an endpoint metric (e.g. final Procrustes R²=−15.7) masks the drift of the process — a direct analogue of the "loops and turns mask heading drift" confound and of the E33 last-token confound
+- Horizon conjecture (NOT tested on Push-T, cross-domain — not a fact): exceeding a threshold of accumulated drift = transition into a hallucination basin (2604.04743, static basins). drift-rate × t → threshold would give the dynamics of the transition. A separate drift→hallucination paper.
+- Environment: Push-T (a rate fit is possible from the existing E-data of Ф10/Г15). The horizon part is out of environment.
+- **REFUTATION (03.07.2026, checked against all_results.json, no new runs):**
+  - [FACT] free raw_drift falls 1.43 (ep1) → 0.001 (ep30); late/early ratio = 0.002 — the drift burns out in ~3 epochs.
+  - [FACT] Cumulative fit: linear (constant rate) R²=0.821 < sqrt (diffusion) 0.920 < log (saturation) 0.977. There is NO constant rate — the drift is a decaying front-loaded transient, not an accumulation.
+  - [INFERENCE] The INS/GNSS dead-reckoning analogy is false: in an INS the error grows without bound over time, here it self-extinguishes. There is nothing to build "drift-rate × t → threshold" on.
+  - [INFERENCE] The data support Ф24/Ф25 (the two-phase model), NOT Г16.
+  - Caveat: "log R²=0.977" ≠ "a logarithmic law" — it is an artefact of front-loading; prescribed=0 is degenerate.
+  - Artefact: E30_critical_window/finding_drift_rate.docx
+- Status: **REFUTED** — the rate form (a constant/characterizable rate) is not supported by the data; the drift is a front-loaded decaying transient (phase 1 of Ф24/Ф25). The drift→hallucination horizon conjecture loses its kinematic support in this form.
 
 
-### Открытые
+### Open
 
-**Г7. ~~Prescribed работает не из-за фиксации, а из-за отбора информации~~ ОПРОВЕРГНУТА**
-- Push-T: prescribed побеждает при dim=5 (все координаты, без отбора) в 66× (E28)
-- Двойной маятник: prescribed_norm побеждает при dim=4 (все координаты, без отбора) в 19× (Ф20)
-- Оригинальный аргумент (маятники не работают → нужен отбор) был артефактом отсутствия нормализации
-- Статус: ОПРОВЕРГНУТА — фиксация + нормализация достаточна, отбор не нужен
+**Г7. ~~Prescribed works not because of fixing but because of information selection~~ REFUTED**
+- Push-T: prescribed wins at dim=5 (all coordinates, no selection) by 66× (E28)
+- Double pendulum: prescribed_norm wins at dim=4 (all coordinates, no selection) by 19× (Ф20)
+- The original argument (pendulums do not work → selection is needed) was an artefact of missing normalization
+- Status: REFUTED — fixing + normalization suffices, selection is not needed
 
-**Г8. ~~Prescribed работает из-за комбинации фиксации + отбора~~ ОПРОВЕРГНУТА**
-- Фиксация без отбора работает на обеих средах при нормализации:
-  - Push-T dim=5 (все координаты): 66× (E28)
-  - Double pendulum dim=4 (все координаты): 19× (Ф20 updated)
-- Отбор не является необходимым компонентом
-- Correct formulation: prescribed = фиксация + нормализация [0,1]
-- Статус: ОПРОВЕРГНУТА
+**Г8. ~~Prescribed works because of the combination of fixing + selection~~ REFUTED**
+- Fixing without selection works on both environments given normalization:
+  - Push-T dim=5 (all coordinates): 66× (E28)
+  - Double pendulum dim=4 (all coordinates): 19× (Ф20 updated)
+- Selection is not a necessary component
+- Correct formulation: prescribed = fixing + [0,1] normalization
+- Status: REFUTED
 
-**Г9. Хрупкость prescribed: одна лишняя ось убивает преимущество**
-- ~~Факт: dim=3→4 = потеря на Push-T (Ф18)~~ ОПРОВЕРГНУТ: prescribed wins dim=4 в 114× (E28)
-- Механизм из E17 (Ф21–Ф23) остаётся: непредсказуемая ось катастрофична (1106×)
-- Но: предсказуемые лишние оси ухудшают prescribed (228× → 42× при dim 3→11), не убивают
-- Gap монотонно убывает, но prescribed побеждает на всех размерностях
-- **E12 (free_11 > prescribed_11) был артефактом маленького predictor (hidden=128)**
-- С predictor capacity max(128, dim*8) prescribed побеждает даже при dim=11
-- Статус: ЧАСТИЧНО ОПРОВЕРГНУТА — хрупкость к noise осям реальна (Ф21), но лишние предсказуемые оси не убивают prescribed advantage
+**Г9. Fragility of prescribed: one extra axis kills the advantage**
+- ~~Fact: dim=3→4 is a loss on Push-T (Ф18)~~ REFUTED: prescribed wins at dim=4 by 114× (E28)
+- The mechanism from E17 (Ф21–Ф23) still holds: an unpredictable axis is catastrophic (1106×)
+- But: predictable extra axes degrade prescribed (228× → 42× over dim 3→11) without killing it
+- The gap shrinks monotonically, but prescribed wins at every dimension
+- **E12 (free_11 > prescribed_11) was an artefact of a small predictor (hidden=128)**
+- With predictor capacity max(128, dim*8) prescribed wins even at dim=11
+- Status: PARTIALLY REFUTED — fragility to noise axes is real (Ф21), but extra predictable axes do not kill the prescribed advantage
 
-**Г14. Prescribed advantage = фиксация + нормализация [0,1] координат**
-- На основе всех экспериментов (Tier 1-3, E28, E16 fix)
-- Prescribed выигрывает когда:
-  (a) фиксирует координаты (не дрейфует)
-  (b) **нормализует координаты в [0,1] (min-max)** — ОБЯЗАТЕЛЬНО
-  (c) координаты содержат релевантную информацию о задаче
-- Без нормализации prescribed проигрывает (маятники raw: 0.1–0.4×)
-- С нормализацией prescribed побеждает на всех средах и всех dim:
+**Г14. The prescribed advantage = fixing + [0,1] normalization of the coordinates**
+- Based on all the experiments (Tier 1–3, E28, the E16 fix)
+- Prescribed wins when it:
+  (a) fixes the coordinates (they do not drift)
+  (b) **normalizes the coordinates into [0,1] (min-max)** — MANDATORY
+  (c) has coordinates that carry information relevant to the task
+- Without normalization prescribed loses (pendulum raw: 0.1–0.4×)
+- With normalization prescribed wins on every environment and every dim:
   - Push-T dim 1–11: 42–1820× (E28)
   - Double pendulum dim 1–8: 10–19× (Ф20 updated)
-- Alignment осей внутри подпространства не имеет значения (Ф31)
-- Random_3d ≈ prescribed при нормализации (Ф31, Ф34)
-- Standardization (zero-mean, unit-var) ухудшает в 15× (Ф40)
-- **При достаточных данных (500 ep) free encoder побеждает prescribed в 695,000× (Ф38)**
-- Prescribed = sample efficiency + guaranteed stability, не абсолютное преимущество
-- Gauge fixing не работает как альтернатива (Ф37)
-- Статус: ПОДТВЕРЖДЕНА на Push-T и двойном маятнике (2 среды, 3+ размерности)
+- Alignment of the axes within the subspace does not matter (Ф31)
+- random_3d ≈ prescribed under normalization (Ф31, Ф34)
+- Standardization (zero-mean, unit-var) degrades by 15× (Ф40)
+- **Given enough data (500 ep) the free encoder beats prescribed by 695,000× (Ф38)**
+- Prescribed = sample efficiency + guaranteed stability, not an absolute advantage
+- Gauge fixing does not work as an alternative (Ф37)
+- Status: CONFIRMED on Push-T and the double pendulum (2 environments, 3+ dimensions)
 
-**Г15. Двухфазная модель drift**
-- Новая гипотеза на основе Tier 1
-- Фаза 1 (ep 0–2): катастрофическая — информация уничтожается нелинейно и невосстановимо
-- Фаза 2 (ep 3+): стабилизация — информация сохраняется, но в нелинейно дрейфующем пространстве
-- Граница фаз: drift rate ≈ 0.3 (из T8 scatter plot)
-- R² потолок free encoder (phase 2) ≈ 0.75 (linear), gap с prescribed определяется alignment, не drift
-- Статус: НОВАЯ, подтверждена на Push-T 3D (Ф24, Ф25, Ф28)
+**Г15. Two-phase model of drift**
+- A new hypothesis based on Tier 1
+- Phase 1 (ep 0–2): catastrophic — information is destroyed non-linearly and unrecoverably
+- Phase 2 (ep 3+): stabilization — information is preserved, but in a non-linearly drifting space
+- Phase boundary: drift rate ≈ 0.3 (from the T8 scatter plot)
+- The R² ceiling of the free encoder (phase 2) is ≈ 0.75 (linear); the gap to prescribed is set by alignment, not drift
+- Status: NEW, confirmed on Push-T 3D (Ф24, Ф25, Ф28)
 
-**Г17. Epiplexity ⊥ identifiability (structural information слепа к дрейфу координат)**
-- Тезис: epiplexity (S_T, структурная информация в смысле time-bounded MDL, Finzi et al. arXiv:2601.03220) мерит *количество* поглощённой структуры, оставаясь агностичной к её заземлённости/идентифицируемости. Модель может поглощать большой объём структуры (низкий NLL → высокая S_T) при сломанной идентифицируемости координат (R² < 0 после Procrustes). → epiplexity и стабильность координат — ортогональные оси.
-- Опора (их собственные свойства):
-  - epiplexity content-agnostic по определению (Finzi §6.1): «measures the amount of structural information, irrespective of its content».
-  - epiplexity loss-derived (prequential = площадь под loss-кривой выше финала). Видит объём сжатия, не геометрию базиса. → сильнейшая инстанциация тезиса «пространство важнее лосса»: даже информационно-теоретическое прочтение loss-кривой не различает заземлённую структуру и внутренне согласованный дрейфующий код.
-- Наблюдаемое на данный момент — только low-id: free R²=−15.7 (Procrustes, финальный) при полном rank/isotropy (Ф9) и приличном NLL. Это Н (1 наблюдение).
-- НЕ наблюдаемое (пока): epiplexity free/prescribed энкодеров не измерена. Ячейка «high-epi + low-id» — ПРЕДСКАЗАНИЕ, не факт.
-- Confound (потенциальный вклад): prequential-оценщик предполагает сходимость к стабильному финальному лоссу. Под дрейфом «финал» плохо определён → S_preq может быть раздута несходимостью, смешивая «поглощённую структуру» с «неспособностью заземлиться». В статье Finzi это допущение не проверяется. Прямой аналог конфаунда эндпоинт-vs-траектория (Г16) и last-token confound (E33).
-- Домены (не конфлатить): JEPA — epiplexity лишь прокси (нет явного правдоподобия), сюда её НЕ тащить как метрику. Чистый дом — LLM-латент (likelihood-модель), т.е. тред drift→hallucination, не prescribed-axes статьи.
-- Отличие от Г16 (называю явно, чтобы не склеить): Г16 = дрейф характеризуем как rate во времени (кинематика, dead-reckoning). Г17 = метрика объёма структуры не видит дрейф вообще. Разные claims; общий только горизонт hallucination. Не объединять.
-- Проверка (likelihood-домен): на LLM-чекпойнтах S_preq (из существующих NLL-логов) × метрика дрейфа/идентифицируемости латента. Подтверждение = ячейка high-epi/low-id непуста, S_preq не различает заземлённую и дрейфующую структуру при разбиении по идентифицируемости. Опровержение = S_preq монотонно коррелирует с идентифицируемостью (тогда epiplexity — симптом, не ортогональная ось).
-- Среда: вне Push-T (домен — LLM). Для JEPA неприменима как метрика.
-- Статус: ОТКРЫТА / ГИПОТЕЗА. Опора = 1 Н (low-id) + непроверенное предсказание (epiplexity не измерена). НЕ факт: нужен LLM-тест на ≥3 seed с явным измерением S_preq. Связи: Paper 1 «Space Matters More Than the Loss»; Г16; hallucination basins (2604.04743); отдельная статья drift→hallucination после фазы 2 Ядро.
+**Г17. Epiplexity ⊥ identifiability (structural information is blind to coordinate drift)**
+- Thesis: epiplexity (S_T, structural information in the sense of time-bounded MDL, Finzi et al. arXiv:2601.03220) measures the *amount* of absorbed structure while remaining agnostic to its groundedness/identifiability. A model can absorb a large amount of structure (low NLL → high S_T) with broken coordinate identifiability (R² < 0 after Procrustes). → epiplexity and coordinate stability are orthogonal axes.
+- Support (their own stated properties):
+  - epiplexity is content-agnostic by definition (Finzi §6.1): it measures the amount of structural information irrespective of its content.
+  - epiplexity is loss-derived (prequential = the area under the loss curve above the final value). It sees the volume of compression, not the geometry of the basis. → the strongest instantiation of the thesis "space matters more than the loss": even an information-theoretic reading of the loss curve fails to distinguish grounded structure from an internally consistent drifting code.
+- What is observed so far is only low-id: free R²=−15.7 (Procrustes, final) with full rank/isotropy (Ф9) and a decent NLL. This is an Н (1 observation).
+- What is NOT observed (yet): the epiplexity of free/prescribed encoders has not been measured. The "high-epi + low-id" cell is a PREDICTION, not a fact.
+- Confound (a potential contributor): the prequential estimator assumes convergence to a stable final loss. Under drift the "final" value is ill-defined → S_preq may be inflated by non-convergence, conflating "absorbed structure" with "inability to ground". Finzi's paper does not check this assumption. A direct analogue of the endpoint-vs-trajectory confound (Г16) and of the last-token confound (E33).
+- Domains (do not conflate): in JEPA, epiplexity is only a proxy (there is no explicit likelihood) — do NOT drag it in there as a metric. Its proper home is the LLM latent (a likelihood model), i.e. the drift→hallucination thread, not the prescribed-axes papers.
+- Difference from Г16 (stated explicitly so the two do not merge): Г16 = drift is characterizable as a rate in time (kinematics, dead reckoning). Г17 = a metric of the amount of structure does not see drift at all. Different claims; only the hallucination horizon is shared. Do not merge.
+- Test (likelihood domain): on LLM checkpoints, S_preq (from existing NLL logs) × a drift/identifiability metric for the latent. Confirmation = the high-epi/low-id cell is non-empty and S_preq fails to distinguish grounded from drifting structure when split by identifiability. Refutation = S_preq correlates monotonically with identifiability (in which case epiplexity is a symptom, not an orthogonal axis).
+- Environment: outside Push-T (the domain is the LLM). Not applicable as a metric for JEPA.
+- Status: OPEN / HYPOTHESIS. Support = 1 Н (low-id) + an untested prediction (epiplexity not measured). NOT a fact: an LLM test on ≥3 seeds with explicit measurement of S_preq is required. Links: Paper 1 "Space Matters More Than the Loss"; Г16; hallucination basins (2604.04743); a separate drift→hallucination paper after phase 2 of Yadro.
 
-**Г25. Prescribed advantage требует координатной полноты по отношению к downstream task**
-- Identifiability осей не заменяет полноту координатного описания
-- Single-seed observation на Two Rooms: prescribed_2 = (x_a, y_a) даёт 0% planning SR при 55% у free (Н1). Координаты агента без информации о препятствиях не позволяют MPPI планировать через дверь — в latent space двери не существует
-- Falsifier: если prescribed_4 = (x_a, y_a, wall_x, door_y) даёт SR ≈ 0% на Two Rooms — гипотеза о completeness опровергнута, проблема глубже (architecture mismatch, недостаточный capacity, fundamental limitation prescribed approach на средах с препятствиями)
-- Тест: E35 prescribed_4 (запланирован, ожидаемый compute 60-100h CPU)
-- Статус: ОТКРЫТА, ставится на проверку в E35
+**Г25. The prescribed advantage requires coordinate completeness with respect to the downstream task**
+- Identifiability of the axes does not substitute for completeness of the coordinate description
+- Single-seed observation on Two Rooms: prescribed_2 = (x_a, y_a) gives 0% planning SR against 55% for free (Н1). Agent coordinates without information about obstacles do not let MPPI plan through the door — in that latent space the door does not exist
+- Falsifier: if prescribed_4 = (x_a, y_a, wall_x, door_y) gives SR ≈ 0% on Two Rooms, the completeness hypothesis is refuted and the problem is deeper (architecture mismatch, insufficient capacity, a fundamental limitation of the prescribed approach in environments with obstacles)
+- Test: E35 prescribed_4 (planned, expected compute 60–100 h CPU)
+- Status: OPEN, goes to test in E35
 
 ---
 
-## КЛЮЧЕВЫЕ РАЗЛИЧИЯ МЕЖДУ СРЕДАМИ
+## KEY DIFFERENCES BETWEEN ENVIRONMENTS
 
-| Свойство | Push-T | Двойной маятник (raw) | Двойной маятник (norm) | EB-JEPA Two Rooms (Н1) |
+| Property | Push-T | Double pendulum (raw) | Double pendulum (norm) | EB-JEPA Two Rooms (Н1) |
 |---|---|---|---|---|
-| Внутр. размерность | 3 | 4 | 4 | 2+ (agent x,y; wall, door — параметры среды) |
-| Полный state dim | 5 | 4 | 4 | 65×65 пиксели + (wall_x, door_y) |
-| Prescribed wins? | Да (dim 1–11) | Нет (Ф20 original) | **Да (dim 1–8)** | Нет при dim=2 (Н1, single seed) |
-| Нормализация | [0,1] min-max | Нет | [0,1] min-max | z-score (LeCun) для prescribed_2 |
+| Intrinsic dimension | 3 | 4 | 4 | 2+ (agent x, y; wall, door are environment parameters) |
+| Full state dim | 5 | 4 | 4 | 65×65 pixels + (wall_x, door_y) |
+| Prescribed wins? | Yes (dim 1–11) | No (Ф20 original) | **Yes (dim 1–8)** | No at dim=2 (Н1, single seed) |
+| Normalization | [0,1] min-max | None | [0,1] min-max | z-score (LeCun) for prescribed_2 |
 | Gap prescribed/free | 42–1820× | 0.1–0.4× | **10–19×** | Free ≫ prescribed (free 55%, prescribed 0% SR) |
-| Препятствия в среде | Нет | Нет | Нет | Да (стена с дверью) |
+| Obstacles in the environment | No | No | No | Yes (a wall with a door) |
 | Downstream task | Prediction loss | Prediction loss | Prediction loss | Goal-conditioned planning (MPPI) |
 
-Two Rooms — первая среда в программе с (a) препятствиями и (b) downstream метрикой не prediction loss. Эти два различия могут оба влиять на результат. E35 prescribed_4 тестирует, помогает ли координатная полнота на этой среде.
+Two Rooms is the first environment in the programme with (a) obstacles and (b) a downstream metric other than prediction loss. Both differences may affect the result. E35 prescribed_4 tests whether coordinate completeness helps in this environment.
 
 ---
 
-## КЛЮЧЕВЫЕ ПРОТИВОРЕЧИЯ (требуют разрешения)
+## KEY CONTRADICTIONS (require resolution)
 
-**П1. ~~Push-T 5D prescribed работает (Ф36), но маятники prescribed на полном входе — нет (Ф19, Ф20)~~ ЗАКРЫТ**
-- Причина: отсутствие нормализации в маятниках
-- С нормализацией [0,1] prescribed побеждает free на двойном маятнике при ВСЕХ dim 1–8 (Ф20 updated)
-- Нормализация даёт 37–166× улучшение prescribed
-- Push-T prescribed всегда нормализовал — поэтому работал
-- Маятники без нормализации — raw координаты в разных масштабах (θ ∈ [-π,π], ω ∈ [-10,10])
-- Ф19 (simple pendulum) — предположительно тот же артефакт, нужна верификация
+**П1. ~~Push-T 5D prescribed works (Ф36), but pendulum prescribed on the full input does not (Ф19, Ф20)~~ CLOSED**
+- Cause: the absence of normalization in the pendulum runs
+- With [0,1] normalization prescribed beats free on the double pendulum at ALL dims 1–8 (Ф20 updated)
+- Normalization gives a 37–166× improvement to prescribed
+- Push-T prescribed always normalized — which is why it worked
+- The pendulums without normalization use raw coordinates at different scales (θ ∈ [−π,π], ω ∈ [−10,10])
+- Ф19 (simple pendulum) is presumably the same artefact; verification needed
 
-**П2. ~~Dim sweep (Ф18): prescribed проигрывает при dim≥4. Но Ф36: prescribed_5d выигрывает в 66×~~ ЗАКРЫТ**
-- E13 (100 ep, 20 epochs, 2 seeds) был underpowered
+**П2. ~~Dim sweep (Ф18): prescribed loses at dim≥4. But Ф36: prescribed_5d wins by 66×~~ CLOSED**
+- E13 (100 ep, 20 epochs, 2 seeds) was underpowered
 - E28 (200 ep, 30 epochs, 3 seeds, predictor max(128, dim*8)): prescribed wins 1–11, no crossover
-- dim=5 совпадает с Tier 3 E25: 66.3× vs 66.2×
-- Причина расхождения: (a) мало данных/эпох, (b) маленький predictor hidden=128
-- Ф18 опровергнут, Ф36 подтверждён
+- dim=5 agrees with Tier 3 E25: 66.3× vs 66.2×
+- Cause of the discrepancy: (a) too little data/epochs, (b) a small predictor at hidden=128
+- Ф18 refuted, Ф36 confirmed
 
 ---
 
-## НЕРЕШЁННЫЕ ВОПРОСЫ (приоритет)
+## OPEN QUESTIONS (by priority)
 
-1. ~~Является ли отбор (feature selection), а не фиксация, истинной причиной преимущества prescribed на Push-T?~~ → Частично отвечено: Push-T 5D prescribed (без отбора) работает (Ф36). Отбор не единственный фактор. Но маятники без отбора не работают — нужно понять различие (П1)
-2. Почему Push-T 5D prescribed работает, а маятники prescribed на полном входе — нет? (П1) → E16 перезапускается с нормализацией
-3. ~~Почему dim sweep (Ф18) и Tier 3 (Ф36) дают разные результаты для dim=5?~~ → РЕШЕНО (П2): E13 был underpowered. E28 подтвердил: prescribed wins 1–11.
-4. ~~Почему даже sinθ (same subspace) ухудшает в 4.8×?~~ → Контекст изменился: prescribed побеждает на всех dim; ухудшение = потеря gap magnitude, не проигрыш
-5. ~~Воспроизводятся ли факты Ф17–Ф23 на полных данных?~~ → Ф17 обновлён (E28): prescribed_11 теперь побеждает free_11 (42×) при правильном predictor capacity. Ф21–Ф23 (fragility) — нужен перезапуск с max(128,dim*8) predictor.
-6. Как prescribed ведёт себя в средах с dim_state > dim_internal, с нормализацией? → Частично: E16 перезапускается
-7. Переносится ли prescribed advantage на среды с препятствиями (downstream — planning, не prediction loss)? → Single-seed E34 (prescribed_2) даёт 0% SR. Тестируется в E35 prescribed_4 = (x_a, y_a, wall_x, door_y). Связано с Г22.
-8. Что у free encoder Two Rooms находится в latent space — выучил ли он implicitly wall_x/door_y из пикселей? → Тестируется в B1 (R² физика на чекпоинтах E34, Colab analysis ≤1ч). Если R²(z_free → wall_x) > 0.7 — free решает задачу через явное представление стены; если < 0.3 — через что-то другое (память RNN predictor, косвенные признаки). Влияет на интерпретацию E34.
-
----
-
-## ПРОТОКОЛ
-
-- Факты: только экспериментальные результаты с параметрами
-- Гипотезы: с явным статусом (подтверждена / опровергнута / открыта)
-- Наблюдения (Н): single-seed или underpowered результаты, помечаются явно как наблюдения, не факты. Ставятся для регистрации сигнала, не как опорные результаты для гипотез
-- Подтверждение на одной среде ≠ подтверждение в общем случае — указывать среду
-- При противоречии между экспериментами — фиксировать как противоречие (П) с возможными объяснениями
-- Обновлять при каждом новом эксперименте
+1. ~~Is selection (feature selection) rather than fixing the true cause of the prescribed advantage on Push-T?~~ → Partly answered: Push-T 5D prescribed (without selection) works (Ф36). Selection is not the only factor. But the pendulums without selection do not work — the difference needs explaining (П1)
+2. Why does Push-T 5D prescribed work while pendulum prescribed on the full input does not? (П1) → E16 is being rerun with normalization
+3. ~~Why do the dim sweep (Ф18) and Tier 3 (Ф36) give different results at dim=5?~~ → SOLVED (П2): E13 was underpowered. E28 confirmed that prescribed wins at 1–11.
+4. ~~Why does even sinθ (same subspace) degrade things by 4.8×?~~ → The context has changed: prescribed wins at every dim; the degradation is a loss of gap magnitude, not a defeat
+5. ~~Do the facts Ф17–Ф23 reproduce on full data?~~ → Ф17 updated (E28): prescribed_11 now beats free_11 (42×) given the right predictor capacity. Ф21–Ф23 (fragility) need a rerun with the max(128, dim*8) predictor.
+6. How does prescribed behave in environments with dim_state > dim_internal, under normalization? → Partly: E16 is being rerun
+7. Does the prescribed advantage carry over to environments with obstacles (where the downstream task is planning, not prediction loss)? → Single-seed E34 (prescribed_2) gives 0% SR. Being tested in E35 prescribed_4 = (x_a, y_a, wall_x, door_y). Related to Г22.
+8. What is in the latent space of the Two Rooms free encoder — did it implicitly learn wall_x/door_y from pixels? → Being tested in B1 (R² physics on the E34 checkpoints, Colab analysis ≤1 h). If R²(z_free → wall_x) > 0.7, free solves the task through an explicit representation of the wall; if < 0.3, through something else (memory in the RNN predictor, indirect cues). This affects the interpretation of E34.
 
 ---
 
-## ТАБЛИЦЫ СООТВЕТСТВИЯ (слияние 20.08.2026)
+## PROTOCOL
 
-Апрельская и июльская ветки реестра развивались параллельно и независимо переиспользовали номера E30–E34 и Г16–Г22. Июльские номера закоммичены в `648f1fd` и на них ссылаются README экспериментов, поэтому перенумерована апрельская ветка.
+- Facts: only experimental results, with parameters
+- Hypotheses: with an explicit status (confirmed / refuted / open)
+- Observations (Н): single-seed or underpowered results, marked explicitly as observations rather than facts. They are recorded to register a signal, not as load-bearing support for hypotheses
+- Confirmation on one environment ≠ confirmation in general — always state the environment
+- When experiments contradict each other, record the contradiction (П) together with possible explanations
+- Update with every new experiment
 
-### Эксперименты
+---
 
-| Апрельский номер | Новый номер | Что это |
+## MAPPING TABLES (merge of 20.08.2026)
+
+The April and July branches of the registry developed in parallel and independently reused the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs, so it is the April branch that was renumbered.
+
+### Experiments
+
+| April number | New number | What it is |
 |---|---|---|
-| E30 (PLANNED) | **E36** | Full coordinate drift on vision SSL. План. |
-| E31 | **E33** | Step 1 PCA: last-token confound и pole stability на 5 LLM. Ф47–Ф55, Г19–Г24. |
-| E32 | **E34** | EB-JEPA Two Rooms — prescribed_2 vs free planning. Н1–Н4 (single seed, НЕ факты). |
-| E33 | **E35** | EB-JEPA Two Rooms — prescribed_4 (координаты стены и двери). READY_TO_START, Г25. |
-| E34 (DEFERRED) | **E37** | CARLA prescribed safety axes. Отложен. |
+| E30 (PLANNED) | **E36** | Full coordinate drift on vision SSL. Planned. |
+| E31 | **E33** | Step 1 PCA: last-token confound and pole stability on 5 LLMs. Ф47–Ф55, Г19–Г24. |
+| E32 | **E34** | EB-JEPA Two Rooms — prescribed_2 vs free planning. Н1–Н4 (single seed, NOT facts). |
+| E33 | **E35** | EB-JEPA Two Rooms — prescribed_4 (wall and door coordinates). READY_TO_START, Г25. |
+| E34 (DEFERRED) | **E37** | CARLA prescribed safety axes. Deferred. |
 
-Июльские E30, E31, E32 (critical window, sub-epoch freeze synthetic, sub-epoch freeze real) сохраняют свои номера. PreE30 (pilot DINOv2) коллизии не имеет. Свободны E38 и далее.
+The July E30, E31, E32 (critical window, sub-epoch freeze synthetic, sub-epoch freeze real) keep their numbers. PreE30 (the DINOv2 pilot) has no collision. E38 onward are free.
 
-### Гипотезы
+### Hypotheses
 
-| Апрельский номер | Новый номер | Что это |
+| April number | New number | What it is |
 |---|---|---|
-| Г16 | **Г19** | Residual stream LLM отдаляется от identity токена с глубиной. |
-| Г17 | **Г20** | Категориальная структура в первых PC — артефакт last-token эффекта. |
-| Г18 | **Г21** | Положение пика семантического сигнала — межмодельное различие. |
-| Г19 | **Г22** | Step 1 PCA показывает чистую семантическую геометрию (опровергнута). |
-| Г20 | **Г23** | Категории формируют дуальные пары на полюсах PC (опровергнута). |
-| Г21 | **Г24** | Категориальные узлы — структурное свойство активаций (опровергнута). |
-| Г22 | **Г25** | Prescribed advantage требует координатной полноты. |
+| Г16 | **Г19** | The LLM residual stream moves away from token identity with depth. |
+| Г17 | **Г20** | Categorical structure in the leading PCs is an artefact of the last-token effect. |
+| Г18 | **Г21** | The location of the semantic-signal peak is a between-model difference. |
+| Г19 | **Г22** | Step 1 PCA shows clean semantic geometry (refuted). |
+| Г20 | **Г23** | Categories form dual pairs at PC poles (refuted). |
+| Г21 | **Г24** | Categorical nodes are a structural property of the activations (refuted). |
+| Г22 | **Г25** | The prescribed advantage requires coordinate completeness. |
 
-Июльские Г16 (drift-rate law, опровергнута), Г17 (epiplexity ⊥ identifiability, открыта), Г18 (критическое окно = склон, подтверждена) сохраняют свои номера.
+The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, open) and Г18 (critical window = slope, confirmed) keep their numbers.
 
-### Что ещё изменено при слиянии
+### What else changed in the merge
 
-- Июльские Г16 и Г18 физически лежали в разделе «Открытые» при статусах ОПРОВЕРГНУТА и ПОДТВЕРЖДЕНА. Перемещены в разделы по статусу. Г17 остаётся в «Открытых».
-- Ссылки `last-token confound (E31)` внутри июльских Г16 и Г17 указывали на апрельскую LLM-работу и переписаны на E33. Ссылки `E31 synthetic + E32 real` внутри Ф46 и Г18 указывают на июльские эксперименты и оставлены без изменений.
-- Из июльского `EVIDENCE.md` были утрачены при форке и восстановлены из апрельской ветки: полный протокол с определением класса **Н (наблюдения)**; столбец EB-JEPA Two Rooms в таблице КЛЮЧЕВЫЕ РАЗЛИЧИЯ вместе со строками «Препятствия в среде» и «Downstream task»; вопросы 7 и 8 в НЕРЕШЁННЫХ ВОПРОСАХ.
+- The July Г16 and Г18 physically sat in the "Open" section while carrying the statuses REFUTED and CONFIRMED. They were moved into the sections matching their status. Г17 stays in "Open".
+- References to `last-token confound (E31)` inside the July Г16 and Г17 pointed at the April LLM work and were rewritten to E33. References to `E31 synthetic + E32 real` inside Ф46 and Г18 point at the July experiments and were left unchanged.
+- Lost from the July `EVIDENCE.md` at the fork and restored from the April branch: the full protocol including the definition of the class **Н (observations)**; the EB-JEPA Two Rooms column in the KEY DIFFERENCES table together with the rows "Obstacles in the environment" and "Downstream task"; questions 7 and 8 in OPEN QUESTIONS.
