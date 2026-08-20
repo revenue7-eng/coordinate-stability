@@ -32,4 +32,4 @@ results/tier3_results.json      — Results (5KB, T9a_5d key)
 Ф33, Ф34, Ф36
 
 ## Significance
-Critical result — contradicts E13 dim sweep (crossover at dim=4) and challenges the information selection hypothesis. See П2 in FACTS.md.
+Critical result — contradicts E13 dim sweep (crossover at dim=4) and challenges the information selection hypothesis. See П2 in EVIDENCE.md.

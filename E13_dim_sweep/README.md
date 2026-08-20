@@ -31,7 +31,7 @@ results/sweep_results.json      — Results (3KB)
 Ф18
 
 ## Note
-Preliminary data (100 episodes, 20 epochs). Contradicts E25 (prescribed_5d wins 66×) — see П2 in FACTS.md.
+Preliminary data (100 episodes, 20 epochs). Contradicts E25 (prescribed_5d wins 66×) — see П2 in EVIDENCE.md.
 
 ## Data provenance
 JSON contains only 2 seeds (42, 123). README mentions 3 seeds — third seed missing from data.

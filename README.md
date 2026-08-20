@@ -37,7 +37,7 @@ E{NN}_{name}/
 ```
 
 - [EXPERIMENTS.md](EXPERIMENTS.md) — Full registry of all experiments with parameters and key results
-- [EVIDENCE.md](EVIDENCE.md) — Experimentally verified facts, hypotheses with status (confirmed/refuted/open), and contradictions
+- [EVIDENCE.md](EVIDENCE.md) — Verified facts (Ф), single-seed observations (Н), hypotheses with status (confirmed/refuted/open), and contradictions
 
 ## Experiments (32)
 

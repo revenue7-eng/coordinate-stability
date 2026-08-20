@@ -33,4 +33,4 @@ results/results.json    — Full results with per-seed breakdown and ratios
 Numbers verified from results.json: gauge_fixed_over_free = 1.083×.
 
 ## Note
-This experiment was conducted on 12 April 2026 but was not included in FACTS.md until the audit on 15 April 2026. Added as Ф37.
+This experiment was conducted on 12 April 2026 but was not included in the fact register until the audit on 15 April 2026. Added as Ф37.

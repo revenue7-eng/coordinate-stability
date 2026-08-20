@@ -1,7 +1,7 @@
 # Реестр экспериментов: Prescribed Axes
 
 Автор: Andrey Lazarev | Дата начала: март 2026
-Последнее обновление: 4 июля 2026
+Последнее обновление: 20 августа 2026 — слияние апрельской и июльской веток реестра.
 
 ---
 
@@ -9,10 +9,21 @@
 
 - **E01–E05**: Paper 1 (prescribed-axes)
 - **E06–E12**: Paper 2 (prescribed-axes-drift)
-- **E13–E18**: Dim sweep (prescribed-axes-dim-sweep)
+- **E13–E18**: Dim sweep
 - **E19–E21**: Tier 1 critical tests
 - **E22–E24**: Tier 2 confound tests
 - **E25–E27**: Tier 3 generalization tests
+- **E28–E29**: П2 resolution + drift nature controls
+- **PreE30**: Pilot — coordinate drift на DINOv2 (production-scale vision SSL)
+- **E30–E32**: Drift / hallucination branch (critical window, sub-epoch freeze synthetic + real)
+- **E33**: Step 1 PCA diagnostic — last-token confound и pole stability (LLM activations). *Был E31 в апрельской ветке.*
+- **E34**: EB-JEPA Two Rooms prescribed_2 vs free — single-seed observation. *Был E32.*
+- **E35**: EB-JEPA Two Rooms prescribed_4 — закрытие E34 gap, проверка Г25 (READY_TO_START). *Был E33.*
+- **E36**: Full coordinate drift на vision SSL (PLANNED, см. PreE30). *Был E30.*
+- **E37**: CARLA prescribed safety axes (DEFERRED). *Был E34.*
+- **E38+**: свободны. Ближайший кандидат — ECA / epiplexity (Г17).
+
+> **Коллизия нумерации (обнаружена 20.08.2026).** Апрельская и июльская ветки реестра развивались параллельно и независимо использовали номера E30–E34 и Г16–Г22. Июльские номера закоммичены в `648f1fd`, на них ссылаются README экспериментов и Ф45/Ф46 — поэтому перенумерована апрельская ветка. Таблица соответствия — в конце файла и в `EVIDENCE.md`.
 
 ---
 
@@ -459,6 +470,124 @@
 
 ---
 
+---
+
+## Pilot studies
+
+### PreE30. Coordinate drift on DINOv2 (production-scale vision SSL)
+- **Среда:** CIFAR-100 test split (random subset N=500), 32×32 → 224×224
+- **Условия:** facebook/dinov2-small (22M, 384D) vs facebook/dinov2-base (86M, 768D); CLS token из last_hidden_state; PCA equalization base→384D
+- **Метрика:** Procrustes R² (raw + Frob-norm), Linear CKA
+- **Результат:**
+  - Procrustes R² (raw) = 0.645, R² (Frob-norm) = 0.650
+  - Linear CKA (PCA-reduced) = 0.764, CKA (full dim) = 0.766
+  - Sanity: R² self-comparison = 1.000 ✓; CKA vs Gaussian = 0.305 ⚠ (finite-sample artifact)
+  - Pattern matches drift hypothesis weakly: CKA > R² на ~0.12. Но магнитуда умеренная — production-scale pretrain (LVD-142M) сильно стабилизирует координаты
+- **Параметры:** N=500, seed=42, CPU only, single seed выборки
+- **Статус:** PILOT_DONE. Не достаточно для standalone claims. To be removed after full E36 completion.
+- **Limitations:** capacity confound (small ≠ base), N=500 низкая мощность, CIFAR-100 OOD для DINOv2, single seed, sanity на CKA сломан
+- **Код:** PreE30_drift_pilot_dinov2/code/e30_run.py
+- **Данные:** PreE30_drift_pilot_dinov2/results/results.json, embeddings.npz
+
+### E36. Full coordinate drift on vision SSL (PLANNED)
+- **Среда:** TBD (multi-seed fine-tune DINOv2-small или эквивалент)
+- **Условия:** Multi-seed runs (≥5 seeds), идентичная capacity, N≥5000, правильная shuffled-pairs baseline для CKA
+- **Метрика:** Procrustes R², Linear CKA, error bars
+- **Цель:** Закрыть confound capacity и low N из PreE30; получить standalone evidence для drift на production-scale vision SSL
+- **Статус:** PLANNED. Дизайн: вариант A (fine-tune ImageNet-100, 5 seeds, ~5×3 H100-часов на RunPod) или вариант B (опубликованные multi-seed runs)
+- **Замещает:** PreE30 после завершения
+
+---
+
+## Step 1 PCA Diagnostic (Ядро Phase 2)
+
+### E33. Step 1 PCA: last-token confound и pole stability на 5 LLM
+- **Среда:** Активации residual stream на позиции последнего токена; 5 LLM (Qwen2.5-3B 36 слоёв, Gemma2-2B 26, OLMo-1B 16, Falcon-1B 22, Pythia-1.4B 32); 80 промптов × 8 категорий из Step 0 yadro_phase2 (12 апреля 2026)
+- **Условия:** PCA(40), residualization linear regression на one-hot last token (41 уникальный токен), LDA 5-fold stratified CV
+- **Метрика:** R²(token) на топ-7 PC, LDA на 7/15 PC до и после residualization, нормированная энтропия категорий на полюсах PC, внутрикатегориальная косинусная сплочённость, Spearman/Pearson корреляция, bootstrap stability (20 ресэмплингов 70%)
+- **Результат:**
+  - Path 2 (по слоям): R²(token) монотонно падает с глубиной у всех 5 LLM (Δ=−0.24÷−0.32); LDA на 15 PC после residualization монотонно растёт (Δ=+0.18÷+0.25). Step 1 PCA делался на серединных слоях у всех 5 моделей (Qwen 18/36, Gemma 13/26, OLMo 8/16, Falcon 11/22, Pythia 16/32) — это согласованный выбор, не специфика Qwen
+  - Срез 1: PAIRED PC на остатках = 0 у всех 5 моделей (на сыром PCA 1–4). ASYMMETRIC PC: 2–7
+  - Срез 1b: распределение асимметричных полюсов — code 8, emotional 7, abstract 4, factual 3, logical 2, spatial 1, narrative 0, ethical 0
+  - Срез 1c: внутрикатегориальная косинусная сплочённость на остатках финального слоя (среднее по 5 моделям): emotional 0.128, spatial 0.086, code 0.086, abstract 0.083, factual 0.015, logical 0.003, narrative 0.000, ethical −0.019
+  - Срез 1d: корреляция сплочённости с числом асимметричных появлений Spearman ρ=0.83 (p=0.011), Pearson r=0.75 (p=0.032), N=8. Spatial — outlier (высокая сплочённость, 1 появление)
+  - Срез 2: bootstrap-устойчивость узлов (≥70%) — только code у Falcon (1/5 моделей). У всех остальных категорий и моделей — нет
+- **Параметры:** Все 5 моделей, все срезы на одних активациях из yadro_phase2; bootstrap seed=42, 20 ресэмплингов
+- **Статус:** COMPLETED (диагностика, не интервенция)
+- **Факты:** Ф47, Ф48, Ф49, Ф50, Ф51, Ф52, Ф53, Ф54, Ф55
+- **Код:** E31_step1_pca_diagnostic/code/{path2_layers,pc_polarities,srez1_polarity,srez1b_asym,srez1c_cohesion,srez1d_corr,srez2_bootstrap}.py
+- **Данные:** E31_step1_pca_diagnostic/results/{path2,pc_polarities,srez1,srez1b,srez1c,srez1d,srez2}_output.txt + PATH2_report.md
+- **Следствие для Step 2:** текущий датасет исчерпан как тест семантической геометрии; нужны контролируемые промпты (одинаковая длина, единый последний токен), съём активаций с финального слоя, не серединного
+
+---
+
+## EB-JEPA Two Rooms (transfer prescribed approach на planning с препятствиями)
+
+### E34. EB-JEPA Two Rooms — prescribed_2 vs free planning
+- **Среда:** EB-JEPA Two Rooms (Meta FAIR, 2602.03604), goal-conditioned navigation в среде из двух комнат с вертикальной стеной и дверью. wall_x и door_y рандомизированы между trajectory (fix_wall=False)
+- **Условия:**
+  - prescribed: PrescribedEncoder (MLP 2→256→256→512), вход = (x_a, y_a) агента, 199K params
+  - free: ImpalaEncoder (CNN), вход = 65×65 RGB пиксели, 1.43M params
+- **Общее:** RNNPredictor 793K params, regularizer = VICReg + IDM + temporal similarity, 12 эпох, batch=64, 100K episodes
+- **Метрика:** planning success rate (MPPI, 200 samples × 20 iter, plan_length=90, 200 steps), 20 эпизодов, epoch 11
+- **Параметры:** seed=1 (single seed). 12 эпох. Default LeCun config
+- **Результат:**
+  - free: SR = **55%** (11/20), mean_dist = 9.78
+  - prescribed: SR = **0%** (0/20), mean_dist = 41.54
+  - Probe loss: prescribed 0.006 (12× лучше free 0.072)
+  - Pred loss: free 0.024 (2.2× лучше prescribed 0.051)
+- **Статус:** COMPLETED as single-seed observation. **НЕ закрыт фактически по протоколу программы** (нужно ≥3 seeds). Methodological gap (2D prescribed без информации о среде) closed by E35
+- **Платформа:**
+  - prescribed training — Colab Pro T4 GPU (~50h)
+  - free training — Windows CPU, Python 3.14, PyTorch 2.11 (~167h)
+  - planning eval — Colab Pro T4 GPU (~1.5h)
+- **Наблюдения:** Н1, Н2, Н3, Н4 (EVIDENCE.md)
+- **Код:** E32_eb_jepa_planning/code/{eb_jepa_v3.ipynb, run_experiment_v3_windows.py, eb_jepa_planning_eval.ipynb}
+- **Данные:**
+  - E32_eb_jepa_planning/results/{free,prescribed}/training_results.json (12 epochs each)
+  - E32_eb_jepa_planning/results/{free,prescribed}/planning_eval_results.json
+  - E32_eb_jepa_planning/results/{free,prescribed}/encoder_stats.json (12 epochs aggregate stats — first 20 of 512 dim)
+  - latest.pth.tar checkpoints для обоих encoder'ов (на Drive, в архивах eb_jepa_free.rar и eb_jepa_prescribed-*.zip)
+  - plan_ep0/ — visualisations 6 ранних planning эпизодов на free@ep0 (1 success, 5 fail)
+- **Дополнительный анализ (30.04.2026, post-hoc на encoder_stats.json):** mean shift в latent space — у free относительно нормы больше чем у prescribed (rel shift 0.69–0.78 vs 0.50–0.63). Caveat: агрегаты по 20 of 512 dim после LayerNorm, не per-sample drift
+- **Следствие для E35:** prescribed нужно тестировать с координатами среды (wall_x, door_y), не только агента
+
+### E35. EB-JEPA Two Rooms — prescribed_4 (с координатами стены и двери)
+- **Среда:** EB-JEPA Two Rooms, тот же setup что E34
+- **Условие:** prescribed_4 = (x_a, y_a, wall_x, door_y), z-score нормализация (mean=[31.59, 32.06], std=[16.10, 16.14] — те же что Normalizer.normalize_location в LeCun коде)
+- **Encoder:** PrescribedEncoder (MLP 4→256→256→512). Только input dim изменён vs prescribed_2. Total ~199.5K params (comparable c prescribed_2 199K)
+- **Probe head:** остаётся 2D (x_a, y_a) для сопоставимости с prescribed_2 и free
+- **Параметры:** seed=1, 12 epochs, batch=64 — те же что E34 для прямого сравнения
+- **Метрика:** planning success rate (та же что E34), 20 эпизодов, epoch 11
+- **Цель:** проверить Г22 (координатная полнота как условие prescribed advantage)
+- **Falsifier:** SR ≈ 0% — гипотеза о completeness опровергнута, проблема глубже (architecture mismatch, недостаточный capacity, fundamental limitation)
+- **Compute:** Windows CPU, ~60-100h в фоне с auto-resume
+- **Сохранение:** dual save — D:\experiments\E33_prescribed_4\results\ (local source of truth) + Drive backup (best-effort, mirrors only at end of epoch)
+- **Зависимости:** нет
+- **Status:** READY_TO_START
+- **Follow-up:**
+  - При SR > 30%: prescribed_3 = (x_a, y_a, wall_x) ablation — что важнее, стена или дверь
+  - При SR ≈ 0%: hybrid run (HybridEncoder уже в коде); min-max нормализация контроль на Г14
+  - При SR между 5–30%: ещё один seed для variance estimation
+- **Код:** run_experiment_v4_windows.py (в работе, в /home/claude/E35/)
+- **Связанные документы:** work_plan_2026_04_30.md (план программы)
+
+### E37. CARLA prescribed safety axes — physical axes в driving (DEFERRED)
+- **Среда:** CARLA synthetic, 500 clips × 100 frames @ 10fps, 256×256
+- **Условия:** C1 free / C2 prescribed (4 axes: TTC, closing_v, lateral_offset, braking_margin) / C3 prescribed_frozen
+- **Backbone:** V-JEPA 2.1 ViT-L (300M, frozen)
+- **Метрики:** AP@(0.5s,1s,2s) lead-time, R²(z_i, GT_i) per axis per epoch, eigenvalue spectrum stability
+- **Compute:** ~6h CARLA generation (Windows CPU) + ~45h Colab GPU (3 conditions × 3 seeds × 5h)
+- **Status:** DEFERRED до завершения E35
+- **Зависимости:**
+  - E35 завершён (понятно ли prescribed approach жив на Two Rooms)
+  - Стабильный Colab GPU (сейчас отпадает на CPU)
+- **Готовность кода:** 3 скрипта в архиве (generate_carla_data.py, train.py, analyze.py), не тестировались
+- **Имя:** **E37, не E16** (E16 уже занят double pendulum)
+
+---
+---
+
 ## Сводная таблица
 
 | ID | Название | Среда | Данные | Seeds | Epochs | Episodes | Ключевой результат |
@@ -495,6 +624,13 @@
 | E30 | Critical window | Push-T gym | gym | 3 | 30 | 200 | 136× cliff: ~99% ущерба в 1-й эпохе |
 | E31 | Sub-epoch freeze | Push-T syn | syn | 5 | 20 | 100 | SLOPE не порог (linear 2.2× best-step) |
 | E32 | Sub-epoch freeze real | Push-T gym | gym | 5 | 4* | 50* | SLOPE, R²=0.977, 5/5 моно, Ф46 solid |
+| PreE30 | Drift pilot DINOv2 | CIFAR-100 | — | 1 | — | — | R²=0.65, CKA=0.77 (pilot) |
+| E36 | Drift full DINOv2 | TBD | TBD | ≥5 | TBD | TBD | DEFERRED |
+| E33 | Step 1 PCA diagnostic | LLM activations | yadro_phase2 | — | — | 80 prompts | last-token confound на 5 LLM, узлы неустойчивы |
+| E34 | EB-JEPA Two Rooms prescribed_2 vs free | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | free SR=55%, prescribed SR=0% (single seed observation) |
+| E35 | EB-JEPA Two Rooms prescribed_4 | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | PLANNED — closing E34 gap, проверка Г22 |
+| E37 | CARLA prescribed safety axes | CARLA synthetic | 500 clips | 3 | 30 | — | DEFERRED |
+
 
 ---
 
@@ -553,6 +689,8 @@
 
 ---
 
+---
+
 ## Противоречия между экспериментами
 
 **П1. E25 (5D prescribed works, 66×) vs E15/E16 (маятники prescribed не работает)**
@@ -569,3 +707,18 @@
 - E08: random_fixed проецирует 5→3, с bias, конкретные seeds
 - E23: random_fixed проецирует 5→3, без нормализации входа, другие seeds
 - Различие в реализации → разный результат. Original E08 result unreliable.
+
+
+---
+
+## Таблица соответствия номеров (слияние 20.08.2026)
+
+| Апрельский | Новый | Что это | Статус |
+|---|---|---|---|
+| E30 | **E36** | Full coordinate drift on vision SSL | PLANNED |
+| E31 | **E33** | Step 1 PCA, last-token confound, 5 LLM | COMPLETED (Ф47–Ф55, Г19–Г24) |
+| E32 | **E34** | EB-JEPA Two Rooms prescribed_2 vs free | COMPLETED as single-seed observation (Н1–Н4) |
+| E33 | **E35** | EB-JEPA Two Rooms prescribed_4 | READY_TO_START (Г25) |
+| E34 | **E37** | CARLA prescribed safety axes | DEFERRED |
+
+Июльские E30, E31, E32 и Г16, Г17, Г18 номеров не меняли.
