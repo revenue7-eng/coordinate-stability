@@ -7,7 +7,7 @@ Whether the leading PCs of an LLM residual stream encode semantic category struc
 - Activation source: `yadro_phase2`, Step 0 (12 Apr 2026)
 - Models: Qwen2.5-3B, Gemma2-2B, OLMo-1B, Falcon-1B, Pythia-1.4B
 - Data: 80 prompts across 8 categories, residual stream at the last-token position
-- Layers: 5 per model (Path 2); final layer (slices 1, 1b, 1c, 1d, 2)
+- Layers: 5 per model (Path 2); final layer (slices 1, 1b, 1c, 1d, 1e, 2)
 - PCA: 40 components (25 in slice 2, for speed); exact SVD (`svd_solver=full`)
 - Residualization: linear regression on one-hot last token (41 unique tokens over 80 prompts)
 - LDA: 5-fold stratified CV
@@ -26,12 +26,12 @@ Whether the leading PCs of an LLM residual stream encode semantic category struc
 
 R2(token) falls monotonically with depth in all five models; LDA on the residuals rises monotonically. Step 1 PCA was run on middle layers (Qwen 18/36, Gemma 13/26, OLMo 8/16, Falcon 11/22, Pythia 16/32) — a consistent middle-layer choice, not a Qwen-specific one.
 
-### Slices 1, 1b, 1c, 1d — pole structure on residuals
+### Slices 1, 1b, 1c, 1d, 1e — pole structure on residuals
 - PAIRED PCs (both poles homogeneous, H < 0.3): 1-4 on raw PCA, **zero in all five models on residuals**
 - ASYMMETRIC PCs (one pole homogeneous): 2-7 on residuals, varying by model
 - Asymmetric poles by category, summed over 5 models: code 8, emotional 7, abstract 4, factual 3, logical 2, spatial 1, narrative 0, ethical 0
 - Within-category cosine cohesion on final-layer residuals, averaged over 5 models: emotional 0.128, spatial 0.086, code 0.086, abstract 0.083, factual 0.015, logical 0.003, narrative 0.000, ethical -0.019
-- Cohesion vs number of asymmetric appearances: Spearman rho = 0.826, Pearson r = 0.746, N = 8 categories. Permutation null (200 label shuffles at fixed geometry, 163 valid): mean -0.06, sd 0.40, q95 = 0.58, max = 0.76; p_perm < 0.006. Leave-one-model-out gives rho 0.675-0.826. The parametric p from `spearmanr` is not used at N = 8. Caveat: the code/spatial rank is decided by a gap of 1.3e-4, well below the between-model SEM (~1.2e-2)
+- Cohesion vs number of asymmetric appearances: Spearman rho = 0.826, Pearson r = 0.746, N = 8 categories. Permutation null (200 label shuffles at fixed geometry, 163 valid): mean -0.06, sd 0.40, q95 = 0.58, max = 0.76; 0 of 163 draws reached the observed value, p_perm = 0.006 (conservative, (1+k)/(1+n)). Leave-one-model-out gives rho 0.675-0.819, sign unchanged in all five subsets. The parametric p from `spearmanr` is not used at N = 8. Caveat: the code/spatial rank is decided by a gap of 1.27e-4, roughly 120x below the between-model SEM (0.012 for code, 0.018 for spatial). Source: `results/srez1e_output.txt`
 
 ### Slice 2 — bootstrap stability of the nodes
 - 30 resamples at 70% of prompts, top-15 PCs after PCA (25 components) and residualization
@@ -45,6 +45,7 @@ R2(token) falls monotonically with depth in all five models; LDA on the residual
 - `code/srez1b_asym.py` — which category separates asymmetrically
 - `code/srez1c_cohesion.py` — within-category cosine cohesion
 - `code/srez1d_corr.py` — formal correlation of cohesion with appearances
+- `code/srez1e_robustness.py` — permutation null, leave-one-model-out, code/spatial margin
 - `code/srez2_bootstrap.py` — node stability under bootstrap
 - `code/analiz_kod.py` — original 25 Apr source, all diagnostics in one file
 - `results/path2_output.txt` — per-layer tables
@@ -53,6 +54,7 @@ R2(token) falls monotonically with depth in all five models; LDA on the residual
 - `results/srez1b_output.txt` — asymmetric PC detail
 - `results/srez1c_output.txt` — cohesion table
 - `results/srez1d_output.txt` — Spearman and Pearson correlation
+- `results/srez1e_output.txt` — robustness checks for the slice 1d correlation
 - `results/srez2_output.txt` — bootstrap stability table
 - `results/srez3_pc_extremes_qwen.txt` — poles of all 40 PCs, Qwen (raw Step 1 PCA)
 - `results/srez3_pc_extremes_gemma.txt` — poles of all 40 PCs, Gemma (raw Step 1 PCA)

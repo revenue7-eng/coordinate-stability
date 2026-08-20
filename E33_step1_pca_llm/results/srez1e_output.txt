@@ -1,0 +1,46 @@
+=== Slice 1e: robustness of the cohesion / asymmetry correlation ===
+prompts             : 80
+unique last tokens  : 41
+one-hot controls    : 41
+residual DoF        : 39
+residual var / orig : 0.3355   (degeneracy check)
+
+observed Spearman   : rho = 0.8264  (parametric p = 0.0114)
+observed Pearson    : r   = 0.7460  (parametric p = 0.0335)
+N (categories)      : 8
+
+--- CHECK A: permutation null (labels shuffled, geometry fixed) ---
+draws requested     : 200   (seed 42)
+draws valid         : 163   (37 dropped: NaN, a permuted category had constant asym count)
+null mean / sd      : -0.0560 / 0.3965
+null q50/q90/q95    : -0.0623 / 0.5372 / 0.5774
+null max            : 0.7638
+null >= observed    : 0 of 163
+p_perm (conservative, (1+k)/(1+n)) : 0.0061
+
+--- CHECK B: leave-one-model-out ---
+dropped         rho    p_rho        r      p_r
+qwen         0.6988   0.0538   0.7200   0.0440
+gemma        0.8193   0.0128   0.7377   0.0367
+olmo         0.7832   0.0215   0.8038   0.0162
+falcon       0.7516   0.0315   0.7218   0.0432
+pythia       0.6752   0.0662   0.6585   0.0758
+rho range           : 0.6752 .. 0.8193
+p range             : 0.0128 .. 0.0662
+sign changes        : 0 of 5
+crosses p = 0.05    : 2 of 5
+
+--- CHECK C: code / spatial margin ---
+code     mean = 0.086269  SEM = 0.011912
+         qwen=0.0987  gemma=0.0525  olmo=0.1235  falcon=0.0743  pythia=0.0824
+spatial  mean = 0.086142  SEM = 0.017971
+         qwen=0.0533  gemma=0.1558  olmo=0.0677  falcon=0.0736  pythia=0.0804
+gap code - spatial  : 1.267478e-04
+mean SEM            : 1.494189e-02   (ratio 117.9x the gap)
+rho if the two swap : 0.7066  (parametric p = 0.0501)
+
+--- CALIBRATION: pipeline reimplementation vs committed srez1d ---
+this script rho     : 0.8264
+srez1d_output.txt   : 0.8264
+abs difference      : 0.000038  (tolerance 0.0005)
+verdict             : MATCH
