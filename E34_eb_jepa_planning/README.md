@@ -44,7 +44,43 @@ Pred loss: free 2.2× better. Probe loss is **not comparable across conditions**
 - Free SR (55%) is below their reported ~97% — likely due to medium task config (200 steps) vs their optimized setup
 
 ### Why prescribed fails at planning
-Prescribed encoder sees only agent (x, y). Two Rooms has a wall with a door dividing the space. Prescribed latent space contains no obstacle information. MPPI planner cannot find paths through the door because the door does not exist in prescribed space. Predictor learns correct dynamics (pred loss 0.051) but planner routes trajectories through walls.
+Prescribed encoder sees only agent (x, y). Two Rooms has a wall with a door dividing the space. Prescribed latent contains no information about the wall, and MPPI routes trajectories through it. Predictor learns correct dynamics (pred loss 0.051). B1 confirms the free side of this: the free latent encodes wall position almost perfectly (R2 0.969) while door position is barely readable (R2 0.211). The contrast between conditions is about the obstacle, not about the door. How free reaches the opening while representing its position so weakly is not answered here.
+
+## B1: what is in the free latent
+
+Linear probe from the frozen free encoder latent (512d, `final_ln` output) to the
+room geometry. Ridge with cross-validated alpha, held-out R2, 4000 train and 1000
+test episodes. Thresholds 0.7 and 0.3 were fixed before the run.
+
+| Target | free | prescribed_2 | prescribed input (2d) |
+|---|---|---|---|
+| wall_x | **0.9691** | 0.0388 | 0.0091 |
+| door_y | **0.2109** | 0.0336 | 0.0147 |
+
+Permutation floor for free, refitting on shuffled labels: +0.0011 +/- 0.0090 for
+wall_x, -0.0038 +/- 0.0034 for door_y. Stable across frames, t=8 gives 0.9687 and
+0.2138. Ridge alpha settled at 0.215 for both targets, so the signal is not being
+squeezed out from under heavy regularization.
+
+Wall position clears the 0.7 threshold. Door position sits below 0.3 but is well
+above its floor, so it is weak rather than absent.
+
+The prescribed_2 columns are the structural control. That encoder is an MLP over
+two numbers, so its latent cannot carry the wall in any richer form than those two
+numbers allow. It yields no more than its own input (gap 0.0297 for wall_x, below
+the 0.10 flag), which shows the measurement itself does not manufacture the free
+result.
+
+Three limits on these numbers:
+
+- A linear probe measures linear decodability, not presence of information. door_y
+  at 0.211 means it does not read out linearly. It does not mean the door is absent
+  from the latent.
+- Episodes are freshly drawn from the E34 configuration, not the ones E34 trained
+  on. `init_data` runs before `setup_seed` in `run_experiment_v3_windows.py:370-373`,
+  so that draw was never seeded and cannot be reproduced.
+- The control checkpoint is epoch 0. For a claim about what the input can carry
+  this makes the check stricter, not weaker.
 
 ## Files
 ```
@@ -57,12 +93,18 @@ results/free/encoder_stats.json                — Free encoder statistics per e
 results/prescribed/training_results.json       — Prescribed training metrics, 12 epochs
 results/prescribed/planning_eval_results.json  — Prescribed planning: SR=0%, 20 episodes
 results/prescribed/encoder_stats.json          — Prescribed encoder statistics per epoch
+code/b1_latent_physics.py                      — B1 probe, free latent
+code/b1_control_prescribed.py                  — B1 control, prescribed latent
+results/b1_output.txt                          — B1 output, n=4000/1000
+results/b1_control_output.txt                  — B1 control output, n=4000/1000
 ```
 
 ## Checkpoints (external, not in git)
 Both conditions produced `latest.pth.tar` checkpoints, kept outside the repository:
-- free: 33.8 MB
-- prescribed: 16.9 MB
+- free: 33.8 MB, epoch 11, used for B1
+- prescribed: 16.9 MB, epoch 0 step 1561
+
+The available prescribed checkpoint holds epoch 0, not the epoch 11 that produced SR = 0%. The Н1 numbers come from `planning_eval_results.json`, not from weights, so they are unaffected. Whether epoch 11 prescribed weights still exist anywhere is open.
 
 These are required for the planning eval and for any probing analysis on the latents.
 

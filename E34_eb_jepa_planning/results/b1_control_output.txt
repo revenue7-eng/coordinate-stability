@@ -1,0 +1,39 @@
+========================================================================
+B1 CONTROL -- prescribed_2 as a structural zero
+========================================================================
+[ckpt] epoch=0 step=1561
+[ckpt] prescribed_dim=2 hidden=256 latent=512 final_ln=True
+[ckpt] params=199168 (E34 recorded 199168)
+[ckpt] strict load OK
+[data] fix_wall=False normalize=True sample_length=17
+[draw] 4000 train + 1000 test, frame t=0, seed=42
+  [train] 500/4000  298s
+  [train] 1000/4000  460s
+  [train] 1500/4000  575s
+  [train] 2000/4000  699s
+  [train] 2500/4000  832s
+  [train] 3000/4000  947s
+  [train] 3500/4000  1068s
+  [train] 4000/4000  1208s
+  [test] 500/1000  127s
+  [test] 1000/1000  254s
+
+--- wall_x ----------------------------------------------------------
+  latent z_prescribed (512d)   R2=+0.0388  alpha=2.15e+04
+     permutation floor            -0.0003 +/- 0.0034
+  its own input, locations[t] (2d) R2=+0.0091
+  full trajectory locations (34d) R2=+0.0116
+  latent minus own input: +0.0297
+  OK: the latent yields no more than what it was fed.
+
+--- door_y ----------------------------------------------------------
+  latent z_prescribed (512d)   R2=+0.0336  alpha=1e+04
+     permutation floor            -0.0027 +/- 0.0044
+  its own input, locations[t] (2d) R2=+0.0147
+  full trajectory locations (34d) R2=+0.0184
+  latent minus own input: +0.0189
+  OK: the latent yields no more than what it was fed.
+
+========================================================================
+Read against B1: free wall_x R2=0.9691, door_y R2=0.2109 (t=0, n=4000).
+========================================================================

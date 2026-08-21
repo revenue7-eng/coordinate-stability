@@ -1,0 +1,53 @@
+========================================================================
+B1 -- R^2(z_free -> wall_x, door_y),  thresholds 0.7 / 0.3 fixed in advance
+========================================================================
+[ckpt] epoch=11 step=18744
+[ckpt] stack_sizes=(16, 32, 32) dobs=2 flattened=2592 latent=512 final_ln=True
+[ckpt] encoder params=1426096  (E34 recorded 1426096)
+[ckpt] strict load OK  (0 missing, 0 unexpected)
+[data] config fields used=37 ignored=['num_workers', 'persistent_workers', 'pin_mem']
+[data] fix_wall=False img_size=65 normalize=True sample_length=17
+[draw] 4000 train + 1000 test fresh episodes, frames t=(0, 8), seed=42
+  [train] 500/4000  215s  (429 ms/ep)
+  [train] 1000/4000  426s  (426 ms/ep)
+  [train] 1500/4000  558s  (372 ms/ep)
+  [train] 2000/4000  696s  (348 ms/ep)
+  [train] 2500/4000  825s  (330 ms/ep)
+  [train] 3000/4000  1011s  (337 ms/ep)
+  [train] 3500/4000  1186s  (339 ms/ep)
+  [train] 4000/4000  1323s  (331 ms/ep)
+  [test] 500/1000  129s  (258 ms/ep)
+  [test] 1000/1000  267s  (267 ms/ep)
+
+[labels] measured spread across episodes (raw pixel units)
+  wall_x: n_unique=25 min=20.00 max=44.00 sd=7.149
+  door_y: n_unique=45 min=10.00 max=54.00 sd=12.830
+
+[fit] RidgeCV, alphas 1e-03..1e+05, n/d = 4000/512 = 7.8
+
+--- frame t=0 -------------------------------------------------------
+  wall_x   R2=+0.9691  alpha=0.215
+           permutation floor +0.0011 +/- 0.0090 (max +0.0160, 20 draws)
+           above floor: +0.9680
+           VERDICT: ABOVE 0.7 -- explicit representation of the geometry
+  door_y   R2=+0.2109  alpha=0.215
+           permutation floor -0.0038 +/- 0.0034 (max +0.0020, 20 draws)
+           above floor: +0.2148
+           VERDICT: BELOW 0.3 -- geometry is not linearly present in the latent
+
+--- frame t=8 -------------------------------------------------------
+  wall_x   R2=+0.9687  alpha=0.215
+           permutation floor -0.0027 +/- 0.0098 (max +0.0131, 20 draws)
+           above floor: +0.9714
+  door_y   R2=+0.2138  alpha=0.215
+           permutation floor -0.0023 +/- 0.0030 (max +0.0020, 20 draws)
+           above floor: +0.2161
+
+========================================================================
+SUMMARY  (primary frame t=0, checkpoint epoch 11)
+  wall_x   R2=+0.9691   [t=8: +0.9687]   ABOVE 0.7 -- explicit representation of the geometry
+  door_y   R2=+0.2109   [t=8: +0.2138]   BELOW 0.3 -- geometry is not linearly present in the latent
+========================================================================
+NOT measured here: prescribed_2 as a structural zero (its latent cannot
+contain the wall by construction). That checkpoint lives in a separate
+archive and is a second pass.
