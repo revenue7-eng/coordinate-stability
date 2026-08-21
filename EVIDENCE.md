@@ -469,6 +469,20 @@ Internal-layer activations of decoder language models (transformer residual stre
 
 ---
 
+**Ф56. The E34 free encoder linearly encodes wall_x (R2 0.969) and barely encodes door_y (R2 0.211)**
+- Ridge probe with cross-validated alpha from the frozen latent (512d, `final_ln` output) of the E34 free checkpoint, seed 1, epoch 11
+- 4000 train / 1000 test episodes, freshly drawn from the E34 data config, held out by construction
+- wall_x R2 = 0.9691, permutation floor +0.0011 +/- 0.0090; door_y R2 = 0.2109, floor -0.0038 +/- 0.0034
+- Stable across frames: t=8 gives 0.9687 and 0.2138. Ridge alpha settled at 0.215 for both, so the fit does not lean on regularization
+- Thresholds 0.7 and 0.3 were fixed in advance (question 8). wall_x clears 0.7; door_y falls below 0.3 while staying far above its floor, so it is weak rather than absent
+- Structural control on the prescribed_2 encoder, an MLP over two numbers: wall_x 0.0388, door_y 0.0336, against 0.0091 and 0.0147 from its own input. The latent yields no more than it was fed, so the measurement does not manufacture the free result
+- **Single checkpoint. Whether this holds across training seeds is not measured.** The claim is about this trained network, not about free encoders in general
+- A linear probe measures linear decodability. door_y at 0.211 means it does not read out linearly, not that the door is absent from the latent
+- Episodes could not be matched to the ones E34 trained on: `init_data` runs before `setup_seed` (`run_experiment_v3_windows.py:370-373`), so that draw was never seeded
+- E34 (B1), `results/b1_output.txt`, `results/b1_control_output.txt`
+
+---
+
 ### Environment: EB-JEPA Two Rooms (OBSERVATIONS, NOT FACTS)
 
 The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navigation in a two-room environment separated by a vertical wall with a door. wall_x and door_y are randomized between trajectories (fix_wall=False in the default config). Planning is done via MPPI in latent space.
@@ -479,7 +493,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - 12 epochs, batch=64, seed=1, 100K episodes
 - Prescribed encoder: MLP 2→256→256→512, 199K params
 - Free encoder: ImpalaEncoder, 1.43M params
-- Probe loss for prescribed (0.006) beats free (0.072) by 12× — the coordinates are identifiable
+- Probe loss is **not comparable across conditions**: in the prescribed condition the probe target is the encoder's own input (`run_experiment_v3_windows.py:490-494`), while in the free condition it must be extracted from pixels. The 12× figure was withdrawn once the probe target was checked
 - Pred loss for free (0.024) beats prescribed (0.051) by 2.2× — the predictor learned the dynamics in both cases
 - **The conditions fall short of a fact under the programme protocol:**
   - 1 seed (minimum 3)
@@ -783,7 +797,8 @@ Two Rooms is the first environment in the programme with (a) obstacles and (b) a
 5. ~~Do the facts Ф17–Ф23 reproduce on full data?~~ → Ф17 updated (E28): prescribed_11 now beats free_11 (42×) given the right predictor capacity. Ф21–Ф23 (fragility) need a rerun with the max(128, dim*8) predictor.
 6. How does prescribed behave in environments with dim_state > dim_internal, under normalization? → Partly: E16 is being rerun
 7. Does the prescribed advantage carry over to environments with obstacles (where the downstream task is planning, not prediction loss)? → Single-seed E34 (prescribed_2) gives 0% SR. Being tested in E35 prescribed_4 = (x_a, y_a, wall_x, door_y). Related to Г22.
-8. What is in the latent space of the Two Rooms free encoder — did it implicitly learn wall_x/door_y from pixels? → Being tested in B1 (R² physics on the E34 checkpoints, Colab analysis ≤1 h). If R²(z_free → wall_x) > 0.7, free solves the task through an explicit representation of the wall; if < 0.3, through something else (memory in the RNN predictor, indirect cues). This affects the interpretation of E34.
+8. ~~What is in the latent space of the Two Rooms free encoder — did it implicitly learn wall_x/door_y from pixels?~~ → ANSWERED (Ф56, B1, local CPU run): wall_x yes (R² 0.969, above the 0.7 threshold), door_y almost not (R² 0.211, below 0.3 but above its floor). The split was not anticipated by the question, which assumed both coordinates would move together. It shifts the reading of Н1: the contrast between conditions is about the obstacle. How free reaches the opening while encoding its position so weakly is a new open question (see 9).
+9. How does the free encoder reach the door while encoding door_y at only R² 0.211 linearly (Ф56)? Candidates: the door is represented nonlinearly (separable by an MLP probe on the same latents but not by ridge); it is represented locally rather than as a global coordinate, so a single frame near the agent carries it only when the agent is close; or planning does not use a door representation at all and MPPI finds the opening reactively. The first is cheap to test on the existing checkpoint, the third needs the planner.
 
 ---
 

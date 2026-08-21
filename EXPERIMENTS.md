@@ -536,7 +536,7 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
 - **Result:**
   - free: SR = **55%** (11/20), mean_dist = 9.78
   - prescribed: SR = **0%** (0/20), mean_dist = 41.54
-  - Probe loss: prescribed 0.006 (12× better than free at 0.072)
+  - Probe loss: prescribed 0.006, free 0.072 — **not comparable across conditions**, the prescribed probe target is the encoder's own input (`run_experiment_v3_windows.py:490-494`). The 12× reading was withdrawn once the probe target was checked
   - Pred loss: free 0.024 (2.2× better than prescribed at 0.051)
 - **Status:** COMPLETED as a single-seed observation. **NOT closed as a fact under the programme protocol** (≥3 seeds required). The methodological gap (2D prescribed without information about the environment) is closed by E35
 - **Platform:**
@@ -544,15 +544,16 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
   - free training — Windows CPU, Python 3.14, PyTorch 2.11 (~167h)
   - planning eval — Colab Pro T4 GPU (~1.5h)
 - **Observations:** Н1, Н2, Н3, Н4 (EVIDENCE.md)
-- **Code:** E32_eb_jepa_planning/code/{eb_jepa_v3.ipynb, run_experiment_v3_windows.py, eb_jepa_planning_eval.ipynb}
+- **Code:** E34_eb_jepa_planning/code/{eb_jepa_v3.ipynb, run_experiment_v3_windows.py, eb_jepa_planning_eval.ipynb, b1_latent_physics.py, b1_control_prescribed.py}
 - **Data:**
-  - E32_eb_jepa_planning/results/{free,prescribed}/training_results.json (12 epochs each)
-  - E32_eb_jepa_planning/results/{free,prescribed}/planning_eval_results.json
-  - E32_eb_jepa_planning/results/{free,prescribed}/encoder_stats.json (12 epochs of aggregate stats — the first 20 of 512 dims)
+  - E34_eb_jepa_planning/results/{free,prescribed}/training_results.json (12 epochs each)
+  - E34_eb_jepa_planning/results/{free,prescribed}/planning_eval_results.json
+  - E34_eb_jepa_planning/results/{free,prescribed}/encoder_stats.json (12 epochs of aggregate stats — the first 20 of 512 dims)
   - latest.pth.tar checkpoints for both encoders (on Drive, in the archives eb_jepa_free.rar and eb_jepa_prescribed-*.zip)
   - plan_ep0/ — visualisations of 6 early planning episodes on free@ep0 (1 success, 5 fail)
 - **Additional analysis (30.04.2026, post-hoc on encoder_stats.json):** the mean shift in latent space is larger for free relative to its norm than for prescribed (rel shift 0.69–0.78 vs 0.50–0.63). Caveat: these are aggregates over 20 of 512 dims after LayerNorm, not per-sample drift
-- **Consequence for E35:** prescribed needs testing with environment coordinates (wall_x, door_y), not only the agent's
+- **B1, linear probe of the free latent:** ridge from the frozen 512d latent of the free checkpoint (seed 1, epoch 11) to the geometry, 4000 train / 1000 test fresh episodes, thresholds 0.7 / 0.3 fixed in advance. wall_x R² = 0.9691 (floor +0.0011 ± 0.0090), door_y R² = 0.2109 (floor -0.0038 ± 0.0034); t=8 gives 0.9687 and 0.2138. Structural control on prescribed_2: 0.0388 and 0.0336, against 0.0091 and 0.0147 from its own two-number input. Recorded as Ф56. Single checkpoint, no seed spread. Output in results/b1_output.txt and results/b1_control_output.txt
+- **Consequence for E35:** prescribed needs testing with environment coordinates (wall_x, door_y), not only the agent's. B1 sharpens this: free itself uses wall_x heavily and door_y barely, so wall_x is the load-bearing addition and prescribed_3 = (x_a, y_a, wall_x) becomes a direct test of which coordinate carries the weight, rather than a follow-up conditional on SR > 30%
 
 ### E35. EB-JEPA Two Rooms — prescribed_4 (with wall and door coordinates)
 - **Environment:** EB-JEPA Two Rooms, the same setup as E34
@@ -629,7 +630,7 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
 | PreE30 | Drift pilot DINOv2 | CIFAR-100 | — | 1 | — | — | R²=0.65, CKA=0.77 (pilot) |
 | E36 | Drift full DINOv2 | TBD | TBD | ≥5 | TBD | TBD | DEFERRED |
 | E33 | Step 1 PCA diagnostic | LLM activations | yadro_phase2 | — | — | 80 prompts | last-token confound on 5 LLMs, nodes unstable |
-| E34 | EB-JEPA Two Rooms prescribed_2 vs free | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | free SR=55%, prescribed SR=0% (single-seed observation) |
+| E34 | EB-JEPA Two Rooms prescribed_2 vs free | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | free SR=55%, prescribed SR=0% (single-seed observation); B1 probe: free wall_x R²=0.969, door_y R²=0.211 (Ф56) |
 | E35 | EB-JEPA Two Rooms prescribed_4 | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | PLANNED — closing the E34 gap, testing Г22 |
 | E37 | CARLA prescribed safety axes | CARLA synthetic | 500 clips | 3 | 30 | — | DEFERRED |
 
