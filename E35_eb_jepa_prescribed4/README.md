@@ -1,7 +1,7 @@
 # Experiment 35: EB-JEPA Two Rooms — prescribed_4 (coordinate completeness)
 
 ## Status
-READY_TO_START. Implementation exists (`code/run_experiment_v4_windows.py`, written 30 April 2026) and has never been run.
+READY_TO_START. Implementation exists (`code/run_experiment_v4_windows.py`, written 30 April 2026). A timing run of prescribed_4 reached epoch 0 / batch 576 on 22.08.2026 (see "Measured cost"); no condition has been trained to completion.
 
 ## What this tests
 E34 showed prescribed_2 = (x_a, y_a) reaching 0% planning SR against 55% for the free pixel encoder. The prescribed latent contained no obstacle information. This experiment adds the missing state: prescribed_4 = (x_a, y_a, wall_x, door_y).
@@ -21,22 +21,54 @@ If prescribed_4 = (x_a, y_a, wall_x, door_y) yields SR ≈ 0% on Two Rooms, the 
 
 ## Required before launch
 
-### 1. Normalization — blocking
-v4 hardcodes z-score for all four channels, reusing EB-JEPA's agent-coordinate constants (mean ~ [31.59, 32.06], std ~ [16.10, 16.14]). Agent `loc` already arrives normalized from `dataset.normalizer.normalize_location` when `normalize=True`.
+### 1. Normalization — resolved, not blocking
+v4 applies z-score to all four channels, reusing EB-JEPA's agent-coordinate constants
+(mean [31.5863, 32.0618], std [16.1025, 16.1353]). Agent `loc` already arrives normalized
+from `dataset.normalizer.normalize_location` when `normalize=True`, verified by measurement
+(see "Channel scaling" below).
 
-This conflicts with two registry entries: Ф40 (standardization is 15x worse) and Г14 (min-max [0,1] is a necessary condition for prescribed advantage). Under z-score alone, an SR ~ 0% outcome is unreadable: insufficient coordinates and unfavourable normalization become indistinguishable.
+The earlier requirement to run min-max as a parallel second condition is withdrawn. It
+rested on Ф40 (standardization 15x worse) and on Г14(b) (min-max mandatory). Ф40 did not
+reproduce under direct re-runs on 23.08.2026: the registry comparison mixes two conditions
+that differ in target normalization (a 111.6x target-variance factor) and in epoch count
+(30 vs 20). Re-measured at equal epochs, the largest reproducible harm from standardization
+is 1.23x, and only in one of three schemes. The `EVIDENCE.md` entry for Ф40 still carries
+its original wording as of this writing and is pending amendment to NOT REPRODUCIBLE;
+Г14(b) is not quantitatively supported for this claim. With the basis gone,
+the parallel condition is not justified and the run budget is not doubled.
 
-Amendment: run min-max as a parallel second condition, not as a follow-up conditional on failure. This is not a config switch. It requires `normalize=False` in `data_config`, a min-max path in `build_loc_input` covering all four channels, and a check that the normalizer path used by `planning.py` stays consistent with it. Pre-training verification: print per-channel ranges — min-max gives exactly [0, 1].
+The residual ambiguity stated below under "Basis of the normalization requirement" also
+falls away with it: an SR ~ 0% outcome under z-score is no longer confounded by a registry
+entry that does not reproduce.
 
-Note: channels 3-4 (`wall_x`, `door_y`) are currently normalized with agent-coordinate statistics rather than their own.
+### 2. Secondary success criterion — done
+Binary SR is too coarse for the falsifier. In E34 the prescribed condition produced
+per-episode distances of 8.36 / 9.12 / 13.30 against a free mean of 9.78 — near-misses
+recorded identically to trajectories ending at 71.37.
 
-### 2. Secondary success criterion
-Binary SR is too coarse for the falsifier. In E34 the prescribed condition produced per-episode distances of 8.36 / 9.12 / 13.30 against a free mean of 9.78 — near-misses recorded identically to trajectories ending at 71.37. A prescribed_4 run that halves the distance distribution without crossing the success threshold would read as refutation while being partial confirmation.
+The full `distances` array was already written by `planning_eval_v4.py`. Added 24.08.2026:
+per-episode geometry (`wall_x`, `hole_y`, start, goal and final position, all in raw pixel
+coordinates). Geometry is not recoverable after a run, and without it a final distance
+cannot be normalized against the scale of the episode. With both arrays stored, any summary
+— median, quartiles, below-threshold fractions at any threshold — is computable afterwards
+without a re-run.
 
-Amendment: record the median and the below-threshold fraction of the `distances` array alongside SR. The array is already written; this costs nothing.
+Deliberately not done here: fixing a set of thresholds. Choosing them now without a decision
+rule would only move the post-hoc choice earlier. The threshold for a non-trivial outcome,
+and the rule that reads it, belong in the spec before launch. `success_rate` continues to
+use the upstream threshold of 4.5 px (`two_rooms/env.py:106`), unchanged, so comparability
+with the 55% free figure from E34 is preserved.
 
-### 3. Capacity — decide and record
-prescribed_2 used 199,168 encoder parameters against 1,426,096 for free (7.2x). At SR ~ 0% the capacity confound is indistinguishable from informational incompleteness. Fix the MLP width deliberately and record the choice in the spec rather than inheriting it from v3.
+### 3. Capacity — decided (24.08.2026)
+prescribed_2 used 199,680 encoder parameters against 1,426,096 for free (7.1x). The MLP
+width stays as inherited from v3. Rationale for the record: matching E34 is deliberate, so
+that one variable changes relative to that experiment; parity with free is undefined, since
+no correspondence exists between a pixel encoder and an MLP over four inputs; and if both
+conditions come out at zero, interpretation is limited by the joint ceiling of the two
+regardless of width.
+
+No latent probe is added in E35. In the prescribed branch the probe recovers the encoder's
+own input — the same defect for which `probe_loss` is excluded below.
 
 ## Metric that does not apply
 `probe_loss` is not interpretable in any prescribed branch: the probe (MLPXYHead on the detached latent, MSE against agent loc) recovers the encoder's own input. Compare within the free condition only, or change the probe target to something outside the prescribed axes.
@@ -47,10 +79,108 @@ prescribed_2 used 199,168 encoder parameters against 1,426,096 for free (7.2x). 
 - SR 5-30%: additional seed for variance estimation
 
 ## Cost
-60-100 h CPU, background, auto-resume (dual local + Drive checkpointing). Doubled by the parallel min-max condition.
+60-100 h CPU, background, auto-resume (dual local + Drive checkpointing). Not doubled:
+the parallel min-max condition is withdrawn (see section 1). Planning evaluation is a
+separate cost, not included in this figure and not yet measured on CPU.
 
 ## Files
-- `code/run_experiment_v4_windows.py` — extends v3 with prescribed_4 / hybrid_4; not yet run
+- `code/run_experiment_v4_windows.py` — extends v3 with prescribed_4 / hybrid_4; training only
+- `code/planning_eval_v4.py` — planning evaluation, run separately after training
+
+## The training script does not evaluate planning (verified 24.08.2026)
+`run_experiment_v4_windows.py` imports `main_eval` but never calls it, and defines
+`set_locations_for_planning` without calling it; `cfg.meta.enable_plan_eval` is set to False
+and the per-epoch `sr`/`md` are hardcoded to -1.0. The same holds for v3. A completed
+training run therefore yields checkpoints and `pred`/`reg` curves, but no SR and no
+distances. Planning evaluation is `code/planning_eval_v4.py`, run afterwards against a
+saved checkpoint. In E34 this step was a notebook (`code/eb_jepa_planning_eval.ipynb`).
+
+Changes to `planning_eval_v4.py` on 24.08.2026:
+- Agent and goal locations are now passed through `normalizer.normalize_location` before
+  reaching the encoder. Previously they were taken raw from `env.info` while the model had
+  been trained on normalized ones. The call must run on shape [2]: `normalize_location`
+  broadcasts over the last axis, so a [1, 2, 1] input silently becomes [1, 2, 2] with no
+  error raised.
+- Four-channel support: `wall_x` and `hole_y` are read from the env (they are set in
+  `reset()` and constant within an episode; note the attribute is `hole_y`, not `door_y`)
+  and passed through the training script's own `build_loc_input`, so the z-score constants
+  are the same object rather than a copy.
+- The duplicated `PrescribedEncoder`, `HybridEncoder`, `CONDITIONS` and `build_encoder`
+  are removed in favour of importing them from `run_experiment_v4_windows`. All nine
+  conditions are now available to the evaluator, and `prescribed_dim` is threaded through
+  instead of being hardcoded to 2. `PrescribedJEPA` stays local: the planning variant needs
+  an `expand()` over the MPPI candidate batch that the training variant does not.
+- Per-episode geometry is recorded (see section 2).
 
 ## Related
 - E34 — prescribed_2 vs free, the observation this responds to (Н1)
+
+## Measured cost (22.08.2026)
+First actual run of v4. Conditions of the measurement: mode prescribed_4, z-score (as hardcoded), encoder 199,680 params, predictor 793,600, CPU, seed 1, batches/epoch 1562, epochs 0-12.
+- 12.92 s/it at batch 576 of epoch 0 (12.9-13.2 s/it across batches 199-576)
+- 5.6 h per epoch, ~67 h for 12 epochs extrapolated from epoch 0
+- Mid-epoch checkpoints confirmed: saved every 200 batches (~43 min)
+These numbers describe prescribed_4 only. The free condition has a 1.4M-param pixel encoder and its per-epoch cost is not measured; do not reuse this figure for grid budgeting without measuring it.
+
+## Basis of the normalization requirement — superseded (24.08.2026)
+Section 1 originally rested on Ф40 and Г14. A scope check on 22.08.2026 already found the
+extrapolation weak: Ф40 is a single measurement on synthetic data from Paper 1 /
+random_axes_control, 200 episodes, regression loss; Г14 is CONFIRMED but based on Push-T and
+the double pendulum, dim 1-11, again on regression-loss ratios. Neither covers EB-JEPA,
+Two Rooms, or planning SR.
+
+The re-runs of 23.08.2026 went further: Ф40 does not reproduce at all. The requirement it
+supported is withdrawn rather than merely qualified. This section is kept as a record of how
+the requirement was arrived at and removed; it imposes nothing on the run.
+
+## Relation to Г14
+Г25 (coordinate completeness) restates clause (c) of Г14 — that the coordinates must carry task-relevant information — and tests it on a third environment. The two entries are not independent; Г25 is a subset of Г14(c) evaluated outside the domain where Г14 was confirmed.
+
+## Channel scaling of wall_x / door_y — measured (24.08.2026)
+
+`build_loc_input` normalizes channels 3-4 with the agent-coordinate constants
+LOC_MEAN_X=31.5863 / LOC_STD_X=16.1025 and LOC_MEAN_Y=32.0618 / LOC_STD_Y=16.1353.
+These are the same values held by `Normalizer` (`two_rooms/normalizer.py:11-12`), which is
+what applies the z-score to the agent coordinates. Each channel takes the statistics of its
+own axis (wall_x with X, door_y with Y). The two paths are not bit-identical: `Normalizer`
+divides by `std + 1e-6`, `build_loc_input` by the bare constant. The difference appears in
+the sixth decimal and is why `planning_eval_v4.py` calls each path for the channels it owns
+rather than routing all four through one of them.
+
+Measured over 20 training batches (1280 samples, batch_size 64, `fix_wall: false`,
+`normalize: true`):
+
+- wall_x: 25 distinct values, [20, 44], mean 32.2492, std 7.2899 -> after z-score std 0.4527
+- door_y: 45 distinct values, [10, 54], mean 31.7727, std 12.7838 -> after z-score std 0.7923
+- agent loc as fed to the encoder: mean (0.0082, 0.0521), std (0.9955, 1.0488), range within +/-1.77
+
+The agent coordinates arrive already z-scored by `dataset.normalizer`, confirming the
+assumption stated in the `build_loc_input` docstring. Channels 3-4 therefore enter at
+0.45x and 0.79x the dynamic range of channels 1-2. The imbalance across all four channels
+spans a factor of 2.2.
+
+An earlier version of this section called the reuse of agent statistics a defect and
+proposed per-channel statistics as a four-line repair. That is withdrawn. A per-channel
+affine change of the input is absorbed by the first `nn.Linear`, which sees the raw four
+vector with no preceding normalization: the class of representable functions is identical
+under either scheme, so no geometric relation is lost or gained. What differs is only the
+prior — the weight ratio that expresses a given function — which is an argument about
+inductive bias, not about correctness, and no measurement supports it either way.
+The measured 2.2x spread is not a pathology in either direction.
+
+The current scheme also has one property the alternative lacks: under a shared transform,
+the difference between the agent's x and the wall's x stays proportional to the pixel
+distance between them. Per-channel statistics would rescale the two independently. This is
+an observation about representation, not a demonstration that either scheme trains better.
+
+Decision: channels 3-4 keep the agent-coordinate constants. The scheme is a recorded design
+choice (rationale in `build_loc_input`, referencing work_plan_2026_04_30.md); changing it
+mid-experiment would require its own justification, which does not exist.
+
+This section reports measurements of the dataset as configured; it is not an experimental
+result and carries no Ф number. It is invalidated if img_size, wall_padding, or
+door_padding change.
+
+Not applicable to B1: that control ran on the prescribed_dim=2 checkpoint
+(experiment_mode.txt = "prescribed"; encoder.projection.0.weight has shape (256, 2)),
+which never received wall_x or door_y. Ф56 is unaffected by this finding.
