@@ -8,7 +8,7 @@ Joint-Embedding Predictive Architectures (JEPA) learn by predicting masked repre
 
 ## What we observe
 
-Across 32 experiments on multiple environments and modalities:
+Across 35 experiments on multiple environments and modalities:
 
 1. **Fixed coordinates consistently outperform learned ones** in the low-data regime (5–222× improvement), regardless of whether the axes carry semantic meaning. Any frozen, normalized basis in the task-relevant subspace works equally well (random ≈ prescribed, ratio 0.97×).
 
@@ -39,7 +39,7 @@ E{NN}_{name}/
 - [EXPERIMENTS.md](EXPERIMENTS.md) — Full registry of all experiments with parameters and key results
 - [EVIDENCE.md](EVIDENCE.md) — Verified facts (Ф), single-seed observations (Н), hypotheses with status (confirmed/refuted/open), and contradictions
 
-## Experiments (32)
+## Experiments (35)
 
 | ID | Name | Environment | Key result |
 |---|---|---|---|
@@ -70,6 +70,9 @@ E{NN}_{name}/
 | E30 | Critical window | Push-T | 136× cliff: ~99% of damage in first epoch |
 | E31 | Sub-epoch freeze | Push-T | within epoch 1: SLOPE, not threshold |
 | E32 | Sub-epoch freeze (real) | Push-T | SLOPE confirmed on real physics (R²=0.977) |
+| E33 | Step 1 PCA on LLMs | 5 LLM residual streams | leading PCs are a last-token artefact |
+| E34 | EB-JEPA planning | Two Rooms | prescribed_2 ≈ free, both 0.55 SR (Ф57) |
+| E35 | EB-JEPA prescribed_4 | Two Rooms | on hold: metric does not resolve latent content |
 
 ## Current status
 
@@ -80,7 +83,12 @@ E{NN}_{name}/
   "law" (Г16) is refuted — drift is a front-loaded, self-quenching transient, not steady
   accumulation. The hallucination bridge lives in the LLM domain (Г17), kept on a leash
   until the Push-T model system is closed.
-- EB-JEPA (planning task at realistic scale): running
+- EB-JEPA (planning task at realistic scale, E34/E35): the first result on this environment,
+  prescribed_2 at 0% against free at 55%, was an evaluation artefact. Re-evaluated through a
+  shared code path, both branches reach 0.55 and agree on 18 of 20 episodes (Ф57). The same
+  pair shows that planning success rate at this sample size does not separate an encoder that
+  holds the wall coordinate from one that holds nothing about the obstacle (Ф56), so E35 is on
+  hold pending a metric with established sensitivity.
 
 ## Author
 
