@@ -31,7 +31,7 @@ from eb_jepa.losses import SquareLossSeq, VC_IDM_Sim_Regularizer
 from eb_jepa.schedulers import CosineWithWarmup
 from eb_jepa.state_decoder import MLPXYHead
 from eb_jepa.training_utils import load_config, setup_device, setup_seed
-from eb_jepa.planning import GCAgent, main_eval
+from eb_jepa.planning import GCAgent
 
 # Import the training-side definitions instead of keeping a second copy.
 # Divergence between duplicated encoder code has cost debugging time before.
@@ -282,6 +282,100 @@ def planning_eval_prescribed(plan_cfg, model, env_creator, eval_folder,
 # Build model (same as training)
 # ================================================================
 
+def planning_eval_free(plan_cfg, model, env_creator, eval_folder,
+                       num_episodes=10, loader=None, prober=None):
+    """
+    Planning eval for the free (pixel) encoder.
+
+    Structurally identical to planning_eval_prescribed minus the location
+    plumbing, so both branches are measured by the same code path with the
+    same accounting. Not main_eval: that one returns aggregates only (no
+    per-episode successes/distances), writes a gif and a state.pdf on every
+    episode regardless of plan_cfg.logging.optional_plots, and binds
+    save_path inside the optional_plots branch while calling save_gif
+    outside it (NameError when plots are off).
+    """
+    plan_cfg = OmegaConf.create(plan_cfg)
+    env = env_creator()
+    env.reset()
+
+    agent = GCAgent(
+        model, action_dim=2, plan_cfg=plan_cfg,
+        normalizer=env.normalizer, loc_prober=prober, env=env,
+    )
+    logger.info(f"Free planning eval with {agent.planner.__class__.__name__}")
+
+    successes = []
+    distances = []
+    episode_times = []
+    geometry = []
+
+    for ep in range(num_episodes):
+        ep_start = time.time()
+        ep_folder = Path(eval_folder) / f"ep_{ep}"
+        os.makedirs(ep_folder, exist_ok=True)
+
+        obs, info = env.reset()
+        obs, reward, done, truncated, info = env.step(np.zeros(env.action_space.shape[0]))
+        goal_img = info["target_obs"]
+        goal_position = info["target_position"]
+        start_position = info["dot_position"].detach().clone()
+
+        agent.set_goal(goal_img.detach().clone().to(dtype=torch.float32), goal_position)
+
+        done = False
+        steps_left = env.n_allowed_steps
+        pbar = tqdm(desc=f"ep {ep}", total=steps_left, leave=True,
+                    disable=plan_cfg.logging.tqdm_silent)
+        t0 = True
+
+        while steps_left > 0:
+            obs_tensor = (
+                env.normalizer.normalize_state(
+                    obs.detach().clone().to(dtype=torch.float32, device=agent.device)
+                ).unsqueeze(0).unsqueeze(2)
+            )
+            with torch.no_grad():
+                action = agent.act(obs_tensor, steps_left=steps_left, t0=t0).cpu().numpy()
+
+            for a in action:
+                obs, reward, done, truncated, info = env.step(a)
+                t0 = False
+                steps_left -= 1
+                pbar.update(1)
+                eval_results = env.eval_state(info["target_position"], info["dot_position"])
+                success = eval_results["success"]
+                state_dist = eval_results["state_dist"]
+            pbar.set_postfix({"success": success, "dist": f"{state_dist:.3f}"})
+        pbar.close()
+
+        successes.append(success)
+        distances.append(state_dist)
+        geometry.append({
+            "wall_x": float(env.wall_x),
+            "hole_y": float(env.hole_y),
+            "start_position": [float(v) for v in start_position],
+            "goal_position": [float(v) for v in goal_position],
+            "final_position": [float(v) for v in info["dot_position"]],
+        })
+        ep_time = time.time() - ep_start
+        episode_times.append(ep_time)
+        logger.info(f"  ep {ep}: {'SUCCESS' if success else 'FAIL'} dist={state_dist:.4f} time={ep_time:.0f}s")
+
+    results = {
+        "success_rate": float(np.mean(successes)),
+        "mean_state_dist": float(np.mean(distances)),
+        "avg_episode_time": float(np.mean(episode_times)),
+        "successes": [bool(s) for s in successes],
+        "distances": [float(d) for d in distances],
+        "geometry": geometry,
+    }
+    with open(os.path.join(eval_folder, "planning_results.json"), "w") as f:
+        json.dump(results, f, indent=2)
+    logger.info(f"SR={results['success_rate']:.2f} mean_dist={results['mean_state_dist']:.4f}")
+    return results
+
+
 def load_model(mode, checkpoint_path, device):
     """Build model and load checkpoint."""
     cond = CONDITIONS[mode]
@@ -409,7 +503,7 @@ def run_planning_eval(mode, drive_base, num_episodes=20):
         )
     else:
         # Use original planning eval for free
-        results = main_eval(
+        results = planning_eval_free(
             plan_cfg=plan_cfg, model=jepa, env_creator=env_creator,
             eval_folder=eval_folder, num_episodes=num_episodes,
             loader=val_loader, prober=xy_prober,
