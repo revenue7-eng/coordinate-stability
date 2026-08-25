@@ -1,18 +1,20 @@
 # Experiment 35: EB-JEPA Two Rooms — prescribed_4 (coordinate completeness)
 
 ## Status
-READY_TO_START. Implementation exists (`code/run_experiment_v4_windows.py`, written 30 April 2026). A timing run of prescribed_4 reached epoch 0 / batch 576 on 22.08.2026 (see "Measured cost"); no condition has been trained to completion.
+ON HOLD (24-25.08.2026). The premise this experiment was designed against does not hold: re-evaluated with a shared eval path, prescribed_2 and free both give 0.55 planning SR on the same twenty episodes (Ф57). The 0% for prescribed_2 was an evaluation artefact. Planning SR at n=20 also fails to separate the free encoder, which holds wall_x at R2 0.969 (Ф56), from prescribed_2, which holds nothing about the obstacle - so the metric has no demonstrated power to detect what prescribed_4 would add. Resuming requires a metric with established sensitivity and a quantitative falsifier; neither exists yet. Implementation exists (`code/run_experiment_v4_windows.py`); no condition has been trained to completion.
 
 ## What this tests
-E34 showed prescribed_2 = (x_a, y_a) reaching 0% planning SR against 55% for the free pixel encoder. The prescribed latent contained no obstacle information. This experiment adds the missing state: prescribed_4 = (x_a, y_a, wall_x, door_y).
+As designed: E34 appeared to show prescribed_2 = (x_a, y_a) reaching 0% planning SR against 55% for the free pixel encoder, and this experiment adds the missing state, prescribed_4 = (x_a, y_a, wall_x, door_y).
+
+That contrast has since been withdrawn (Ф57): both branches reach 0.55. What prescribed_4 would add over prescribed_2 is now an open question with no baseline gap to close, and no measurement showing that the planned metric would register it.
 
 ## Hypothesis Г25
 Prescribed advantage requires coordinate completeness with respect to the downstream task. Axis identifiability does not substitute for completeness of the coordinate description.
 
-Source of record: `EVIDENCE.md`, Г25 (status: OPEN, assigned to E35). This is a translation of the registry entry; the registry is authoritative.
+Source of record: `EVIDENCE.md`, Г25 (status: OPEN, untested; support in this environment withdrawn, assigned test on hold). This is a translation of the registry entry; the registry is authoritative.
 
 ## Falsifier
-If prescribed_4 = (x_a, y_a, wall_x, door_y) yields SR ≈ 0% on Two Rooms, the completeness hypothesis is refuted and the problem lies deeper: architecture mismatch, insufficient capacity, or a fundamental limitation of the prescribed approach in environments with obstacles.
+NOT DEFINED. The original criterion - prescribed_4 yielding SR near 0% - was written against a baseline of 0% that turned out to be an evaluation artefact (Ф57). Against a baseline of 0.55 the criterion has to be quantitative, and writing one requires knowing what difference the metric can resolve at n=20. That is the blocking question, not the encoder width.
 
 ## Conditions implemented in v4
 `free`, `prescribed` (= prescribed_2), `prescribed_4`, `hybrid`, `hybrid_4`, plus ablations `prescribed_no_idm`, `prescribed_no_vicreg`, `prescribed_no_sim`, `prescribed_4_no_sim`.
@@ -42,9 +44,13 @@ falls away with it: an SR ~ 0% outcome under z-score is no longer confounded by 
 entry that does not reproduce.
 
 ### 2. Secondary success criterion — done
-Binary SR is too coarse for the falsifier. In E34 the prescribed condition produced
-per-episode distances of 8.36 / 9.12 / 13.30 against a free mean of 9.78 — near-misses
-recorded identically to trajectories ending at 71.37.
+Binary SR is too coarse for the falsifier. The per-episode distances quoted here from the
+first E34 evaluation (8.36 / 9.12 / 13.30 against a free mean of 9.78) are superseded: that
+evaluation is the one Ф57 replaces, and its per-episode figures cannot be traced to a stored
+artefact. On the re-evaluated runs the distances are bimodal - every success ends at 1.108
+or below, every failure at 5.411 or above - so on this data binary SR and the distance array
+carry nearly the same information, and the coarseness argument needs remaking on whatever
+metric replaces SR.
 
 The full `distances` array was already written by `planning_eval_v4.py`. Added 24.08.2026:
 per-episode geometry (`wall_x`, `hole_y`, start, goal and final position, all in raw pixel
@@ -60,7 +66,8 @@ use the upstream threshold of 4.5 px (`two_rooms/env.py:106`), unchanged, so com
 with the 55% free figure from E34 is preserved.
 
 ### 3. Capacity — decided (24.08.2026)
-prescribed_2 used 199,680 encoder parameters against 1,426,096 for free (7.1x). The MLP
+prescribed_2 used 199,168 encoder parameters against 1,426,096 for free (7.2x); prescribed_4
+has 199,680, the 512 difference being two extra input channels into the first Linear. The MLP
 width stays as inherited from v3. Rationale for the record: matching E34 is deliberate, so
 that one variable changes relative to that experiment; parity with free is undefined, since
 no correspondence exists between a pixel encoder and an MLP over four inputs; and if both
@@ -74,14 +81,8 @@ own input — the same defect for which `probe_loss` is excluded below.
 `probe_loss` is not interpretable in any prescribed branch: the probe (MLPXYHead on the detached latent, MSE against agent loc) recovers the encoder's own input. Compare within the free condition only, or change the probe target to something outside the prescribed axes.
 
 ## Follow-up (conditional on outcome)
-- SR > 30%: prescribed_3 = (x_a, y_a, wall_x) — separate the wall from the door
-- SR ~ 0%: hybrid run (hybrid_4 is implemented)
-- SR 5-30%: additional seed for variance estimation
-
-## Cost
-60-100 h CPU, background, auto-resume (dual local + Drive checkpointing). Not doubled:
-the parallel min-max condition is withdrawn (see section 1). Planning evaluation is a
-separate cost, not included in this figure and not yet measured on CPU.
+Withdrawn. All three branches were cut against an SR baseline of 0%, which does not exist
+(Ф57). Any follow-up structure has to be rebuilt on the metric that replaces SR.
 
 ## Files
 - `code/run_experiment_v4_windows.py` — extends v3 with prescribed_4 / hybrid_4; training only
@@ -113,14 +114,9 @@ Changes to `planning_eval_v4.py` on 24.08.2026:
 - Per-episode geometry is recorded (see section 2).
 
 ## Related
-- E34 — prescribed_2 vs free, the observation this responds to (Н1)
-
-## Measured cost (22.08.2026)
-First actual run of v4. Conditions of the measurement: mode prescribed_4, z-score (as hardcoded), encoder 199,680 params, predictor 793,600, CPU, seed 1, batches/epoch 1562, epochs 0-12.
-- 12.92 s/it at batch 576 of epoch 0 (12.9-13.2 s/it across batches 199-576)
-- 5.6 h per epoch, ~67 h for 12 epochs extrapolated from epoch 0
-- Mid-epoch checkpoints confirmed: saved every 200 batches (~43 min)
-These numbers describe prescribed_4 only. The free condition has a 1.4M-param pixel encoder and its per-epoch cost is not measured; do not reuse this figure for grid budgeting without measuring it.
+- E34 — prescribed_2 vs free. The observation this was designed to respond to (Н1) is refuted;
+  the re-evaluation that replaced it is Ф57, artefacts under
+  `E34_eb_jepa_planning/results/{free,prescribed}_reeval_20260824/`
 
 ## Basis of the normalization requirement — superseded (24.08.2026)
 Section 1 originally rested on Ф40 and Г14. A scope check on 22.08.2026 already found the
