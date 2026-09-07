@@ -18,7 +18,7 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
 - **E30–E32**: Drift / hallucination branch (critical window, sub-epoch freeze synthetic + real)
 - **E33**: Step 1 PCA diagnostic — last-token confound and pole stability (LLM activations). *Was E31 in the April branch.*
 - **E34**: EB-JEPA Two Rooms prescribed_2 vs free — single-seed observation. *Was E32.*
-- **E35**: EB-JEPA Two Rooms prescribed_4 — closing the E34 gap, testing Г25 (READY_TO_START). *Was E33.*
+- **E35**: EB-JEPA Two Rooms prescribed_4 — testing Г25 (ON HOLD). *Was E33.*
 - **E36**: Full coordinate drift on vision SSL (PLANNED, see PreE30). *Was E30.*
 - **E37**: CARLA prescribed safety axes (DEFERRED). *Was E34.*
 - **E38+**: free. The nearest candidate is ECA / epiplexity (Г17).
@@ -567,7 +567,7 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
 - **Compute:** Windows CPU, ~60–100h in the background with auto-resume
 - **Saving:** dual save — D:\experiments\E33_prescribed_4\results\ (local source of truth) + Drive backup (best-effort, mirrors only at the end of an epoch)
 - **Dependencies:** none
-- **Status:** READY_TO_START
+- **Status:** ON HOLD (24-25.08.2026). Planning SR at n=20 has no demonstrated power to separate an encoder holding wall_x (Ф56) from one holding nothing about the obstacle (Ф57). Resuming requires a metric with established sensitivity and a quantitative falsifier; neither exists yet. See `E35_eb_jepa_prescribed4/README.md`.
 - **Follow-up:**
   - If SR > 30%: a prescribed_3 = (x_a, y_a, wall_x) ablation — which matters more, the wall or the door
   - If SR ≈ 0%: a hybrid run (HybridEncoder is already in the code); a min-max normalization control on Г14
@@ -631,7 +631,7 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
 | E36 | Drift full DINOv2 | TBD | TBD | ≥5 | TBD | TBD | DEFERRED |
 | E33 | Step 1 PCA diagnostic | LLM activations | yadro_phase2 | — | — | 80 prompts | last-token confound on 5 LLMs, nodes unstable |
 | E34 | EB-JEPA Two Rooms prescribed_2 vs free | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | free SR=55%, prescribed SR=0% (single-seed observation); B1 probe: free wall_x R²=0.969, door_y R²=0.211 (Ф56) |
-| E35 | EB-JEPA Two Rooms prescribed_4 | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | PLANNED — closing the E34 gap, testing Г22 |
+| E35 | EB-JEPA Two Rooms prescribed_4 | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | ON HOLD — testing Г22 |
 | E37 | CARLA prescribed safety axes | CARLA synthetic | 500 clips | 3 | 30 | — | DEFERRED |
 
 
@@ -721,7 +721,7 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
 | E30 | **E36** | Full coordinate drift on vision SSL | PLANNED |
 | E31 | **E33** | Step 1 PCA, last-token confound, 5 LLMs | COMPLETED (Ф47–Ф55, Г19–Г24) |
 | E32 | **E34** | EB-JEPA Two Rooms prescribed_2 vs free | COMPLETED as a single-seed observation (Н1–Н4) |
-| E33 | **E35** | EB-JEPA Two Rooms prescribed_4 | READY_TO_START (Г25) |
+| E33 | **E35** | EB-JEPA Two Rooms prescribed_4 | ON HOLD (Г25) |
 | E34 | **E37** | CARLA prescribed safety axes | DEFERRED |
 
 The July E30, E31, E32 and Г16, Г17, Г18 kept their numbers.
