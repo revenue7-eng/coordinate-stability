@@ -470,7 +470,9 @@ def run_planning_eval(mode, drive_base, num_episodes=20):
     jepa.eval()
 
     # Load planning configs
-    with open("examples/ac_video_jepa/cfgs/planning_mppi.yaml") as f:
+    # Planner config is vendored in this repo (E35): sum_all_diffs=false
+    _repo_cfgs = Path(__file__).resolve().parent.parent / "cfgs"
+    with open(_repo_cfgs / "planning_mppi.yaml") as f:
         plan_cfg = yaml.safe_load(f)
     with open("examples/ac_video_jepa/cfgs/eval.yaml") as f:
         eval_cfg = yaml.safe_load(f)
