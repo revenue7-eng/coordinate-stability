@@ -14,7 +14,27 @@ Prescribed advantage requires coordinate completeness with respect to the downst
 Source of record: `EVIDENCE.md`, Г25 (status: OPEN, untested; support in this environment withdrawn, assigned test on hold). This is a translation of the registry entry; the registry is authoritative.
 
 ## Falsifier
-NOT DEFINED. The original criterion - prescribed_4 yielding SR near 0% - was written against a baseline of 0% that turned out to be an evaluation artefact (Ф57). Against a baseline of 0.55 the criterion has to be quantitative, and writing one requires knowing what difference the metric can resolve at n=20. That is the blocking question, not the encoder width.
+Defined 07.09.2026 from a power calculation, superseding NOT DEFINED. The original criterion - prescribed_4 yielding SR near 0% - was written against a baseline of 0% that turned out to be an evaluation artefact (Ф57). Against a baseline of 0.55 the criterion has to be quantitative, and writing one requires knowing what difference the metric can resolve at n=20. That is the blocking question, not the encoder width.
+
+Resolution of the metric at n=20 (exact McNemar, two-sided, alpha=0.05, paired on
+`setup_seed(1)`, baseline SR 0.55). Power against a true effect of:
++0.15 -> 0.067; +0.20 -> 0.196; +0.25 -> 0.383; +0.30 -> 0.584; +0.35 -> 0.755,
+all assuming zero regressions. Allowing one regression in twenty (p10=0.05), even
+a true SR of 1.00 gives 0.785. Twenty episodes therefore cannot support any
+falsifier: below +0.35 the design returns a non-significant result whether or not
+the effect exists.
+
+n required for power 0.80, p10=0.05: +0.10 -> 168; +0.15 -> 92; +0.20 -> 61;
++0.25 -> 45; +0.30 -> 36.
+
+Falsifier: n=60 per condition, paired, exact McNemar, two-sided alpha=0.05. G25 is
+unsupported in this environment if prescribed_4 does not exceed free by at least
++0.20 SR with a significant test. Effects below +0.20 are outside the resolution of
+this design; that limit is declared before the run, not read off the result.
+
+The continuous alternative does not help: on the re-evaluated runs distances are
+bimodal (success <= 1.108, failure >= 5.411, nothing between), so mean_dist carries
+the same information as binary SR and inherits the same n requirement.
 
 ## Conditions implemented in v4
 `free`, `prescribed` (= prescribed_2), `prescribed_4`, `hybrid`, `hybrid_4`, plus ablations `prescribed_no_idm`, `prescribed_no_vicreg`, `prescribed_no_sim`, `prescribed_4_no_sim`.
