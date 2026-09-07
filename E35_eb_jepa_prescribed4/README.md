@@ -88,6 +88,24 @@ Withdrawn. All three branches were cut against an SR baseline of 0%, which does 
 - `code/run_experiment_v4_windows.py` — extends v3 with prescribed_4 / hybrid_4; training only
 - `code/planning_eval_v4.py` — planning evaluation, run separately after training
 
+## Upstream and reproducibility
+
+Built on `facebookresearch/eb_jepa` @ `966e61e9285b3a876f49b9774e9720d9a99a7925`
+(v0.1.1, Apache 2.0, arXiv:2602.03604). The local working copy is byte-identical
+to that commit across all code, configs and tests, with one exception:
+`pyproject.toml` relaxes `torch==2.6.0` to `torch` and `requires-python == 3.12.*`
+to `>= 3.12`. Consequence: the eval environment runs torch 2.13.0+cpu, not the
+pinned 2.6.0. The torch version used for the August training runs is not recorded.
+
+Environment configs (`train.yaml`, `eval.yaml`,
+`eb_jepa/datasets/two_rooms/data_config.yaml`) are upstream and not vendored here;
+obtain them from the commit above. Only `cfgs/planning_mppi.yaml` is vendored, and
+it differs from upstream by exactly one line: `sum_all_diffs: true` -> `false`.
+
+Checkpoints (epoch 11, not in version control):
+- prescribed: md5 `37aa06ee71f4a6e5754d810bff6469ea`
+- free: md5 `7c6a27ad873ca5c57c0d717459601b38`
+
 ## The training script does not evaluate planning (verified 24.08.2026)
 `run_experiment_v4_windows.py` imports `main_eval` but never calls it, and defines
 `set_locations_for_planning` without calling it; `cfg.meta.enable_plan_eval` is set to False
