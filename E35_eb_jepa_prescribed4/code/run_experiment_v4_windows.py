@@ -470,8 +470,8 @@ def build_loc_input(loc, wall_x, door_y, prescribed_dim):
         dy = door_y.view(B, 1, 1).float().expand(B, 1, T)
         # Apply z-score with X-statistics for wall_x (it's an x-coordinate),
         # Y-statistics for door_y (it's a y-coordinate).
-        wx = (wx - LOC_MEAN_X) / LOC_STD_X
-        dy = (dy - LOC_MEAN_Y) / LOC_STD_Y
+        wx = ((wx - LOC_MEAN_X) / LOC_STD_X).to(loc.device)
+        dy = ((dy - LOC_MEAN_Y) / LOC_STD_Y).to(loc.device)
         loc4 = torch.cat([loc, wx, dy], dim=1)  # [B, 4, T]
         return loc4
 
