@@ -869,3 +869,15 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - The July Г16 and Г18 physically sat in the "Open" section while carrying the statuses REFUTED and CONFIRMED. They were moved into the sections matching their status. Г17 stays in "Open".
 - References to `last-token confound (E31)` inside the July Г16 and Г17 pointed at the April LLM work and were rewritten to E33. References to `E31 synthetic + E32 real` inside Ф46 and Г18 point at the July experiments and were left unchanged.
 - Lost from the July `EVIDENCE.md` at the fork and restored from the April branch: the full protocol including the definition of the class **Н (observations)**; the EB-JEPA Two Rooms column in the KEY DIFFERENCES table together with the rows "Obstacles in the environment" and "Downstream task"; questions 7 and 8 in OPEN QUESTIONS.
+
+## Ф58 — E35: prescribed_4 vs free, paired SR (Two Rooms, MPPI, n=168)
+- [verified: python McNemar over /mnt/d/e35_backup/{prescribed_4,free}/planning_eval_results_n168.json, 2026-09-09] n=168, seed=1. prescribed_4 SR=97/168=0.577, free SR=79/168=0.470. Paired diff +0.107 [95% CI +0.017..+0.198].
+- [verified: same table] Discordant pairs b(prescribed-only)=40, c(free-only)=22; concordant a=57, d=49.
+- [verified: exact binomial McNemar, two-sided] p=0.0300 (chi2 cont.corr=4.66, df=1). Significant at alpha=0.05.
+- [verified: geometry compare, rounded-3 mismatches=0 over 168] Episode pairing confirmed: wall_x/hole_y/goal identical across all 168; only final_position (the outcome) differs. McNemar valid. (GEOM strict == was False only because final_position differs; not a pairing break.)
+- [verified: eval logs this session] eval speed prescribed ~84s/ep, free ~90s/ep (single run). 336-ep campaign ~8h.
+- VERDICT (Г25): EXPERIMENTS.md pre-registers NO quantitative falsifier for E35 (it was ON HOLD precisely because n=20 planning SR had no power; the +0.20 threshold existed only in handoffs, not in the protocol). This run supplies the missing power (n=168, paired): prescribed_4 significantly beats free (diff +0.107, McNemar p=0.030). This RESOLVES the ON-HOLD (power now exists) and is a significant positive effect in the predicted direction. It does NOT map to a pre-registered pass/fail line because none was defined; magnitude interpretation is open. [protocol: EXPERIMENTS.md line ~558-564, metric=planning SR, prescribed_4=(x_a,y_a,wall_x,door_y); we ran n=168 vs the pre-registered 20.]
+- free checkpoint md5=8344448ed0da4437f0d91ab4e73afd71 (seed=1, 12ep). [verified: md5sum, 3 copies] (prescribed_4 md5=a97248... already in EVIDENCE from prior session.)
+
+## Ф59 — build_loc_input device fix (prescribed eval on GPU)
+- [verified: traceback + commit e227e96 + pod md5 0ad40aec44b47a299eb2d9e32b852488] Before fix, prescribed planning eval crashed on GPU in build_loc_input: torch.cat([loc(cuda), wx(cpu), dy(cpu)]). Fix: .to(loc.device) on wx/dy. Numerically inert (no-op when devices match) -> checkpoints/training unaffected. Bug was masked on CPU pods (all-cpu).
