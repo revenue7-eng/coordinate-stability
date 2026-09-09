@@ -384,7 +384,7 @@ def load_model(mode, checkpoint_path, device):
     locations_available = encoder_type in ('prescribed', 'hybrid')
 
     cfg = load_config("examples/ac_video_jepa/cfgs/train.yaml")
-    cfg.data.num_workers = 0
+    cfg.data.num_workers = int(os.environ.get("NUM_WORKERS", "0"))
     cfg.data.pin_mem = False
     cfg.data.persistent_workers = False
 

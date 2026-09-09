@@ -353,7 +353,7 @@ def run_condition(mode, drive_base):
     cfg = load_config("examples/ac_video_jepa/cfgs/train.yaml")
     # Colab overrides
     cfg.logging.log_wandb = False
-    cfg.data.num_workers = 0
+    cfg.data.num_workers = int(os.environ.get("NUM_WORKERS", "0"))
     cfg.data.pin_mem = False
     cfg.data.persistent_workers = False
     cfg.data.batch_size = 64
