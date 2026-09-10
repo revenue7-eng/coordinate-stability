@@ -386,17 +386,29 @@ Protocol:
 - Artefact: E30_critical_window/ (README + code + results, reproducible from all_results.json)
 - E30
 
-**Ф46. Within the first epoch the damage is a continuous SLOPE, not a discrete threshold (E31 synthetic → E32 real, SOLID)**
+**Ф46. Within the first epoch the damage is a continuous SLOPE, not a discrete threshold (E31 synthetic → E32 real → E38 full budget, SOLID; onset reading revised)**
 - Question: inside epoch 1, does the damage appear at a sharp threshold (a discrete point of no return) or accumulate as a slope? The encoder is frozen at fractions of the batches of epoch 1.
 - **E31 (synthetic, 5 seeds):** verdict SLOPE (from analyze_shape.py). Linear-vs-step over the rise f≥0.25: the line is 2.2× better (SS 0.085 vs 0.186), linear R²=0.88. Monotone in 3/5 seeds (0 dips), 2/5 with a single noise dip.
 - **E32 (real gym-pusht, 5 seeds {7,42,123,777,2024}):** verdict SLOPE, CLEANER than synthetic. **5/5 seeds strictly monotone** (0 dips of any kind). Pooled linear-vs-step over the band f∈[0.25,0.60] (per-seed min-max normalized): **linear R²=0.977**; the best single-breakpoint step is **10.5×** worse (SS_step 1.047 vs SS_lin 0.100, breakpoint f=0.50). Raw per-seed curves are slightly convex (increments grow toward f=0.60). E30-style anchor on real data: freeze@1.0/@0.0 = **22.1×** (per seed 7.2–35.3×) — the same direction as E30's 136× cliff.
-- The first quarter of the epoch (f≤0.25) is near-harmless; after that the damage integrates continuously, accelerating toward the end
+- **E38 (real gym-pusht, full budget EP=15/NEP=200, 5 seeds, 17-point grid incl. sub-0.25):** verdict SLOPE over the actual rise f∈[0.00,0.40] — **5/5 seeds strictly monotone**, pooled linear R²=0.880, best single-breakpoint step 1.86× worse. Anchor freeze@1.0/@0.0 = 9.8–75.6× per seed (mean 39.1×).
+- **REVISED by E38:** the "first quarter is near-harmless, damage accelerates toward the end of the epoch" reading does NOT survive measurement. With points below 0.25 the damage rises from the first optimizer steps (f=0.00→0.25 gives 5.8–17.1×, see Ф60), is steepest over roughly the first 40% of the epoch, and then SATURATES rather than accelerating. Per-seed plateau onset f≈0.70/0.80/0.90/1.00 (seed 777 oscillates near its max from f≈0.35). The earlier convexity was the visible part of a rise whose upper half lay outside the measured band — exactly the gap flagged in the [NOTE for cross-checking] below.
+- [WINDOW CAVEAT, E38] E32's analyze_shape.py run unmodified on full-budget data returns **STEP** (ratio 0.66, R²_lin 0.576, 1/5 monotone). This is a property of the legacy 0.25–0.60 band, which at full budget straddles the rise and the plateau, not of the curve: the identical comparison gives SLOPE on [0.00,0.40] (ratio 1.86) and INCONCLUSIVE on the plateau [0.45,1.00]. Any shape claim must state its window.
 - Against a discrete irreversibility event; in favour of continuous drift. E32 removes the single (synthetic) caveat from Ф46 → **SOLID**.
 - Environment: E31 — Push-T synthetic (synth(), 20 epoch/100 ep); E32 — Push-T real gym-pusht (reduced budget EP=4/NEP=50, pymunk 6.2.1 pinned)
 - Caveats (E32): the reduced budget compresses the ABSOLUTE gaps (prescribed/unfrozen ~4× here vs 222× at scale; anchor cliff 22× vs E30's 136×) — do NOT compare these magnitudes with the 30-epoch runs; **the shape verdict is budget-robust** (the curve is monotone and slope-shaped regardless of budget). pymunk 6.2.1 (gym_pusht asks for ≥6.6, but 6.6+/7.x break add_collision_handler). A full-fidelity rerun (EP=15, NEP=200) is a one-line change.
 - [NOTE for cross-checking] These artefacts contain NO resolution in (0.0, 0.25) (grid {0.0, 0.25…0.60, 1.0}); the near-harmless onset here is qualitative (f≤0.25). The claim "band [0.00–0.20] slope≈1.25 vs [0.25–0.60] slope≈13.04, ratio 10.4×" requires a separate higher-resolution run (sub-0.25) and is not supported by these files. The numbers above come from the shipped shape_verdict.json.
-- Artefacts: E31_subepoch_freeze/, E32_subepoch_freeze_real/ (verdict in shape_verdict.txt / shape_verdict.json)
-- E31, E32
+- Artefacts: E31_subepoch_freeze/, E32_subepoch_freeze_real/, E38_subepoch_freeze_full/ (verdicts in shape_verdict.txt / shape_verdict.json; E38 per-seed sweeps checked in)
+- E31, E32, E38
+
+**Ф60. The onset of epoch 1 is NOT harmless: damage accumulates from the first optimizer steps (E38)**
+- Over f∈[0.00,0.25] best_vp rises by **5.8×, 9.8×, 11.0×, 11.2×, 17.1×** (seeds 7, 123, 42, 2024, 777). No seed shows a harmless opening segment.
+- Directly answers the sub-0.25 run requested in Ф46's [NOTE for cross-checking]. The answer is negative: the near-harmless onset was an artifact of a grid with no points between 0.00 and 0.25, whose endpoints were joined by a line.
+- Consequence for the bridge wording: "continuously-integrated divergence" starts at the first steps, not after a quiet quarter. Nothing about the SLOPE verdict changes; the onset claim attached to it does.
+- Also measured at full budget: `prescribed` 0.00177–0.00411 vs `f=0.00` (encoder frozen at init) 0.00097–0.00801 — same order of magnitude, i.e. Ф31 (random_fixed ≈ prescribed) reproduced on measured data rather than through the Ф12 proxy that E30/Ф45 had to substitute.
+- Environment: Push-T real gym-pusht, EP=15/NEP=200, seeds {42,123,777,2024,7}, grid {0.00,0.05,...,0.60,0.70,0.80,0.90,1.00}, pymunk 6.2.1 pinned, local CPU
+- Caveats: 5 seeds characterize the between-seed spread only roughly, and that spread is large (anchor 9.8–75.6×; knee position 0.70–1.00). The plateau criterion (first f staying within 5% of max) is a post-hoc descriptive statistic chosen after seeing the curves, not a pre-registered metric. The JEPA initial-collapse confound (T-JEPA/I-JEPA report a sharp collapse-then-recover transient in the first iterations) is NOT settled by this experiment.
+- Artefact: E38_subepoch_freeze_full/ (README + code + per-seed results)
+- E38
 
 ---
 ---
@@ -612,7 +624,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 **Г18. The critical window for free-encoder damage is inside the first epoch; the shape is a continuous slope, not a discrete threshold**
 - Refines Г15 (the two-phase model): phase 1 is not "epochs 0–2" but "inside the first epoch".
 - Support: Ф45 (E30) — ~99% of the damage in the first epoch (freeze@0→@1 = 136× cliff vs freeze@1→unfrozen = 1.3×); Ф46 (E31 synthetic + E32 real) — inside the first epoch it is a slope (SLOPE verdict from code: E32 R²=0.977, step 10.5× worse, 5/5 monotone).
-- The first quarter of the epoch (f≤0.25) is near-harmless; after that the damage integrates continuously, accelerating toward the end.
+- ~~The first quarter of the epoch (f≤0.25) is near-harmless; after that the damage integrates continuously, accelerating toward the end.~~ **REVISED by E38 (Ф60):** the damage rises from the first optimizer steps (f=0.00→0.25 gives 5.8–17.1×), is steepest over roughly the first 40% of the epoch, and then saturates. The SLOPE verdict is unaffected; only the onset and the "accelerating" reading are.
 - **The correct formulation (important for the hallucination bridge):** "early, continuously-integrated divergence that later training does not undo" — NOT "irreversible event". The word "irreversible" must not be read as discreteness: irreversibility is a property of the terminal state of epoch 1 with respect to later training (E30/Ф45), reached by continuous accumulation (E31/E32/Ф46). The slope directly refutes a discrete threshold.
 - Bridge to hallucination: the shared axis is confident output from an ungrounded state (NOT an identity of mechanism). The real domain test is the LLM (Г17, epiplexity ⊥ identifiability), outside Push-T. Keep it on the leash.
 - Environment: Push-T (synthetic E31 + real gym-pusht E32). The hallucination domain is separate (Г17).

@@ -21,7 +21,8 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
 - **E35**: EB-JEPA Two Rooms prescribed_4 — testing Г25 (COMPLETE 2026-09-09, see EVIDENCE Ф58). *Was E33.*
 - **E36**: Full coordinate drift on vision SSL (PLANNED, see PreE30). *Was E30.*
 - **E37**: CARLA prescribed safety axes (DEFERRED). *Was E34.*
-- **E38+**: free. The nearest candidate is ECA / epiplexity (Г17).
+- **E38**: Sub-epoch freeze sweep, full budget + sub-0.25 resolution (COMPLETE 2026-09-11, Ф46 revised, Ф60).
+- **E39+**: free. The nearest candidate is ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
 
@@ -465,6 +466,21 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
 - **Parameters:** 5 seeds (7,42,123,777,2024), reduced budget EP=4/NEP=50 (sandbox limit; the shape is budget-robust). pymunk 6.2.1 pinned.
 - **Caveats:** the absolute gaps are compressed (prescribed/unfrozen ~4× vs 222× at scale) — do NOT compare magnitudes with the 30-epoch runs. There is no sub-0.25 resolution (the near-harmless onset is qualitative). Per-seed raw seed_*.json are regenerated via run_seed.py.
 - **Facts:** Ф46 (solid), Г18 (confirmed)
+
+### E38. Sub-epoch freeze sweep — full budget + sub-0.25 resolution (Push-T, gym-pusht)
+- **Environment:** Push-T (real gym-pusht, pymunk 6.2.1 pinned); infrastructure imported unchanged from E32 (`e32_lib.py`)
+- **Conditions:** The E32 sweep at full budget with four added points below 0.25 and three between 0.60 and 1.00. f ∈ {0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.70, 0.80, 0.90, 1.0}. Closes the three items E32 left open: forced budget, missing sub-0.25 resolution, absent per-seed raw data.
+- **Metric:** best_vp per freeze fraction; shape by the E32 analyzer (linear vs single-breakpoint step), evaluated across several windows
+- **Result:**
+  - SLOPE over the rise f∈[0.00,0.40]: **5/5 seeds strictly monotone**, linear R²=0.880, step 1.86× worse
+  - **Onset is not harmless**: f=0.00→0.25 gives 5.8–17.1× (Ф60), refuting the near-harmless reading in Ф46
+  - Curve saturates rather than accelerating; per-seed plateau onset f≈0.70–1.00
+  - The legacy 0.25–0.60 band returns STEP on this data — a window artifact, not a threshold (see the window table in the README)
+  - Anchor freeze@1.0/@0.0 = 9.8–75.6× per seed (mean 39.1×), vs 22.1× at E32's reduced budget and 136× via E30's proxy
+- **Parameters:** 5 seeds (42,123,777,2024,7), EP=15, NEP=200, 17 grid points. Local CPU, 33–267 min per seed (wall-clock varied with CPU contention, results unaffected).
+- **Facts:** Ф60, Ф46 (revised)
+- **Code:** E38_subepoch_freeze_full/code/{run_seed.py, analyze_shape.py, analyze_shape_windows.py}
+- **Data:** E38_subepoch_freeze_full/results/seed_{7,42,123,777,2024}.json (checked in)
 - **Code:** E32_subepoch_freeze_real/code/{e32_lib.py, run_seed.py, analyze_shape.py}
 - **Data:** E32_subepoch_freeze_real/results/{shape_verdict.json, e32_slope.png}
 
@@ -628,6 +644,7 @@ Last updated: 20 August 2026 — merge of the April and July branches of the reg
 | E30 | Critical window | Push-T gym | gym | 3 | 30 | 200 | 136× cliff: ~99% of the damage in epoch 1 |
 | E31 | Sub-epoch freeze | Push-T syn | syn | 5 | 20 | 100 | SLOPE not a threshold (linear 2.2× best-step) |
 | E32 | Sub-epoch freeze real | Push-T gym | gym | 5 | 4* | 50* | SLOPE, R²=0.977, 5/5 monotone, Ф46 solid |
+| E38 | Sub-epoch freeze full budget | Push-T gym | gym | 5 | 15 | 200 | SLOPE on [0.00,0.40] R²=0.880 5/5 monotone; onset 5.8–17.1× (Ф60); Ф46 onset reading revised |
 | PreE30 | Drift pilot DINOv2 | CIFAR-100 | — | 1 | — | — | R²=0.65, CKA=0.77 (pilot) |
 | E36 | Drift full DINOv2 | TBD | TBD | ≥5 | TBD | TBD | DEFERRED |
 | E33 | Step 1 PCA diagnostic | LLM activations | yadro_phase2 | — | — | 80 prompts | last-token confound on 5 LLMs, nodes unstable |
