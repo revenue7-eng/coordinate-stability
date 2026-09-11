@@ -2,7 +2,7 @@
 
 Andrey Lazarev | Independent Researcher
 
-Last updated: 25 August 2026 (Ф57, Н1/Н2 refuted, Г25 rewritten) — merge of the April branch (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) with the July branch (Ф45, Ф46, Г16–Г18). April E- and Г-numbers were reassigned, July ones kept. See MAPPING TABLES at the end of the file.
+Last updated: 11 September 2026 (Ф61/Ф62 added, Ф46/Ф60 caveats amended; earlier: Ф57, Н1/Н2 refuted, Г25 rewritten) — merge of the April branch (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) with the July branch (Ф45, Ф46, Г16–Г18). April E- and Г-numbers were reassigned, July ones kept. See MAPPING TABLES at the end of the file.
 
 Protocol:
 - **Facts (Ф)** — experimentally verified results, ours or from sources we have studied. For ours: code, environment, parameters and seeds are given. For external ones: the source is given (book, paper with DOI/arXiv, page or section). Admitting an external fact to the registry is a curatorial decision: it counts as established once independent work confirms it, or once it is adopted as a working basis for the current programme.
@@ -395,7 +395,7 @@ Protocol:
 - [WINDOW CAVEAT, E38] E32's analyze_shape.py run unmodified on full-budget data returns **STEP** (ratio 0.66, R²_lin 0.576, 1/5 monotone). This is a property of the legacy 0.25–0.60 band, which at full budget straddles the rise and the plateau, not of the curve: the identical comparison gives SLOPE on [0.00,0.40] (ratio 1.86) and INCONCLUSIVE on the plateau [0.45,1.00]. Any shape claim must state its window.
 - Against a discrete irreversibility event; in favour of continuous drift. E32 removes the single (synthetic) caveat from Ф46 → **SOLID**.
 - Environment: E31 — Push-T synthetic (synth(), 20 epoch/100 ep); E32 — Push-T real gym-pusht (reduced budget EP=4/NEP=50, pymunk 6.2.1 pinned)
-- Caveats (E32): the reduced budget compresses the ABSOLUTE gaps (prescribed/unfrozen ~4× here vs 222× at scale; anchor cliff 22× vs E30's 136×) — do NOT compare these magnitudes with the 30-epoch runs; **the shape verdict is budget-robust** (the curve is monotone and slope-shaped regardless of budget). pymunk 6.2.1 (gym_pusht asks for ≥6.6, but 6.6+/7.x break add_collision_handler). A full-fidelity rerun (EP=15, NEP=200) is a one-line change.
+- Caveats (E32): the reduced budget compresses the ABSOLUTE gaps (prescribed/unfrozen ~4× here vs 222× at scale; anchor cliff 22× vs E30's 136×) — do NOT compare these magnitudes with the 30-epoch runs; **the shape verdict is budget-robust** (the curve is monotone and slope-shaped regardless of budget). pymunk 6.2.1 (gym_pusht asks for ≥6.6, but 6.6+/7.x break add_collision_handler). A full-fidelity rerun (EP=15, NEP=200) is a one-line change. The 5 seeds are five independent samples rather than controlled repetitions, and the absolute numbers do not reproduce across runs (Ф62); the shape verdict is unaffected.
 - [NOTE for cross-checking] These artefacts contain NO resolution in (0.0, 0.25) (grid {0.0, 0.25…0.60, 1.0}); the near-harmless onset here is qualitative (f≤0.25). The claim "band [0.00–0.20] slope≈1.25 vs [0.25–0.60] slope≈13.04, ratio 10.4×" requires a separate higher-resolution run (sub-0.25) and is not supported by these files. The numbers above come from the shipped shape_verdict.json.
 - Artefacts: E31_subepoch_freeze/, E32_subepoch_freeze_real/, E38_subepoch_freeze_full/ (verdicts in shape_verdict.txt / shape_verdict.json; E38 per-seed sweeps checked in)
 - E31, E32, E38
@@ -406,9 +406,34 @@ Protocol:
 - Consequence for the bridge wording: "continuously-integrated divergence" starts at the first steps, not after a quiet quarter. Nothing about the SLOPE verdict changes; the onset claim attached to it does.
 - Also measured at full budget: `prescribed` 0.00177–0.00411 vs `f=0.00` (encoder frozen at init) 0.00097–0.00801 — same order of magnitude, i.e. Ф31 (random_fixed ≈ prescribed) reproduced on measured data rather than through the Ф12 proxy that E30/Ф45 had to substitute.
 - Environment: Push-T real gym-pusht, EP=15/NEP=200, seeds {42,123,777,2024,7}, grid {0.00,0.05,...,0.60,0.70,0.80,0.90,1.00}, pymunk 6.2.1 pinned, local CPU
-- Caveats: 5 seeds characterize the between-seed spread only roughly, and that spread is large (anchor 9.8–75.6×; knee position 0.70–1.00). The plateau criterion (first f staying within 5% of max) is a post-hoc descriptive statistic chosen after seeing the curves, not a pre-registered metric. The JEPA initial-collapse confound (T-JEPA/I-JEPA report a sharp collapse-then-recover transient in the first iterations) is NOT settled by this experiment.
+- Caveats: 5 seeds characterize the between-seed spread only roughly, and that spread is large (anchor 9.8–75.6×; knee position 0.70–1.00). The plateau criterion (first f staying within 5% of max) is a post-hoc descriptive statistic chosen after seeing the curves, not a pre-registered metric. The JEPA initial-collapse confound (T-JEPA/I-JEPA report a sharp collapse-then-recover transient in the first iterations) is NOT settled by this experiment, and is closed separately by E39 (Ф61). The 5 seeds are five independent samples rather than controlled repetitions (Ф62).
 - Artefact: E38_subepoch_freeze_full/ (README + code + per-seed results)
 - E38
+
+**Ф61. The JEPA initial-collapse confound does not explain the sub-epoch damage (E39)**
+- Question: inside epoch 1, is the measured quantity coordinate-basis drift, or the collapse-then-recover transient that T-JEPA/I-JEPA report in the first iterations? E38's finest point (f=0.05) is optimizer step 8 of 160, so the whole opening window sat below its resolution.
+- Design: grid specified in optimizer steps {0,1,2,3,4,6,8} rather than fractions, f=(step+0.5)/n_batches so that floor(f*n_batches) lands on the intended step regardless of float representation. n_batches=160 (measured), EP=15/NEP=200, 5 seeds {42,123,777,2024,7}, real gym-pusht, local CPU.
+- Discriminating prediction: collapse-then-recover requires a recovery segment, a rise to a peak followed by a sustained fall. The encoder is frozen at step f and stays frozen for all remaining epochs, so it cannot recover from a dip, and such a segment would be visible. **No seed shows one.**
+- best_vp over steps 0,1,2,3,4,6,8: seed 42 0.00330/0.00333/0.00339/0.00347/0.00357/0.00388/0.00430; seed 123 0.00181/0.00180/0.00184/0.00185/0.00188/0.00200/0.00213; seed 777 0.00282/0.00312/0.00340/0.00374/0.00401/0.00486/0.00587; seed 2024 0.00101/0.00103/0.00110/0.00105/0.00110/0.00113/0.00126; seed 7 0.00843/0.00846/0.00853/0.00858/0.00859/0.00885/0.00923.
+- Strictly monotone in **3/5** seeds (42, 777, 7). Two seeds show a single dip at different steps (123 at step 1, -0.6%; 2024 at step 3, -4.5%), each followed by continued rise. Do NOT state 5/5 for this window.
+- The dips are not measurement noise: run_subepoch is deterministic given (eps, seed), verified by two identical runs in one process (0.003017362545391447 twice). Each point is an exact value, so a dip is a property of the pair (sample, step).
+- Shape is invariant to the sampling defect of Ф62: the same grid on two independent samples for seed 42 (before and after the fix) gives window ratio 1.23x and 1.30x, monotone in both.
+- Supported by Ф45: there is no recovery after epoch 1 either (freeze@1 to unfrozen = 1.3x).
+- Consequence: the open confound recorded in Ф60's caveats is closed. The E30/E31/E32/E38 line measures damage that accumulates and persists, not a transient that resolves.
+- Caveats: the window ratio varies strongly by sample (1.10x to 2.08x), and the between-sample spread at step 0 is 8.3x (0.00101 to 0.00843). Nothing below one optimizer step is resolved. The absence of a recovery segment is established for this architecture (predictor with stop-grad plus SIGReg, no EMA target encoder), not for JEPA variants in general.
+- Artefact: E39_subepoch_freeze_micro/ (README + code + per-seed results). Checkpoints (70 files, 2 per grid point: encoder at freeze and full model after all epochs) are kept locally and not in the repository, which excludes *.pt by policy; their SHA256 manifest is committed as E39_subepoch_freeze_micro/checkpoints_sha256.txt.
+- E39
+
+**Ф62. collect_gym_data in e32_lib does not reproduce for a given seed (action space unseeded)**
+- The function seeds its own Generator and uses it for env.reset, the branch draw and the noise draw, but `env.action_space.sample()` draws from the action space's own generator, which gym.make initialises from system entropy. That branch fires on the first step of every episode and in roughly 30% of later steps, so about a third of all recorded actions came from an unseeded source.
+- Probe: two calls with seed=42 in one process give different SHA256 of the pickled episodes, and a second process gives two more distinct hashes (4 of 4 different). After adding `env.action_space.seed(int(rng.integers(0, 100000)))` all four agree (859c6a33fc96a239).
+- Magnitude: at nominal seed 42 and f=0.00, three processes produced best_vp 0.00302, 0.00327 (E38 as shipped) and 0.00332, a spread of about 10%.
+- Scope, affected: absolute numbers from E32 and E38, and any cross-run comparison of them. The label "5 seeds" in Ф46 and Ф60 means five independent samples whose labels do not identify them, not five controlled repetitions of one condition; the reported spread is between-sample.
+- Scope, NOT affected: every shape verdict and within-run comparison. A run collects its data once and all grid points of that run share it, so the curve shape is measured on one fixed sample.
+- Decision: E38 is not rerun. The load-bearing claims are shape claims and are unaffected, the absolute anchors already carry a do-not-compare caveat, and E39 demonstrated shape invariance across the defect directly. The fix lives in E39_subepoch_freeze_micro/code/e39_lib.py; e32_lib.py is left untouched so that E32/E38 artefacts remain reproducible as recorded.
+- Also refutes the inherited reasoning that thread count cannot affect a result "because the seed is deterministic". The premise was false; measured, threads change the ninth decimal only (0.003017362545391447 at 4 threads vs 0.003017361605899376 at 1), so the conclusion happened to hold.
+- Artefact: E39_subepoch_freeze_micro/code/patch_e39_seedfix.py; E39_subepoch_freeze_micro/prefix_bug/ (results of the defective collection, retained as evidence)
+- E39
 
 ---
 ---

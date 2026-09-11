@@ -1,0 +1,9 @@
+data collected 76s
+  step=0 f=0.000000 done 98s best_vp=0.00330 freeze_step=0
+  step=1 f=0.009375 done 100s best_vp=0.00333 freeze_step=1
+  step=2 f=0.015625 done 106s best_vp=0.00339 freeze_step=2
+  step=3 f=0.021875 done 108s best_vp=0.00347 freeze_step=3
+  step=4 f=0.028125 done 106s best_vp=0.00357 freeze_step=4
+  step=6 f=0.040625 done 123s best_vp=0.00388 freeze_step=6
+  step=8 f=0.050000 done 109s best_vp=0.00430 freeze_step=8
+seed 42 COMPLETE  n_batches observed: {160}
