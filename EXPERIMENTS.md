@@ -22,7 +22,8 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E36**: Full coordinate drift on vision SSL (PLANNED, see PreE30). *Was E30.*
 - **E37**: CARLA prescribed safety axes (DEFERRED). *Was E34.*
 - **E38**: Sub-epoch freeze sweep, full budget + sub-0.25 resolution (COMPLETE 2026-09-11, Ф46 revised, Ф60).
-- **E40+**: free. The nearest candidate is ECA / epiplexity (Г17).
+- **E40**: initialisation sweep at a fixed data seed, frozen at step 0 (COMPLETE 2026-09-11, Ф64, Г26 split, Г27).
+- **E41+**: free. The nearest candidate is ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
 
@@ -646,6 +647,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 | E32 | Sub-epoch freeze real | Push-T gym | gym | 5 | 4* | 50* | SLOPE, R²=0.977, 5/5 monotone, Ф46 solid |
 | E38 | Sub-epoch freeze full budget | Push-T gym | gym | 5 | 15 | 200 | SLOPE on [0.00,0.40] R²=0.880 5/5 monotone; onset 5.8–17.1× (Ф60); Ф46 onset reading revised |
 | E39 | Sub-epoch freeze micro-grid | Push-T gym | gym | 5 | 15 | 200 | JEPA initial-collapse confound closed: no recovery segment in any seed, 3/5 monotone, dips at different steps (Ф61); action_space seeding defect found (Ф62) |
+| E40 | Initialisation sweep, fixed data seed | Push-T gym | gym | 10 inits | 15 | 200 | corr(best_vp, R2_readout) = +0.060; best_vp spreads 7.31x across initialisations; prescribed inside the range (Ф64) |
 | PreE30 | Drift pilot DINOv2 | CIFAR-100 | — | 1 | — | — | R²=0.65, CKA=0.77 (pilot) |
 | E36 | Drift full DINOv2 | TBD | TBD | ≥5 | TBD | TBD | DEFERRED |
 | E33 | Step 1 PCA diagnostic | LLM activations | yadro_phase2 | — | — | 80 prompts | last-token confound on 5 LLMs, nodes unstable |
