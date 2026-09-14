@@ -491,6 +491,110 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 
 ---
 
+### E39. Sub-epoch freeze micro-sweep, five seeds (Push-T, gym-pusht)
+- **Status:** COMPLETE. Facts: Ф63. Registry: EVIDENCE.md. Nothing restated here.
+- **Question:** how the frozen-at-step-0 encoder behaves across the opening
+  window, and whether any cheap property of it tracks the outcome.
+- **Design:** five seeds; initialisation and data sample vary together, which is
+  the confound E40 was built to remove.
+- **Left behind:** an observation that looked like a trend, the initialisation
+  carrying the most linearly extractable information about the true state also
+  gave the worst result. Unreadable as it stood, because the two factors moved
+  together.
+- **Code:** `E39_subepoch_freeze_micro/code/e39_lib.py` (copy of `e32_lib.py`).
+- **Caveat for anyone comparing across experiments:** E39 step 0 never touched
+  the RNG stream, E40 reseeds and restores it around model construction, so E39
+  and E40 step-0 numbers are not directly comparable.
+
+### E40. Initialisation sweep at a fixed data seed (Push-T, gym-pusht)
+- **Status:** COMPLETE 2026-09-14. Facts: Ф64, Ф67, Ф68. Hypotheses: Г26 (split),
+  Г27 (new). Registry: EVIDENCE.md.
+- **Question:** with the data sample held fixed, how much does the frozen
+  initialisation alone move `best_vp`, and does anything cheap order the
+  initialisations?
+- **Design:** ten initialisations, data seed fixed at 42, encoder frozen at step
+  0 (`freeze_frac=0`) and never trained; only the predictor head trains.
+  `R2_readout` and `eff_rank` measure what the fixed representation carries.
+- **Metric:** `best_vp`, the minimum validation loss over epochs; lower is
+  better.
+- **Design note:** `e40_lib.py` adds an optional `init_seed`; the stream is
+  reseeded immediately before the model is built and restored immediately after,
+  so DataLoader shuffling order is identical across initialisations and only the
+  parameters differ.
+- **Code:** `E40_init_sweep/code/e40_lib.py` (copy of `e39_lib.py`).
+- **Results:** `E40_init_sweep/results/sweep.json`.
+
+### E41. Variance decomposition, encoder init x head init (Push-T, gym-pusht)
+- **Status:** COMPLETE 2026-09-14. Facts: Ф65, Ф66, Ф67. Registry: EVIDENCE.md.
+- **Question:** does the E40 spread belong to the encoder, or to the
+  (encoder, head) pair? E40 drew both from one seed argument, so the two were
+  confounded.
+- **Design:** crossed grid, 8 encoder seeds x 5 head seeds, 40 cells, one run per
+  cell, data seed 42 fixed, encoder frozen at step 0. Two-way crossed random
+  effects, df 7 / 4 / 28, interaction confounded with the residual.
+- **Acceptance:** encoder seeds 1..8 reproduce E40 initialisations 1..8
+  bit-exactly, so the seed split did not move the stream.
+- **Code:** `E41_variance_decomp/code/e41_lib.py`, `run_e41.py`,
+  `analyze_e41.py`. **Results:** `E41_variance_decomp/results/grid.json`.
+
+### E42. Candidate-predictor sweep for Г27 (Push-T, gym-pusht) — PRE-REGISTERED
+- **Status:** PLANNED. Tests Г27 as refined 2026-09-14: the target is not a
+  property that orders frozen bases in general, but one that explains the tails
+  (Ф68).
+- **Design:** 30 initialisations at data seed 42, one head each (justified by
+  Ф66: the encoder level is recoverable from a single run, so no crossed design
+  is needed). Encoder frozen at step 0. Plus 8-10 initialisations at a second
+  data seed, run in the same campaign.
+- **What the second data seed does and does not test:** it checks whether the
+  spread and the variance shares reproduce off seed 42. It does NOT test any
+  correlation: 8-10 points cannot resolve one.
+
+**Candidate properties, closed list, all computed on the untrained encoder before
+the first optimiser step, on a fixed validation batch:**
+1. `eff_rank` of the representation. Included for continuity with Ф67, where it
+   was not a lead at n=8-10.
+2. `R2_readout`, linear extractability of the true state. Included for continuity
+   with Ф64, where corr = +0.060 at n=10.
+3. Condition number of the representation covariance. Distinct hypothesis from
+   eff_rank: sensitive to the worst-conditioned direction rather than to how
+   evenly variance is spread. Ill-conditioning is a plausible tail mechanism.
+4. Smoothness of the latent dynamics:
+   `mean(||z_{t+1} - z_t||) / sqrt(mean(||z_t||^2))` over consecutive states.
+   The only candidate motivated by the task rather than by representation theory:
+   the head predicts dynamics, and a representation in which the dynamics tear
+   should be harder to predict in. Expected sign: positive with `best_vp`.
+
+**Control, outside the multiplicity correction:** norm of the encoder output. It
+scales the loss directly, so a correlation there would be about units rather than
+about basis quality. Reported as a sanity check on whether SIGReg equalises scale
+across initialisations; never counted as a hit.
+
+**Statistics, fixed before the run:**
+- Pearson and Spearman of each candidate against `best_vp` over all 30 points.
+- Bonferroni over the four candidates: significance threshold alpha = 0.0125.
+  At n=30, power 0.80, that resolves |rho| from about 0.55 (uncorrected 0.49).
+- Leave-one-out jackknife over the 30 points is reported for every candidate,
+  significant or not. It is part of the report, not a response to an inconvenient
+  result. Rationale: in this line the correlation has already been shown to be
+  set by two points out of ten (Ф67, Ф68).
+- The composition of points is not changed after seeing the results. Any subset
+  analysis is reported alongside the full-sample figure, never in place of it.
+
+**Declared outcomes:**
+- If no candidate clears the corrected threshold: the property that orders frozen
+  bases is not a cheap one. That is the registered result of this experiment, not
+  a failure of it, and it closes Г27 negatively.
+- If a candidate clears it and survives the jackknife: it becomes a lead and Г27
+  moves to a confirmatory test on an independent data seed.
+- If a candidate clears it and does not survive the jackknife: recorded as
+  tail-driven, not as a lead, following the Ф67 precedent.
+- Independently of the above, the 30 points measure the distribution of encoder
+  levels, which is what the two-tier claim (Ф68) currently rests on with two
+  observations out of ten.
+
+**Cost:** about 86 s per cell as measured in E41, so roughly 45 min for the 30
+plus about 15 min for the second-seed runs.
+
 ## Pilot studies
 
 ### PreE30. Coordinate drift on DINOv2 (production-scale vision SSL)
