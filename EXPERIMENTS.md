@@ -24,7 +24,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E38**: Sub-epoch freeze sweep, full budget + sub-0.25 resolution (COMPLETE 2026-09-11, Ф46 revised, Ф60).
 - **E40**: initialisation sweep at a fixed data seed, frozen at step 0 (COMPLETE 2026-09-11, Ф64, Г26 split, Г27).
 - **E41**: variance decomposition, encoder init x head init at a fixed data seed, frozen at step 0 (COMPLETE 2026-09-14, Ф65, Ф66, Ф67).
-- **E42**: initialisation sweep for Г27, about 30 encoders, one head each, candidate predictors computed before training (PLANNED).
+- **E42**: candidate-predictor sweep for Г27, 30 encoders at data seed 42 plus 8-10 at a second seed, one head each, four pre-registered candidates computed before training, Bonferroni 0.0125 (PRE-REGISTERED 2026-09-14).
 - **E43+**: free. The nearest candidate is ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
