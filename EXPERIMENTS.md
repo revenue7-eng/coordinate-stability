@@ -563,6 +563,13 @@ the first optimiser step, on a fixed validation batch:**
    The only candidate motivated by the task rather than by representation theory:
    the head predicts dynamics, and a representation in which the dynamics tear
    should be harder to predict in. Expected sign: positive with `best_vp`.
+   Reachability checked before pre-registration: `DS` windows hold H+2 = 5
+   consecutive states per item and `__getitem__` returns the window whole,
+   so the pairs are within-sample and independent of the loader shuffle
+   [e41_lib.py:57-66]. Windows are built at stride 1 and therefore overlap,
+   so interior states enter the mean up to five times: the observations
+   behind this candidate are not independent, and the jackknife report for
+   it says so.
 
 **Control, outside the multiplicity correction:** norm of the encoder output. It
 scales the loss directly, so a correlation there would be about units rather than
@@ -572,7 +579,7 @@ across initialisations; never counted as a hit.
 **Statistics, fixed before the run:**
 - Pearson and Spearman of each candidate against `best_vp` over all 30 points.
 - Bonferroni over the four candidates: significance threshold alpha = 0.0125.
-  At n=30, power 0.80, that resolves |rho| from about 0.55 (uncorrected 0.49).
+  At n=30, power 0.80, that resolves |rho| from 0.567 two-sided (uncorrected 0.492).
 - Leave-one-out jackknife over the 30 points is reported for every candidate,
   significant or not. It is part of the report, not a response to an inconvenient
   result. Rationale: in this line the correlation has already been shown to be
