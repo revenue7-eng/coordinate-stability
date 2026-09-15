@@ -550,12 +550,20 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
   correlation: 8-10 points cannot resolve one.
 
 **Candidate properties, closed list, all computed on the untrained encoder before
-the first optimiser step, on a fixed validation batch:**
+the first optimiser step, on the full validation split as returned by
+`val_states(data_seed)` from E39's `analyze_representation.py`, which is the
+same set of states behind Ф64 and Ф67. Not a batch: `eff_rank` and
+`R2_readout` are imported from that module rather than reimplemented, so the
+new values are the same quantities as 1.5380 and 1.5755. Candidate 4 needs the
+window axis that `val_states` flattens away, so it reads the pre-reshape
+tensor (Nv, H+2, 5); candidates 1 to 3 read the flattened one:**
 1. `eff_rank` of the representation. Included for continuity with Ф67, where it
    was not a lead at n=8-10.
 2. `R2_readout`, linear extractability of the true state. Included for continuity
    with Ф64, where corr = +0.060 at n=10.
-3. Condition number of the representation covariance. Distinct hypothesis from
+3. Condition number of the representation covariance, defined as the ratio of
+   largest to smallest eigenvalue of the same `np.cov(rep.T)` that `eff_rank`
+   reads, so the two candidates are computed on one matrix. Distinct hypothesis from
    eff_rank: sensitive to the worst-conditioned direction rather than to how
    evenly variance is spread. Ill-conditioning is a plausible tail mechanism.
 4. Smoothness of the latent dynamics:
