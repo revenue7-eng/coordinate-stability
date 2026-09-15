@@ -1,0 +1,79 @@
+{
+  "epochs": 15,
+  "episodes": 200,
+  "candidates": [
+    "eff_rank",
+    "r2_readout",
+    "cond_number",
+    "smoothness"
+  ],
+  "control": [
+    "rms_norm"
+  ],
+  "primary_seed": 42,
+  "n_inits": 30,
+  "cells": {
+    "s42_i1": {
+      "best_vp": 0.0031448905217346915,
+      "final_vp": 0.0031448905217346915,
+      "mean_last3": 0.003314375206937044,
+      "argmin_ep": 15,
+      "n_batches": 160,
+      "freeze_step": 0,
+      "eff_rank": 2.7144003024055916,
+      "r2_readout": 0.23845317702725422,
+      "cond_number": 2.963171274186901,
+      "smoothness": 0.10961421590721247,
+      "rms_norm": 0.9205581545829773,
+      "seconds": 751.3
+    },
+    "s42_i2": {
+      "best_vp": 0.003994597050998556,
+      "final_vp": 0.003994597050998556,
+      "mean_last3": 0.004159280529779474,
+      "argmin_ep": 15,
+      "n_batches": 160,
+      "freeze_step": 0,
+      "eff_rank": 1.8207525783655711,
+      "r2_readout": 0.33768969833952167,
+      "cond_number": 17.130700854200118,
+      "smoothness": 0.11659856802411853,
+      "rms_norm": 0.9624314308166504,
+      "seconds": 252.4
+    },
+    "s42_i3": {
+      "best_vp": 0.003855886968800373,
+      "final_vp": 0.003855886968800373,
+      "mean_last3": 0.003871444505721069,
+      "argmin_ep": 15,
+      "n_batches": 160,
+      "freeze_step": 0,
+      "eff_rank": 2.2764541965335643,
+      "r2_readout": 0.40938336082975924,
+      "cond_number": 8.813180469026696,
+      "smoothness": 0.17008331285505102,
+      "rms_norm": 0.7696183323860168,
+      "seconds": 336.9
+    },
+    "s42_i4": {
+      "best_vp": 0.004829956174484993,
+      "final_vp": 0.004893418403113621,
+      "mean_last3": 0.005010675101361254,
+      "argmin_ep": 14,
+      "n_batches": 160,
+      "freeze_step": 0,
+      "eff_rank": 2.4280887843669157,
+      "r2_readout": 0.4715856288095377,
+      "cond_number": 6.244219001134496,
+      "smoothness": 0.24372864749711975,
+      "rms_norm": 0.5828043818473816,
+      "seconds": 949.6
+    }
+  },
+  "acceptance": {
+    "expected": 0.0031448905217346915,
+    "got": 0.0031448905217346915,
+    "bit_exact": true,
+    "rel_diff": 0.0
+  }
+}
