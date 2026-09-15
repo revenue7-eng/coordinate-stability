@@ -544,7 +544,9 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Design:** 30 initialisations at data seed 42, one head each (justified by
   Ф66: the encoder level is recoverable from a single run, so no crossed design
   is needed). Encoder frozen at step 0. Plus 8-10 initialisations at a second
-  data seed, run in the same campaign.
+  data seed, run in the same campaign. The second data seed is 123, fixed
+  2026-09-15 before any cell of the seed-42 half was read. It is one of the
+  five E39 seeds, so E39 representation metrics exist on it for cross-check.
 - **What the second data seed does and does not test:** it checks whether the
   spread and the variance shares reproduce off seed 42. It does NOT test any
   correlation: 8-10 points cannot resolve one.

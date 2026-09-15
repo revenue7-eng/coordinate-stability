@@ -60,7 +60,7 @@ N_INITS = 30
 # chosen after seeing the seed-42 results would not be pre-registered, so the
 # second half refuses to run until the registry fixes the value and it is
 # copied here.
-SECOND_SEED = None
+SECOND_SEED = 123
 N_INITS_SECOND = 10
 
 EP, NEP = 15, 200
