@@ -588,6 +588,13 @@ across initialisations; never counted as a hit.
 
 **Statistics, fixed before the run:**
 - Pearson and Spearman of each candidate against `best_vp` over all 30 points.
+  AMBIGUITY FOUND AFTER THE RUN (2026-09-17): this line names two statistics
+  and the next line one threshold, without saying which governs a hit. It
+  decided nothing for candidates 1 to 3 and everything for candidate 4, which
+  fails on Pearson (p = 0.0327) and passes on Spearman (p = 0.00088 Fisher,
+  0.00127 permutation). Recorded here unresolved: choosing either one now
+  would be choosing the test after seeing the result. A successor experiment
+  names one statistic before it runs.
 - Bonferroni over the four candidates: significance threshold alpha = 0.0125.
   At n=30, power 0.80, that resolves |rho| from 0.567 two-sided (uncorrected 0.492).
 - Leave-one-out jackknife over the 30 points is reported for every candidate,
