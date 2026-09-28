@@ -118,6 +118,7 @@ Protocol:
 - Paper 2, Section 5.5
 
 **Ф17. Prescribed 11D is 20× worse than prescribed 3D, but 42× better than free 11D**
+- STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.
 - prescribed_3: 0.000036, prescribed_11: 0.000732 (20× worse than prescribed_3)
 - free_11: 0.030509 (42× worse than prescribed_11)
 - Original data (E12, a different setup): free_11 (0.000060) beat prescribed_11 (0.000381) by 6×
@@ -128,6 +129,7 @@ Protocol:
 - 200 episodes, 30 epochs, 3 seeds
 
 **Ф18. ~~Sweep dim 1→15: prescribed wins only at dim ≤ 3~~ REFUTED**
+- STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.
 - The original data (100 ep, 20 epochs, 2 seeds) showed a crossover at dim=4
 - **A full rerun (200 ep, 30 epochs, 3 seeds) refuted the crossover:**
 - dim=1: 60×, dim=2: 1820×, dim=3: 228×, dim=4: 114×, dim=5: 66×, dim=7: 57×, dim=11: 42×
@@ -299,6 +301,7 @@ Protocol:
 - Tier 3 / T9a, T9b
 
 **Ф36. 5D prescribed (all coordinates, no selection) works — gap 66×**
+- STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.
 - prescribed_5d = normalize(all 5 coordinates), free_5d = MLP 5→5
 - Prescribed does NOT pick a subspace — it takes everything
 - Gap 66× — smaller than 3D (169×), still order-of-magnitude
@@ -1047,3 +1050,19 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - CORRECTS Ф64: its null (corr +0.060 at n=10, and +0.0235 at n=30 in Ф69) is a property of the self-referential metric, not evidence that linear informativeness fails to order frozen encoders.
 - CORRECTS Ф74: the eff_rank lead (-0.4088 against the two-predictor residual) does not carry over to the external target (-0.0675, p 0.725).
 - NEXT: a confirmatory test of R2_readout alone at n >= 30 on data seed 123, pre-registered separately with one statistic and a predicted sign.
+
+## Ф76: the free encoder on the raw Push-T state discards the length of the positional vector and nearly all of the block angle
+- [verified: python3 E44_agent_target/code/fe_input_scale_probe.py; refutation criterion fixed in the file before the first run: median raw ratio >= 0.5 on either test] 40 frozen E42 encoders (30 at data seed 42, 10 at 123), 1220 gym-pusht states. Output change when (x_a, y_a, x_b, y_b) is scaled by 0.95, relative to an orthogonal perturbation of the same norm: median 0.0060 (seed 42, range 0.0023 to 0.0120) and 0.0067 (seed 123). Output change when the block is rotated by 10% of its range, relative to moving it by 10% of its range: median 0.0153 (seed 42, range 0.0057 to 0.0375) and 0.0200 (seed 123). First-layer bias share ||b|| / ||Wx||: 0.0017 and 0.0018. The same weights on input divided by (512, 512, 512, 512, 2 pi): 0.65, 0.92, 0.76 (seed 42) and 0.86, 1.14, 0.77 (seed 123).
+- Mechanism: FE is Linear(5,64), LayerNorm, GELU, Linear(64,64), LayerNorm, GELU, Linear(64,3). On coordinates in [0, 512] the first-layer bias is negligible and LayerNorm removes the scale of Wx, so the output depends on the direction of the positional vector only. The angle, in [0, 2 pi], moves the output between about 25 and 175 times less than an equal fraction of a coordinate range. The defect is in the input, not in the weights. [verified: e43_lib.py:73-79; the raw state reaches the encoder through DS and run_subepoch, e43_lib.py:56-66 and 109-160]
+- Scope: the same FE definition is in E06, E07, E31, E32 and E39 to E43 [verified: grep -rl "class FE" --include=*.py], and the E28 FreeEncoder is the same network on the raw state [verified: p2_dim_sweep_full.py:81-94, 151-166]. The raw input path is verified for E39 to E43 [verified: DS appends st[t:t+H+2] unscaled and M.forward calls s.enc(st), grep -F in e39_lib.py and e40_lib.py; e43_lib.py is a byte-identical extension of e42_lib.py and e41_lib.py] and for E28. For E06, E07, E31 and E32 only the definition is verified. In every case PE divides by the range.
+- CONSEQUENCE: the frozen-encoder line (Ф64 to Ф75, paper 1) measures spread inside this family. Nothing in it has been shown for encoders with scaled input. R2_readout on PE is in effect a readout of block x and y through the direction of the positional vector, since the angle reaches no FE with more than a few percent of the weight of a coordinate shift.
+
+## Ф77: E28 scores prescribed and free on each encoder's own latent, with free on the raw state
+- [verified: p2_dim_sweep_full.py, WorldModel.forward and val_loss] The loss is mse(prediction, emb[:, H]), where emb is the output of the encoder under test, and val_loss averages it. The prescribed latent is make_prescribed_features (no parameters; coordinates divided by 512, angle by 2 pi). The free latent is learned under SIGReg. The two losses are in different units.
+- [verified: Ф76] FreeEncoder receives the raw state; PrescribedEncoder receives it range-normalised.
+- Precedent: the 12x probe figure for Н1 was withdrawn for the same kind of incomparability (Н1, run_experiment_v3_windows.py:490-494).
+- Observation, cause not established: the E28 ratio is largest where the prescribed latent holds only the block (dim 2: 1820x, dim 3: 228x) and smaller where it includes the agent (dim 5: 66x, dim 11: 42x). A self-referential loss ranks by latent step size (Ф73), and the block moves little between steps: on gym-pusht the persistence baseline explains 96% of the variance of the block pose at t+3 (E44_agent_target/code/feasibility_oracle.py). E28 uses its own synthetic dynamics, where this is not checked. The pattern is what the units alone would produce.
+- CORRECTS Ф17, Ф18, Ф36: the ratios 42x to 1820x are not interpretable as a difference in quality between the encoders until both are scored on a common target with equally scaled input. They are not refuted: the direction on a common target is unknown. The same holds for the "Gap prescribed/free" row of KEY DIFFERENCES BETWEEN ENVIRONMENTS and for П1 and П2 as far as they rest on these ratios.
+- Likely affected, not checked: Ф37 (gauge fixing, the same kind of loss comparison), Tier 3 E25 (Ф18 reports agreement with E28 at dim 5, 66.3x against 66.2x), and the double-pendulum ratios of Ф20.
+- Not affected: Ф58 (E35, planning SR is a metric common to both encoders).
+- NEXT: E44, the E28 dim-5 point on a common external target, with three arms: prescribed_5, free on the raw state, free on the range-normalised state.

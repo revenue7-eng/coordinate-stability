@@ -12,6 +12,7 @@ orders the initialisations at +0.97 on two data seeds. Ф71 contradicts the
 description of the objective as SIGReg-regularised in section 3. The Ф68
 correction replaces the two tiers of section 5. Section 10 predates Ф69 to Ф74.
 `[verified: EVIDENCE.md Ф69 to Ф74]`
+Ф75 corrects abstract sentence 3, which cites Ф64 as a null. Ф76 narrows the object of the paper: every frozen encoder in E39 to E43 reads the raw state through a first layer that discards the length of the positional vector and nearly all of the block angle. `[verified: EVIDENCE.md Ф75, Ф76]`
 
 **Rev 4 correction.** Revisions 1 to 3 described the setting as EB-JEPA on Two
 Rooms with MPPI planning. That is the Г25 line, not this one. This line runs on
