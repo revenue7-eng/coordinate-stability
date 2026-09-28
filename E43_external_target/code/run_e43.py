@@ -143,7 +143,7 @@ def cell(eps, seed, k, head_seed=None):
     row["encoder_matches_e42"] = True
     for c in COPY_KEYS:
         row[c] = ref[c]
-    row["persistence"] = E42_PERS[key]
+    row["persistence"] = E42_PERS[f"s{seed}_i{k}"]
     row["e42_best_vp"] = ref["best_vp"]
     row["e42_final_vp"] = ref["final_vp"]
     row["head_seed"] = head_seed
