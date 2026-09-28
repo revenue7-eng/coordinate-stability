@@ -6,6 +6,13 @@ The Г25 / prescribed-vs-free line is excluded and becomes paper 2.
 `[Фnn]` = registered in EVIDENCE.md. `[NEEDS]` = blocks writing until resolved.
 `[rev4]` marks what changed from rev 3.
 
+**Rev 5 pending, do not cite rev 4.** Ф73 contradicts both working titles and
+section 9: persistence, computed from the frozen encoder before any training,
+orders the initialisations at +0.97 on two data seeds. Ф71 contradicts the
+description of the objective as SIGReg-regularised in section 3. The Ф68
+correction replaces the two tiers of section 5. Section 10 predates Ф69 to Ф74.
+`[verified: EVIDENCE.md Ф69 to Ф74]`
+
 **Rev 4 correction.** Revisions 1 to 3 described the setting as EB-JEPA on Two
 Rooms with MPPI planning. That is the Г25 line, not this one. This line runs on
 gym-pusht with a frozen encoder and a trained predictor head; there is no planner
