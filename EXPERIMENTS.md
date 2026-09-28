@@ -25,6 +25,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E40**: initialisation sweep at a fixed data seed, frozen at step 0 (COMPLETE 2026-09-11, Ф64, Г26 split, Г27).
 - **E41**: variance decomposition, encoder init x head init at a fixed data seed, frozen at step 0 (COMPLETE 2026-09-14, Ф65, Ф66, Ф67).
 - **E42**: candidate-predictor sweep for Г27, 30 encoders at data seed 42 plus 8-10 at a second seed, one head each, four pre-registered candidates computed before training, Bonferroni 0.0125 (PRE-REGISTERED 2026-09-14).
+- **E43**: external-target sweep over the E42 encoders, one head per encoder trained on PE of the true state, three pre-registered predictors, Bonferroni 0.0167, noise floor on encoder 1 (PRE-REGISTERED 2026-09-28).
 - **E43+**: free. The nearest candidate is ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
@@ -620,6 +621,85 @@ across initialisations; never counted as a hit.
 plus about 15 min for the second-seed runs.
 
 ## Pilot studies
+
+### E43. External-target sweep over the E42 encoders (Push-T, gym-pusht): PRE-REGISTERED
+- **Status:** PLANNED. Written 2026-09-28 after Ф69 to Ф74 and before any
+  external-target cell was run.
+- **Question:** is the spread of E42 a property of the frozen encoders, or of
+  the self-referential target? In E40 to E42 the head predicts emb[:, 3], the
+  encoder's own output, so the encoder sets the scale of the loss it is scored
+  by, and persistence orders the initialisations at +0.97 (Ф73). The declared
+  E42 outcome "the property that orders frozen bases is not a cheap one" does
+  not hold for that metric (Ф73).
+- **Design:** the same frozen encoders as E42. Initialisation k at a data seed
+  is built with enc_seed=k, head_seed=None, and every cell asserts that its
+  frozen encoder equals the E42 checkpoint of the same cell tensor for tensor.
+  The head is trained to predict PE(state at window position 3): block x/512,
+  block y/512 and block angle/(2*pi) of the fourth state in the window, a fixed
+  function of the true state that does not depend on the encoder. Context,
+  action encoder, predictor, optimiser, epochs, split and batch order are those
+  of E42. Code: `e43_lib.py` is `e42_lib.py` byte for byte plus an appended
+  block that rebinds M; the first N bytes hash to c41d9434a5fc0ffc..., the
+  sha256 of `e42_lib.py`.
+- **Acceptance, already run:** in target "self", enc_seed=1 at data seed 42
+  reproduced E40 init 1 bit for bit (best_vp 0.0031448905217346915,
+  2026-09-28). That run produces no external-target output.
+- **Cells:** 30 at data seed 42 (primary). 10 at data seed 123, which test
+  reproduction of the spread and no correlation. 5 noise-floor cells: encoder 1
+  at data seed 42 with head_seed 1..5.
+- **Metric:** final_vp on the external target, on the log scale. Not best_vp,
+  which carries selection over epochs (Ф74).
+
+**Predictors, closed list, copied from E42 for the same encoder (Ф69, Ф73):**
+1. log(persistence). The self-reference reading (Ф73) predicts no association:
+   persistence ordered E42 through the scale of a target that is absent here.
+2. R2_readout, linear extractability of the block pose from the frozen
+   representation, which is the quantity the external head is asked to
+   recover. The information reading predicts a negative association.
+3. eff_rank. Predicted negative, from Ф74, which recorded it as the basis for
+   this pre-registration.
+
+Excluded, with reasons: cond_number correlates -0.7810 with eff_rank (Ф74);
+smoothness is a function of rms_norm and persistence (Ф72); rms_norm was a
+scale control in E42 and the external target has a fixed scale.
+
+**Statistic, one, fixed before the run:**
+- Pearson correlation of each predictor with log(final_vp) over the 30 cells at
+  data seed 42; two-sided p from Fisher z. A hit is p < 0.0167 (Bonferroni over
+  three). The sign is reported against the prediction; a hit with the
+  unpredicted sign is recorded as a hit against the prediction. Spearman is
+  printed alongside and decides nothing. At n=30 and power 0.80 the threshold
+  resolves |r| from 0.553.
+- Leave-one-out jackknife for every predictor, significant or not.
+- The composition of points is not changed after seeing the results.
+- The analysis is `E43_external_target/code/analyze_e43.py`, committed with
+  this block. It prints the verdict below mechanically.
+
+**Descriptive quantities with declared thresholds, outside the correction:**
+- R = sd(log final_vp, E43) / sd(log final_vp, E42) over the same 30 encoders.
+- Ordering agreement: Spearman between E43 final_vp and E42 final_vp over the 30.
+- Noise floor F = sd(log final_vp) over the six heads on encoder 1 (head_seed
+  None and 1..5) divided by sd(log final_vp, E43) over the 30 encoders.
+- R at data seed 123 over its 10 encoders.
+
+**Declared outcomes:**
+- F >= 0.5: head noise is comparable to the encoder effect on this target.
+  Correlations are reported and not interpreted, whatever their p.
+- Collapse: R < 0.5 and predictor 1 is not a hit. The E42 spread is mainly a
+  property of the self-referential target: comparing frozen encoders by a loss
+  on their own output ranks them by latent step size.
+- Persistence of the spread: R >= 0.5. The encoders differ on a target they do
+  not define. A hit on predictor 2 or 3 with the predicted sign becomes a lead,
+  to be confirmed in a separate experiment at n >= 30 on data seed 123. No hit
+  means the difference is real and none of the three orders it.
+- Predictor 1 a hit: persistence carries information about the encoder beyond
+  the scale of the self-referential target. Recorded whatever R is.
+- R at data seed 123 is reported next to R at data seed 42 and tests
+  reproduction only.
+
+**Cost:** E42 cells took 74.2 to 128.1 s on an unloaded machine (ce98ae4); the
+E43 acceptance cell took 141 s. 45 cells: 60 to 106 min. Start only with no
+concurrent build: cc1plus count 0 and load average under 1.
 
 ### PreE30. Coordinate drift on DINOv2 (production-scale vision SSL)
 - **Environment:** CIFAR-100 test split (random subset N=500), 32×32 → 224×224

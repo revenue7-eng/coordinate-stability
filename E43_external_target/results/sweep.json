@@ -1,0 +1,15 @@
+{
+  "target": "external",
+  "epochs": 15,
+  "episodes": 200,
+  "primary_seed": 42,
+  "n_inits": 30,
+  "cells": {},
+  "acceptance": {
+    "target": "self",
+    "expected": 0.0031448905217346915,
+    "got": 0.0031448905217346915,
+    "bit_exact": true,
+    "rel_diff": 0.0
+  }
+}
