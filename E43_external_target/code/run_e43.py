@@ -64,7 +64,7 @@ COPY_KEYS = ["eff_rank", "r2_readout", "cond_number", "smoothness", "rms_norm"]
 
 # Hash of the commit that adds the E43 block to EXPERIMENTS.md. The external
 # sweep asserts it is set and is an ancestor of HEAD.
-PREREG_COMMIT = None
+PREREG_COMMIT = "410679a9a41e3731d0d3463eb08e96cc4409efa4"
 
 DATA_SEED = 42
 N_INITS = 30
