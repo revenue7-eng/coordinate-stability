@@ -27,7 +27,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E42**: candidate-predictor sweep for Г27, 30 encoders at data seed 42 plus 8-10 at a second seed, one head each, four pre-registered candidates computed before training, Bonferroni 0.0125 (PRE-REGISTERED 2026-09-14).
 - **E43**: external-target sweep over the E42 encoders, one head per encoder trained on PE of the true state, three pre-registered predictors, Bonferroni 0.0167, noise floor on encoder 1 (PRE-REGISTERED 2026-09-28).
 - **E44**: common-target comparison at the E28 dim-5 point (Ф77), COMPLETE: O4 PROVISIONAL (Ф78).
-- **E45**: E44 at 90 epochs, prescribed against free_scaled (Ф78), PRE-REGISTERED.
+- **E45**: E44 at 90 epochs, prescribed against free_scaled (Ф78), COMPLETE: O4 PROVISIONAL (Ф79).
 - **E46+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
@@ -767,6 +767,8 @@ Scope: dim 5, E28 synthetic dynamics. If the class is O4 or O2 without PROVISION
 Code: E45_long_training/code/run_e45.py, analyze_e45.py. Results: E45_long_training/results/cells/seed_<s>.json, analysis.json.
 
 Cost: E44 took 4 h 21 min wall for 720 epochs on the three-seed workers. E45 has 2 arms x 2 stages x 90 = 360 epochs per seed, 1080 on a three-seed worker: about 6.5 h wall on four workers.
+
+Result (Ф79): O4 PROVISIONAL. GMR 0.915 [0.828, 1.010]; median convergence 0.916 and 0.940, below 0.95.
 
 ### PreE30. Coordinate drift on DINOv2 (production-scale vision SSL)
 - **Environment:** CIFAR-100 test split (random subset N=500), 32×32 → 224×224
