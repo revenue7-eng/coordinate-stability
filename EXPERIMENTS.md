@@ -27,7 +27,8 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E42**: candidate-predictor sweep for Г27, 30 encoders at data seed 42 plus 8-10 at a second seed, one head each, four pre-registered candidates computed before training, Bonferroni 0.0125 (PRE-REGISTERED 2026-09-14).
 - **E43**: external-target sweep over the E42 encoders, one head per encoder trained on PE of the true state, three pre-registered predictors, Bonferroni 0.0167, noise floor on encoder 1 (PRE-REGISTERED 2026-09-28).
 - **E44**: common-target comparison at the E28 dim-5 point (Ф77), COMPLETE: O4 PROVISIONAL (Ф78).
-- **E45+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
+- **E45**: E44 at 90 epochs, prescribed against free_scaled (Ф78), PRE-REGISTERED.
+- **E46+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
 
@@ -746,6 +747,26 @@ Code: E44_common_target/code/e44_lib.py, run_e44.py (runs only if this commit is
 Cost, from acceptance.log: prescribed cell (both stages) 456 s, free_raw stage 1 461 s. Per seed about 2 x 456 + 4 x 461 = 2756 s (46 min). Ten seeds on four workers (3, 3, 2, 2 seeds): about 2.3 h wall if the processes do not slow each other.
 
 Result (Ф78): O4 PROVISIONAL. GMR 1.146 [0.937, 1.402]; median convergence 0.863 and 0.873, below 0.95. Workers ran with one thread each (see Ф78).
+
+### E45. E44 at 90 epochs, prescribed against free_scaled: PRE-REGISTERED
+
+Question (Ф78). E44 classed free_scaled against prescribed as O4 but PROVISIONAL: both arms were still improving at epoch 30 (median convergence 0.863 and 0.873, below 0.95). Does the class hold when both stages are trained to convergence?
+
+Setup. E44 unchanged except: arms prescribed and free_scaled only; 90 epochs in stage 1 and in stage 2. Library E44_common_target/code/e44_lib.py, unchanged since 483f39e; run_arm is called with epochs=90. Same seeds (42, 123, 777, 1001 to 1007), same data, split and loop. Workers run with OMP_NUM_THREADS=1, as E44 did; every seed file records the thread count.
+
+Registered statistic and outcomes: as E44. Per seed L = ln(final2(free_scaled) / final2(prescribed)) at epoch 90; the class O1 to O5 from the 95% t interval (df 9) of GMR = exp(mean L) decides; the p value is reported only.
+
+Convergence. conv = mean(stage-2 loss over epochs 81 to 90) / mean(epochs 71 to 80). If the median over seeds of conv for either arm is below 0.95, the class is reported as PROVISIONAL.
+
+Validity gates, the campaign is void if any fails: prescribed stage 2 equals stage 1 bit for bit on every seed; the encoder state is unchanged by stage 2 in every cell; the first 30 epochs of stage 1 equal the E44 stage-1 history bit for bit for both arms on every seed (same code, data, seed and thread count, so any difference means the run is not what it claims to be); one pre-registration commit, ancestor of HEAD.
+
+Named, not deciding: the registered statistic on best instead of final, with its class; per arm, E44 final at 30 epochs over E45 final at 90 epochs, as GMR with 95% interval (how much the extra training bought).
+
+Scope: dim 5, E28 synthetic dynamics. If the class is O4 or O2 without PROVISIONAL, Ф78's reading stands as a programme fact for dim 5; if O1 or O3, Ф78 is corrected.
+
+Code: E45_long_training/code/run_e45.py, analyze_e45.py. Results: E45_long_training/results/cells/seed_<s>.json, analysis.json.
+
+Cost: E44 took 4 h 21 min wall for 720 epochs on the three-seed workers. E45 has 2 arms x 2 stages x 90 = 360 epochs per seed, 1080 on a three-seed worker: about 6.5 h wall on four workers.
 
 ### PreE30. Coordinate drift on DINOv2 (production-scale vision SSL)
 - **Environment:** CIFAR-100 test split (random subset N=500), 32×32 → 224×224
