@@ -16,7 +16,7 @@ Across 35 experiments on multiple environments and modalities:
 
 3. **Drift is not generic noise.** Matched-amplitude i.i.d. noise is 4× more destructive than actual drift; matched-amplitude correlated noise (constant shift) is 167× less destructive. The free encoder's instability is a structured, data-dependent deformation between these extremes.
 
-4. **Standard remedies don't solve it.** Reducing encoder learning rate by 100× leaves a 62× gap. Extra predictor updates, EMA target encoders, and PCA alignment all fail. The instability is structural, not an optimization artifact.
+4. **Standard remedies don't solve it.** Reducing encoder learning rate by 100× leaves a 62× gap. Extra predictor updates, EMA target encoders, and PCA alignment all fail. The instability is structural, not an optimization artifact. [Ratios are on each encoder's own latent and are not interpretable as quality: EVIDENCE Ф77, Ф82.]
 
 5. **Fixed coordinates have a ceiling.** With sufficient data (500 episodes), the free encoder surpasses prescribed by six orders of magnitude. Coordinate fixation provides sample efficiency, not absolute superiority.
 
@@ -44,22 +44,22 @@ E{NN}_{name}/
 | ID | Name | Environment | Key result |
 |---|---|---|---|
 | E01 | Speech JEPA | LibriSpeech | +18–20pp entropy |
-| E02 | LeWM State | Push-T | 38× prescribed advantage |
+| E02 | LeWM State | Push-T | 38× prescribed advantage (own-latent ratio, not interpretable as quality: EVIDENCE Ф77, Ф82) |
 | E03 | LeWM Pixel | Push-T pixels | 14.8×, 37× fewer params |
 | E04 | Shov-JEPA Vision | Rico UI | +5% accuracy |
 | E05 | Controls | Push-T | random ≈ prescribed |
-| E06 | Covariance + Drift | Push-T | rank 2.99 → still 222× worse |
+| E06 | Covariance + Drift | Push-T | rank 2.99 → still 222× worse (own-latent ratio, not interpretable as quality: EVIDENCE Ф77, Ф82) |
 | E07 | Freeze test | Push-T | freeze@1 +20% |
 | E08 | Random fixed encoder | Push-T | 17× stability effect |
 | E09 | Aligned-but-drifting | Push-T | aligned ≈ free |
-| E10 | LR sweep + EMA | Push-T | prescribed wins at every LR |
+| E10 | LR sweep + EMA | Push-T | prescribed wins at every LR (own-latent ratio, not interpretable as quality: EVIDENCE Ф77, Ф82) |
 | E11 | Rico drift | Rico UI | cross-modal drift confirmation |
 | E12–E14 | Dimension sweep | Push-T | prescribed wins dim 1–11 (own-latent ratios, not interpretable as quality: EVIDENCE Ф77, Ф80) |
 | E15 | Simple pendulum | Pendulum | free wins (boundary condition) |
 | E16 | Double pendulum | Double pendulum | normalization resolves |
 | E17 | Fragility test | Push-T | noise axis: 1106× degradation |
 | E18 | MLP decoder transfer | Push-T | two-phase drift model |
-| E19 | Update ratio + diffLR | Push-T | 62× gap remains at 100× slower |
+| E19 | Update ratio + diffLR | Push-T | 62× gap remains at 100× slower (own-latent ratio, not interpretable as quality: EVIDENCE Ф77, Ф82) |
 | E20 | PCA canonicalization | Push-T | PCA worsens transfer |
 | E21–E22 | Confound tests | Push-T | optimizer/SIGReg confounds absent |
 | E23 | Random 3D vs 5D | Push-T | subspace selection critical |

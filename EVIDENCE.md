@@ -2,7 +2,7 @@
 
 Andrey Lazarev | Independent Researcher
 
-Last updated: 4 October 2026 (Г5, Г7, Г9, Г10, Г14, Г25, П1, П2, the KEY DIFFERENCES row, open questions 1, 3, 4, 5 and 7 and the E35 mapping row aligned with Ф58 and Ф77 to Ф81; earlier: 11 September, Ф61/Ф62 added, Ф46/Ф60 caveats amended; earlier: Ф57, Н1/Н2 refuted, Г25 rewritten) — merge of the April branch (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) with the July branch (Ф45, Ф46, Г16–Г18). April E- and Г-numbers were reassigned, July ones kept. See MAPPING TABLES at the end of the file.
+Last updated: 4 October 2026 (Г5, Г7, Г9, Г10, Г14, Г25, П1, П2, the KEY DIFFERENCES row, open questions 1, 3, 4, 5 and 7 and the E35 mapping row aligned with Ф58 and Ф77 to Ф81; Ф82 added and propagated; earlier: 11 September, Ф61/Ф62 added, Ф46/Ф60 caveats amended; earlier: Ф57, Н1/Н2 refuted, Г25 rewritten) — merge of the April branch (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) with the July branch (Ф45, Ф46, Г16–Г18). April E- and Г-numbers were reassigned, July ones kept. See MAPPING TABLES at the end of the file.
 
 Protocol:
 - **Facts (Ф)** — experimentally verified results, ours or from sources we have studied. For ours: code, environment, parameters and seeds are given. For external ones: the source is given (book, paper with DOI/arXiv, page or section). Admitting an external fact to the registry is a curatorial decision: it counts as established once independent work confirms it, or once it is adopted as a working basis for the current programme.
@@ -39,13 +39,13 @@ Protocol:
 **Ф5. Random fixed axes (3D) ≈ prescribed**
 - Random fixed: 0.61× of prescribed (slightly better) at 200 ep
 - Random fixed: 1.00× at 500 ep
-- Free 3D same input: 4.47× worse than prescribed at 200 ep
+- Free 3D same input: 4.47× worse than prescribed at 200 ep [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Fixedness matters more than the semantics of the axes
 - Source of 0.61×: random_axes_control, 200 ep, 30 epochs, 3 seeds, no SIGReg (Ф39)
 - Source of 1.00×: random_axes_control, 500 ep, 50 epochs, 9 runs (Ф39)
 - Paper 1, Section 4.6 + random_axes_control/RESULTS.md
 
-**Ф6. Equal-input control: free with the same input (x, y, θ) is 7.6× worse than prescribed**
+**Ф6. Equal-input control: free with the same input (x, y, θ) is 7.6× worse than prescribed** [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Prescribed: 0.000472, free 3D same input: 0.003570
 - The advantage comes from fixedness, not from access to information
 - Paper 1, reviewer response
@@ -56,13 +56,13 @@ Protocol:
 - Paper 1, reviewer response
 
 **Ф8. SIGReg can harm the free encoder**
-- Free without SIGReg: 0.037, free with SIGReg: 0.156 (4.2× worse)
+- Free without SIGReg: 0.037, free with SIGReg: 0.156 (4.2× worse) [Ф82: SIGReg shapes the latent the loss is measured in; not interpretable as quality.]
 - SIGReg forces isotropy; the task is anisotropic
 - Eigenvalues, prescribed: [0.098, 0.078, 0.064] — reflects the structure of the task
 - Eigenvalues, free+SIGReg: [0.98, 0.93, 0.85] — artificial isotropy
 - Paper 2, Section 6.2
 
-**Ф9. The free encoder has full rank (2.99/3) and isotropy (0.86) — and loses to prescribed by 233×**
+**Ф9. The free encoder has full rank (2.99/3) and isotropy (0.86) — and loses to prescribed by 233×** [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Prescribed: rank 2.91, isotropy 0.66
 - Rank collapse is not the cause of the degradation
 - Paper 2, Section 3
@@ -74,15 +74,15 @@ Protocol:
 - By epoch 2→3 R² recovers to 0.73–0.76
 - Paper 2, Section 4.2
 
-**Ф11. Freeze@1 improves free by 20%**
+**Ф11. Freeze@1 improves free by 20%** [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Free unfrozen: 0.081, freeze@1: 0.065
 - Freeze@2: +2.9%, freeze@10: −1.1% (neutral)
 - Causal evidence: stabilizing the encoder helps
-- But freeze@1 (0.065) is still 25× worse than prescribed (0.0025)
+- But freeze@1 (0.065) is still 25× worse than prescribed (0.0025) [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Stability alone is not sufficient
 - Paper 2, Section 5.1
 
-**Ф12. A random fixed encoder beats free by 17×**
+**Ф12. A random fixed encoder beats free by 17×** [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Random fixed: 0.000476, free: 0.008282
 - Random fixed = frozen random orthogonal projection, zero semantic content
 - Stability without alignment already gives an order-of-magnitude advantage
@@ -99,7 +99,7 @@ Protocol:
 - Paper 2, Section 5.4
 
 **Ф15. Aligned-but-drifting ≈ free (or worse)**
-- Aligned-drifting linear: 0.012849 (1.55× worse than free at 0.008282)
+- Aligned-drifting linear: 0.012849 (1.55× worse than free at 0.008282) [Ф82: same script as E05b, Ф80 verdict on Ф37 applies.]
 - Aligned-drifting MLP: 0.008380 (≈ free)
 - Encoder initialized at the ideal coordinates → drift allowed → the advantage is lost entirely
 - Alignment without stability is useless
@@ -205,7 +205,7 @@ Protocol:
 - 200 episodes, 30 epochs, 3 seeds, synthetic
 - Tier 1 / T1
 
-**Ф26. Differential LR (encoder 100× slower) closes 72% of the gap, but 62× remains**
+**Ф26. Differential LR (encoder 100× slower) closes 72% of the gap, but 62× remains** [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Prescribed: 0.000037
 - Free K=1: 0.008282 (222×)
 - Free diffLR 100× (enc LR=3e-6): 0.002303 (62×)
@@ -370,7 +370,7 @@ Protocol:
 - 3 seeds, 200 episodes, 30 epochs, synthetic
 - E29
 
-**Ф43i. The free encoder (222×) is 167× worse than correlated noise (1.3×) at matched amplitude**
+**Ф43i. The free encoder (222×) is 167× worse than correlated noise (1.3×) at matched amplitude** [Ф82: the free 222x side is not interpretable; the noise side stands.]
 - free: 0.008282, correlated_schedule: 0.000050
 - Drift ≠ a global coordinate shift. It is a data-dependent deformation.
 - 3 seeds, 200 episodes, 30 epochs, synthetic
@@ -388,7 +388,7 @@ Protocol:
 - freeze@0 (random_fixed as proxy, Ф12 = 0.000476) → freeze@1 (0.06485, gym-pusht) = **136× cliff**
 - freeze@1 → unfrozen (0.08113) = **1.3×** (negligible against the cliff)
 - ~99% of the damage to the free encoder is done in the first epoch; the break is between epoch 0 and 1, not later
-- The freeze@k≥1 band (k=1,2,3,5,7,10) is narrow: 0.065–0.082, each ≥25× worse than prescribed (0.00252)
+- The freeze@k≥1 band (k=1,2,3,5,7,10) is narrow: 0.065–0.082, each ≥25× worse than prescribed (0.00252) [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Mechanistically closes Ф31: random_fixed ≈ prescribed because both are freeze@0 (the representation BEFORE the catastrophic first epoch)
 - Method: analysis of the already recorded freeze@k profile from E06/E07 all_results.json, no new runs; reproduces exactly (repro 136.25× = shipped)
 - Environment: Push-T (gym-pusht, real pymunk, synthetic=false), 3 seeds, 30 epochs, 200 episodes
@@ -641,14 +641,14 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
   - Early drift destroys information — the MLP decoder breaks too (Ф24)
   - Late drift preserves information non-linearly (Ф25)
   - The drift is non-linear — PCA cannot fix it (Ф27)
-  - diffLR 100× still leaves a 62× gap — not optimization lag (Ф26)
+  - diffLR 100× still leaves a 62× gap — not optimization lag (Ф26) [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - No confound in the freeze test (Ф30)
 - Drift grows with dimension (Ф35)
 - Environment: Push-T (3D, 5D, 16D)
 - Status: CONFIRMED, strengthened
 
 **Г3. Rank collapse is not the main cause of free-encoder degradation**
-- Confirmed: full rank 2.99 + isotropy 0.86 → still 233× worse (Ф9)
+- Confirmed: full rank 2.99 + isotropy 0.86 → still 233× worse (Ф9) [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Environment: Push-T
 - Status: CONFIRMED on Push-T
 
@@ -683,7 +683,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 
 **Г18. The critical window for free-encoder damage is inside the first epoch; the shape is a continuous slope, not a discrete threshold**
 - Refines Г15 (the two-phase model): phase 1 is not "epochs 0–2" but "inside the first epoch".
-- Support: Ф45 (E30) — ~99% of the damage in the first epoch (freeze@0→@1 = 136× cliff vs freeze@1→unfrozen = 1.3×); Ф46 (E31 synthetic + E32 real) — inside the first epoch it is a slope (SLOPE verdict from code: E32 R²=0.977, step 10.5× worse, 5/5 monotone).
+- Support: Ф45 (E30) — ~99% of the damage in the first epoch (freeze@0→@1 = 136× cliff vs freeze@1→unfrozen = 1.3×); Ф46 (E31 synthetic + E32 real) — inside the first epoch it is a slope (SLOPE verdict from code: E32 R²=0.977, step 10.5× worse, 5/5 monotone). [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - ~~The first quarter of the epoch (f≤0.25) is near-harmless; after that the damage integrates continuously, accelerating toward the end.~~ **REVISED by E38 (Ф60):** the damage rises from the first optimizer steps (f=0.00→0.25 gives 5.8–17.1×), is steepest over roughly the first 40% of the epoch, and then saturates. The SLOPE verdict is unaffected; only the onset and the "accelerating" reading are.
 - **The correct formulation (important for the hallucination bridge):** "early, continuously-integrated divergence that later training does not undo" — NOT "irreversible event". The word "irreversible" must not be read as discreteness: irreversibility is a property of the terminal state of epoch 1 with respect to later training (E30/Ф45), reached by continuous accumulation (E31/E32/Ф46). The slope directly refutes a discrete threshold.
 - Bridge to hallucination: the shared axis is confident output from an ungrounded state (NOT an identity of mechanism). The real domain test is the LLM (Г17, epiplexity ⊥ identifiability), outside Push-T. Keep it on the leash.
@@ -716,7 +716,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: REFUTED (the decomposition). The earlier note "not the thesis" rested on the dim-5 gap of Ф18; at dim 5 that gap is mostly the input defect (Ф78), and on a common target with range-normalised input no prescribed advantage is seen (Ф79, class O4 PROVISIONAL).
 
 **Г11. The free-encoder problem is optimization lag (solved by scheduler/LR)**
-- diffLR 100× helps by 72%, but a 62× gap remains (Ф26)
+- diffLR 100× helps by 72%, but a 62× gap remains (Ф26) [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Extra predictor steps (K=3) make it WORSE (Ф26)
 - EMA (decay=0.996) does not help (Paper 2, 6.1×)
 - Status: REFUTED — optimization lag is a partial factor, not the main cause
@@ -1113,3 +1113,14 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - Both arms use the same jepa.unroll loss; only the locations argument differs. SR is a common metric, so Ф77 does not apply to the verdict. [verified: run_experiment_v4_windows.py:636-665]
 - INTERPRETATION: the +0.107 SR of Ф58 compares input modality (oracle low-dimensional state against pixels), with one training seed (seed=1). The paired McNemar over 168 episodes does not cover training-seed variance, which E41 found to dominate on Push-T. It does not test prescribed axes as a fixed coordinate system. The only common-metric comparison of a fixed against a learned coordinate system with equal information remains E44/E45 (Ф78, Ф79), class O4 PROVISIONAL.
 - NEXT: if the thesis is to be tested on planning, a Two Rooms analogue of E44: a frozen fixed projection of the four z-scored coordinates against a learned MLP on the same input, both scored on SR, at least 3 training seeds. Not decided.
+
+## Ф82: audit of the remaining prescribed-vs-free comparisons for the Ф76 and Ф77 confounds
+- Scope: entries carrying a prescribed/free ratio that Ф77 to Ф81 did not cover: Ф5, Ф6, Ф8, Ф9, Ф11, Ф12, Ф13, Ф15, Ф26, Ф41i, Ф43i, Ф45, and the E02, E06, E10 and E19 rows of README.
+- [verified: E02 lewm_pusht_experiment.py:159-163, E05 random_fixed_axes_test.py:184-188, E06 paper2_full_analysis.py:177-180, E07 freeze_test_standalone.py:116-121, E08 random_fixed_full.py:179-183, E19 tier1_all_tests.py:140-145, E29 noise_control.py:228-232; E10 lr_sweep_ema_baseline.ipynb, tgt = embs[:, H:] at notebook lines 377, 413, 757] The prediction loss is mse(p, emb[:, H]) with emb the output of the encoder under test. Every encoder is scored on its own latent (Ф77).
+- [verified: class definitions at E02:130-136, E05:152-159, E06:147-154, E07:86-93, E08:148-154, E19:96-103, E29:187-194] The free encoder is the Ф76 network, Linear(5,64), LayerNorm, GELU, Linear(64,64), LayerNorm, GELU, Linear(64,3), with no input scaling, while the prescribed encoder in the same file divides by (512, 512, 2 pi) inside its own forward. Both therefore receive the same unscaled state [INFERENCE: read from where the scaling sits; the data loaders were not traced]. Ф76 applies. In E10 the free encoder definition was not located and Ф76 is not established there.
+- Not interpretable as a difference in quality: Ф5 (the free 4.47x side, the E05a script of Ф38), Ф6 (E05), Ф9 (E06), Ф11 (both the 25x against prescribed and the 20% free-against-free, since a frozen and a trained latent differ in scale), Ф12 (E08), Ф26 (E19), the free 222x side of Ф43i, Ф45 (the 136x freeze@0 to freeze@1 cliff compares different encoders on their own latents), E02 (38x), E10 (prescribed wins at every LR).
+- Ф8 (SIGReg on against off, both free): SIGReg shapes the distribution of the latent in which the loss is measured; not interpretable as a quality difference [INFERENCE].
+- Ф15: E09_aligned_drifting/code/gauge_fix_experiments.py is byte-identical to the E05b script [verified: md5sum, e080d0fe97277210ce7270534660ba23 for both]. The Ф80 verdict on Ф37 applies.
+- Stand: Ф13 [verified: E08 random_fixed_full.py:138-146, R = ortho_group.rvs, forward (s * sc) @ R.T]: prescribed and random_fixed share units, as in Ф39. Ф41i [verified: E29 noise_control.py:144-185, noise is added only in training and evaluation returns the clean prescribed latent]: noisy and clean prescribed are scored in the same units, so the 851x stands as a comparison inside prescribed. The noise side of Ф43i (1.3x) stands for the same reason.
+- Not audited here: E34 (EB-JEPA, pixel input, own-latent prediction loss; the Н1 probe precedent), Г6 and E12 (prescribed_11 against prescribed_3, two fixed latents of different content; the persistence observation of Ф77 suggests caution).
+- CONSEQUENCE: apart from Ф13, Ф39 and the comparisons inside prescribed, no prescribed-vs-free loss ratio on Push-T or the pendulums is interpretable as a difference in quality. The common-metric comparisons are E44 and E45 (Ф78, Ф79, class O4 PROVISIONAL) and E35 (Ф58, which compares input modality, Ф81).

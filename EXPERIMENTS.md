@@ -82,7 +82,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Metric:** Val prediction loss
 - **Result:**
   - Random fixed ≈ prescribed (0.61×) → fixing > semantics (Ф5)
-  - Equal-input free is 7.6× worse than prescribed → not about access to information (Ф6)
+  - Equal-input free is 7.6× worse than prescribed → not about access to information (Ф6) [Ф82: own-latent ratio, not interpretable as a quality gap.]
   - SIGReg removal improves free by 1.9× (Ф7)
 - **Parameters:** 3 seeds, 50 epochs, 200 episodes
 - **Facts:** Ф5, Ф6, Ф7
@@ -94,7 +94,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Conditions:** prescribed, random_fixed, free_3d, free_5d at 200 and 500 episodes
 - **Metric:** Val prediction loss
 - **Result:**
-  - 200 ep: random 0.61× prescribed, free 4.47× worse (Ф39)
+  - 200 ep: random 0.61× prescribed, free 4.47× worse (Ф39) [Ф82: own-latent ratio, not interpretable as a quality gap.]
   - 500 ep: random 1.00× prescribed, **free 695,000× BETTER** (Ф38) [Ф80: the free latent is likely collapsed; this reading is withdrawn.]
   - Fixed encoders plateau at ~8.5×10⁻⁴, free → 10⁻⁹
   - Prescribed = sample efficiency, not absolute superiority
@@ -128,7 +128,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
   - Free: rank 2.99, isotropy 0.86 → loses to prescribed by 233× (Ф9)
   - R² transfer epoch 0→1: −16.9 / −62.2 / −25.4 (Ф10)
   - 80% of the drift is structural after Procrustes
-  - SIGReg harms free: 4.2× worse (Ф8)
+  - SIGReg harms free: 4.2× worse (Ф8) [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - **Parameters:** 3 seeds (42, 123, 777), 30 epochs, 200 episodes, SIGReg λ=0.09
 - **Facts:** Ф8, Ф9, Ф10
 - **Code:** paper2_full_analysis.py, drift_analysis_standalone.py, covariance_analysis_standalone.py
@@ -149,7 +149,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Conditions:** Prescribed, rotated prescribed, random fixed 5→3, free
 - **Metric:** Best val loss
 - **Result:**
-  - Random fixed 17× better than free (Ф12)
+  - Random fixed 17× better than free (Ф12) [Ф82: own-latent ratio, not interpretable as a quality gap.]
   - Prescribed 13× better than random fixed (Ф13)
   - Rotated ≈ prescribed at 1.09× (Ф14)
 - **Parameters:** 3 seeds, 30 epochs, 200 episodes
@@ -173,7 +173,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Environment:** Push-T (synthetic)
 - **Conditions:** Free LR={1e-4, 3e-4, 1e-3, 3e-3}, free+EMA (decay=0.996), prescribed
 - **Metric:** Best val loss, R²(0→1)
-- **Result:** Prescribed wins at every LR (4.3–7.0×). EMA is 6.1× worse than prescribed.
+- **Result:** Prescribed wins at every LR (4.3–7.0×). EMA is 6.1× worse than prescribed. [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - **Parameters:** Seed 42, 50 epochs
 - **Facts:** (Paper 2, Section 5.6–5.7)
 - **Code:** lr_sweep_ema_baseline.ipynb
@@ -439,7 +439,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Metric:** best_vp ratio between freeze points
 - **Result:**
   - freeze@0 → freeze@1 = **136× cliff**; freeze@1 → unfrozen = 1.3× → ~99% of the damage in the first epoch (Ф45)
-  - The freeze@k≥1 band is narrow (0.065–0.082), each point ≥25× worse than prescribed
+  - The freeze@k≥1 band is narrow (0.065–0.082), each point ≥25× worse than prescribed [Ф82: own-latent ratio, not interpretable as a quality gap.]
   - Mechanistically closes Ф31 (random_fixed ≈ prescribed = freeze@0)
   - Incidentally: Г16 (drift-rate law) REFUTED on the same data (finding_drift_rate.docx) — the drift burns out in ~3 epochs, there is no constant rate
 - **Parameters:** 3 seeds (42,123,777), 30 epochs, 200 episodes. Analysis, CPU, seconds. Reproduces exactly (136.25×).
@@ -897,7 +897,7 @@ Result (Ф79): O4 PROVISIONAL. GMR 0.915 [0.828, 1.010]; median convergence 0.91
 | E03 | LeWM State | Push-T gym | gym | 3 | 50 | 200 | 38× |
 | E04 | LeWM Pixel | Push-T pixel | gym | — | 50 | — | 14.8× |
 | E05 | Controls (Paper 1) | Push-T | gym | 3 | 50 | 200 | random≈prescribed |
-| E06 | Cov + drift | Push-T gym | gym | 3 | 30 | 200 | rank 2.99 → 233× worse |
+| E06 | Cov + drift | Push-T gym | gym | 3 | 30 | 200 | rank 2.99 → 233× worse (own-latent ratio, not interpretable as quality: Ф82) |
 | E07 | Freeze test | Push-T gym | gym | 3 | 30 | 200 | freeze@1 +20% |
 | E08 | Random fixed | Push-T syn | syn | 3 | 30 | 200 | 17× stability |
 | E09 | Aligned-drifting | Push-T syn | syn | 3 | 30 | 200 | aligned≈free |
@@ -910,7 +910,7 @@ Result (Ф79): O4 PROVISIONAL. GMR 0.915 [0.828, 1.010]; median convergence 0.91
 | E16 | Double pendulum | Dbl pend syn | syn | 3 | 20 | 100 | prescribed@dim=1 only |
 | E17 | Fragility | Push-T syn | syn | 3 | 30 | 200 | noise: 1106× |
 | E18 | MLP decoder xfer | Push-T syn | syn | 3 | 30 | 200 | ep0→1: info destroyed |
-| E19 | Update ratio | Push-T syn | syn | 3 | 30 | 200 | 62× gap remains |
+| E19 | Update ratio | Push-T syn | syn | 3 | 30 | 200 | 62× gap remains (own-latent ratio, not interpretable as quality: Ф82) |
 | E20 | PCA canonical | Push-T syn | syn | 3 | 30 | 200 | PCA worsens |
 | E21 | ±SIGReg aligned | Push-T syn | syn | 3 | 30 | 200 | SIGReg stabilizes |
 | E22 | Optimizer freeze | Push-T syn | syn | 3 | 30 | 200 | no confound |
