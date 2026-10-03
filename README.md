@@ -54,7 +54,7 @@ E{NN}_{name}/
 | E09 | Aligned-but-drifting | Push-T | aligned ≈ free |
 | E10 | LR sweep + EMA | Push-T | prescribed wins at every LR |
 | E11 | Rico drift | Rico UI | cross-modal drift confirmation |
-| E12–E14 | Dimension sweep | Push-T | prescribed wins dim 1–11 |
+| E12–E14 | Dimension sweep | Push-T | prescribed wins dim 1–11 (own-latent ratios, not interpretable as quality: EVIDENCE Ф77, Ф80) |
 | E15 | Simple pendulum | Pendulum | free wins (boundary condition) |
 | E16 | Double pendulum | Double pendulum | normalization resolves |
 | E17 | Fragility test | Push-T | noise axis: 1106× degradation |
@@ -63,7 +63,7 @@ E{NN}_{name}/
 | E20 | PCA canonicalization | Push-T | PCA worsens transfer |
 | E21–E22 | Confound tests | Push-T | optimizer/SIGReg confounds absent |
 | E23 | Random 3D vs 5D | Push-T | subspace selection critical |
-| E24–E26 | Dimensionality scaling | Push-T | 3D→16D: gap persists, drift scales |
+| E24–E26 | Dimensionality scaling | Push-T | 3D→16D: gap persists, drift scales (own-latent ratios, not interpretable as quality: EVIDENCE Ф77, Ф80) |
 | E27 | Drift correlation | Push-T | Pearson = 0.95 |
 | E28 | Full dim sweep | Push-T | NO crossover at any dimension |
 | E29 | Noise control | Push-T | drift ≠ noise ≠ shift |

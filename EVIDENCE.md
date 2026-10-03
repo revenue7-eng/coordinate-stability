@@ -2,7 +2,7 @@
 
 Andrey Lazarev | Independent Researcher
 
-Last updated: 4 October 2026 (Г10, Г25, open questions 4, 5 and 7 and the E35 mapping row aligned with Ф58, Ф77, Ф78, Ф79 and Ф81; earlier: 11 September, Ф61/Ф62 added, Ф46/Ф60 caveats amended; earlier: Ф57, Н1/Н2 refuted, Г25 rewritten) — merge of the April branch (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) with the July branch (Ф45, Ф46, Г16–Г18). April E- and Г-numbers were reassigned, July ones kept. See MAPPING TABLES at the end of the file.
+Last updated: 4 October 2026 (Г5, Г7, Г9, Г10, Г14, Г25, П1, П2, the KEY DIFFERENCES row, open questions 1, 3, 4, 5 and 7 and the E35 mapping row aligned with Ф58 and Ф77 to Ф81; earlier: 11 September, Ф61/Ф62 added, Ф46/Ф60 caveats amended; earlier: Ф57, Н1/Н2 refuted, Г25 rewritten) — merge of the April branch (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) with the July branch (Ф45, Ф46, Г16–Г18). April E- and Г-numbers were reassigned, July ones kept. See MAPPING TABLES at the end of the file.
 
 Protocol:
 - **Facts (Ф)** — experimentally verified results, ours or from sources we have studied. For ours: code, environment, parameters and seeds are given. For external ones: the source is given (book, paper with DOI/arXiv, page or section). Admitting an external fact to the registry is a curatorial decision: it counts as established once independent work confirms it, or once it is adopted as a working basis for the current programme.
@@ -696,7 +696,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 ### Refuted
 
 **Г5. The prescribed/free crossover equals the intrinsic dimension of the task**
-- Push-T: ~~crossover 3→4~~ NO CROSSOVER on full data (E28). Prescribed wins at 1–11.
+- Push-T: ~~crossover 3→4~~ NO CROSSOVER on full data (E28). Prescribed wins at 1–11. [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - Pendulum: no crossover, intrinsic dim=2 — (data from Ф19, not verified with full parameters)
 - Double pendulum: crossover 1→2, intrinsic dim=4 — (data from Ф20, being rerun)
 - The original Push-T crossover was an artefact of the underpowered E13 (100 ep, 20 epochs, 2 seeds)
@@ -773,8 +773,8 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 ### Open
 
 **Г7. ~~Prescribed works not because of fixing but because of information selection~~ REFUTED**
-- Push-T: prescribed wins at dim=5 (all coordinates, no selection) by 66× (E28)
-- Double pendulum: prescribed_norm wins at dim=4 (all coordinates, no selection) by 19× (Ф20)
+- Push-T: prescribed wins at dim=5 (all coordinates, no selection) by 66× (E28) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
+- Double pendulum: prescribed_norm wins at dim=4 (all coordinates, no selection) by 19× (Ф20) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - The original argument (pendulums do not work → selection is needed) was an artefact of missing normalization
 - Status: REFUTED — fixing + normalization suffices, selection is not needed
 
@@ -787,22 +787,22 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: REFUTED
 
 **Г9. Fragility of prescribed: one extra axis kills the advantage**
-- ~~Fact: dim=3→4 is a loss on Push-T (Ф18)~~ REFUTED: prescribed wins at dim=4 by 114× (E28)
+- ~~Fact: dim=3→4 is a loss on Push-T (Ф18)~~ REFUTED: prescribed wins at dim=4 by 114× (E28) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - The mechanism from E17 (Ф21–Ф23) still holds: an unpredictable axis is catastrophic (1106×)
 - But: predictable extra axes degrade prescribed (228× → 42× over dim 3→11) without killing it
-- The gap shrinks monotonically, but prescribed wins at every dimension
+- The gap shrinks monotonically, but prescribed wins at every dimension [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - **E12 (free_11 > prescribed_11) was an artefact of a small predictor (hidden=128)**
-- With predictor capacity max(128, dim*8) prescribed wins even at dim=11
-- Status: PARTIALLY REFUTED — fragility to noise axes is real (Ф21), but extra predictable axes do not kill the prescribed advantage
+- With predictor capacity max(128, dim*8) prescribed wins even at dim=11 [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
+- Status: PARTIALLY REFUTED — fragility to noise axes is real (Ф21), but extra predictable axes do not kill the prescribed advantage [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 
 **Г14. The prescribed advantage = fixing + [0,1] normalization of the coordinates**
 - Based on all the experiments (Tier 1–3, E28, the E16 fix)
-- Prescribed wins when it:
+- Prescribed wins when it: [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
   (a) fixes the coordinates (they do not drift)
   (b) **normalizes the coordinates into [0,1] (min-max)** — MANDATORY
   (c) has coordinates that carry information relevant to the task
 - Without normalization prescribed loses (pendulum raw: 0.1–0.4×)
-- With normalization prescribed wins on every environment and every dim:
+- With normalization prescribed wins on every environment and every dim: [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
   - Push-T dim 1–11: 42–1820× (E28)
   - Double pendulum dim 1–8: 10–19× (Ф20 updated)
 - Alignment of the axes within the subspace does not matter (Ф31)
@@ -868,7 +868,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 |---|---|---|---|---|
 | Intrinsic dimension | 3 | 4 | 4 | 2+ (agent x, y; wall, door are environment parameters) |
 | Full state dim | 5 | 4 | 4 | 65×65 pixels + (wall_x, door_y) |
-| Prescribed wins? | Yes (dim 1–11) | No (Ф20 original) | **Yes (dim 1–8)** | No difference measured at dim=2 (Ф57, single seed) |
+| Prescribed wins? | Yes (dim 1–11) | No (Ф20 original) | **Yes (dim 1–8)** | No difference measured at dim=2 (Ф57, single seed) (own-latent ratio, not interpretable as quality: Ф77, Ф80) |
 | Normalization | [0,1] min-max | None | [0,1] min-max | z-score (LeCun) for prescribed_2 |
 | Gap prescribed/free | 42–1820× | 0.1–0.4× | **10–19×** | None measured: both 0.55 SR at n=20 (Ф57) |
 | Obstacles in the environment | No | No | No | Yes (a wall with a door) |
@@ -882,7 +882,7 @@ Two Rooms is the first environment in the programme with (a) obstacles and (b) a
 
 **П1. ~~Push-T 5D prescribed works (Ф36), but pendulum prescribed on the full input does not (Ф19, Ф20)~~ CLOSED**
 - Cause: the absence of normalization in the pendulum runs
-- With [0,1] normalization prescribed beats free on the double pendulum at ALL dims 1–8 (Ф20 updated)
+- With [0,1] normalization prescribed beats free on the double pendulum at ALL dims 1–8 (Ф20 updated) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - Normalization gives a 37–166× improvement to prescribed
 - Push-T prescribed always normalized — which is why it worked
 - The pendulums without normalization use raw coordinates at different scales (θ ∈ [−π,π], ω ∈ [−10,10])
@@ -890,7 +890,7 @@ Two Rooms is the first environment in the programme with (a) obstacles and (b) a
 
 **П2. ~~Dim sweep (Ф18): prescribed loses at dim≥4. But Ф36: prescribed_5d wins by 66×~~ CLOSED**
 - E13 (100 ep, 20 epochs, 2 seeds) was underpowered
-- E28 (200 ep, 30 epochs, 3 seeds, predictor max(128, dim*8)): prescribed wins 1–11, no crossover
+- E28 (200 ep, 30 epochs, 3 seeds, predictor max(128, dim*8)): prescribed wins 1–11, no crossover [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - dim=5 agrees with Tier 3 E25: 66.3× vs 66.2×
 - Cause of the discrepancy: (a) too little data/epochs, (b) a small predictor at hidden=128
 - Ф18 refuted, Ф36 confirmed
@@ -899,9 +899,9 @@ Two Rooms is the first environment in the programme with (a) obstacles and (b) a
 
 ## OPEN QUESTIONS (by priority)
 
-1. ~~Is selection (feature selection) rather than fixing the true cause of the prescribed advantage on Push-T?~~ → Partly answered: Push-T 5D prescribed (without selection) works (Ф36). Selection is not the only factor. But the pendulums without selection do not work — the difference needs explaining (П1)
+1. ~~Is selection (feature selection) rather than fixing the true cause of the prescribed advantage on Push-T?~~ → Partly answered: Push-T 5D prescribed (without selection) works (Ф36). Selection is not the only factor. But the pendulums without selection do not work — the difference needs explaining (П1) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 2. Why does Push-T 5D prescribed work while pendulum prescribed on the full input does not? (П1) → E16 is being rerun with normalization
-3. ~~Why do the dim sweep (Ф18) and Tier 3 (Ф36) give different results at dim=5?~~ → SOLVED (П2): E13 was underpowered. E28 confirmed that prescribed wins at 1–11.
+3. ~~Why do the dim sweep (Ф18) and Tier 3 (Ф36) give different results at dim=5?~~ → SOLVED (П2): E13 was underpowered. E28 confirmed that prescribed wins at 1–11. [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 4. ~~Why does even sinθ (same subspace) degrade things by 4.8×?~~ → The context has changed: prescribed wins at every dim; the degradation is a loss of gap magnitude, not a defeat. Superseded: at dim 5 there is no prescribed advantage on a common target with range-normalised input (Ф78, Ф79, class O4 PROVISIONAL); at other dims the gap is not interpretable as a quality difference (Ф77)
 5. ~~Do the facts Ф17–Ф23 reproduce on full data?~~ → Ф17 updated (E28): prescribed_11 now beats free_11 (42×) given the right predictor capacity. Superseded: Ф17 is not interpretable as a quality gap until both encoders are scored on a common target with equally scaled input (Ф77). Ф21–Ф23 (fragility) need a rerun with the max(128, dim*8) predictor.
 6. How does prescribed behave in environments with dim_state > dim_internal, under normalization? → Partly: E16 is being rerun

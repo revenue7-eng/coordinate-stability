@@ -95,10 +95,10 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Metric:** Val prediction loss
 - **Result:**
   - 200 ep: random 0.61× prescribed, free 4.47× worse (Ф39)
-  - 500 ep: random 1.00× prescribed, **free 695,000× BETTER** (Ф38)
+  - 500 ep: random 1.00× prescribed, **free 695,000× BETTER** (Ф38) [Ф80: the free latent is likely collapsed; this reading is withdrawn.]
   - Fixed encoders plateau at ~8.5×10⁻⁴, free → 10⁻⁹
   - Prescribed = sample efficiency, not absolute superiority
-  - Isotropic normalization 15× worse (Ф40)
+  - Isotropic normalization 15× worse (Ф40) [Ф80: rescaling of the metric latent, not evidence about the model.]
 - **Parameters:** 200 ep: 3 seeds, 30 epochs. 500 ep: 3–9 runs, 50 epochs. No SIGReg.
 - **Facts:** Ф38, Ф39, Ф40
 - **Code:** random_axes_control/run_random_axes_control.py, run_isotropic_control.py
@@ -197,7 +197,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Environment:** Push-T (synthetic)
 - **Conditions:** prescribed_3, prescribed_11, free_3, free_11, random_fixed_11
 - **Metric:** Val loss
-- **Result:** prescribed_11 is 20× worse than prescribed_3. free_11 beats prescribed_11 by 6×. (Ф17)
+- **Result:** prescribed_11 is 20× worse than prescribed_3. free_11 beats prescribed_11 by 6×. (Ф17) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - **Parameters:** 3 seeds, 30 epochs, 200 episodes
 - **Facts:** Ф17
 - **Code:** dim-sweep/exp1_11axes/run_11axes.py
@@ -207,7 +207,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Environment:** Push-T (synthetic)
 - **Conditions:** Prescribed vs free at dim = 3, 4, 5, 6, 7, 9, 11, 15
 - **Metric:** Val loss
-- **Result:** Crossover at dim=3→4. Prescribed wins only at dim ≤ 3. (Ф18)
+- **Result:** Crossover at dim=3→4. Prescribed wins only at dim ≤ 3. (Ф18) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - **Parameters:** 3 seeds, 20 epochs, 100 episodes (preliminary)
 - **Facts:** Ф18
 - **Code:** dim-sweep/exp2_sweep/run_sweep.py
@@ -227,7 +227,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Environment:** Simple pendulum (θ, θ̇), synthetic
 - **Conditions:** Prescribed vs free at dim = 1–5, identical input
 - **Metric:** Val loss
-- **Result:** Free wins at all dims. No crossover. (Ф19)
+- **Result:** Free wins at all dims. No crossover. (Ф19) [Ф80: not interpretable.]
 - **Parameters:** 3 seeds, 20 epochs, 100 episodes
 - **Facts:** Ф19
 - **Code:** dim-sweep/exp4_pendulum/run_pendulum.py
@@ -237,7 +237,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Environment:** Double pendulum (θ₁, ω₁, θ₂, ω₂), synthetic
 - **Conditions:** Prescribed vs free at dim = 1, 2, 4, 8, identical input
 - **Metric:** Val loss
-- **Result:** Prescribed wins only at dim=1 (2.1×). Free wins at dim ≥ 2. (Ф20)
+- **Result:** Prescribed wins only at dim=1 (2.1×). Free wins at dim ≥ 2. (Ф20) [Ф80: not interpretable.]
 - **Parameters:** 3 seeds, 20 epochs, 100 episodes
 - **Facts:** Ф20
 - **Code:** dim-sweep/exp5_double_pendulum/run_double_pendulum.py
@@ -404,12 +404,12 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Conditions:** Prescribed vs free at dim = 1, 2, 3, 4, 5, 7, 11. Predictor hidden = max(128, dim×8).
 - **Metric:** Best val loss
 - **Result:**
-  - **NO CROSSOVER.** Prescribed wins at ALL dimensions 1–11.
+  - **NO CROSSOVER.** Prescribed wins at ALL dimensions 1–11. [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
   - dim=1: 60×, dim=2: 1820×, dim=3: 228×, dim=4: 114×, dim=5: 66×, dim=7: 57×, dim=11: 42×
   - The gap decreases monotonically with dim but never reaches 1×
   - dim=5 matches Tier 3 E25 exactly (66.3× vs 66.2×)
   - **Ф18 (crossover at dim=4) REFUTED** — it was an underpowered artefact of E13
-  - **Ф17 updated:** prescribed_11 now beats free_11 (42×) given proper predictor capacity
+  - **Ф17 updated:** prescribed_11 now beats free_11 (42×) given proper predictor capacity [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - **Parameters:** 3 seeds (42, 123, 777), 30 epochs, 200 episodes, predictor max(128, dim×8)
 - **Facts:** Ф18 (refuted), Ф17 (updated)
 - **Code:** p2_dim_sweep_full.py
@@ -919,7 +919,7 @@ Result (Ф79): O4 PROVISIONAL. GMR 0.915 [0.828, 1.010]; median convergence 0.91
 | E25 | 5D latent | Push-T syn | syn | 3 | 30 | 200 | 66×, random≈prescribed |
 | E26 | 16D latent | Push-T syn | syn | 3 | 30 | 200 | 50×, alignment emerges at 1.5× |
 | E27 | Drift correlation | Push-T gym | gym | 3 | 30 | 200 | Pearson=0.95 |
-| E28 | Dim sweep full | Push-T syn | syn | 3 | 30 | 200 | NO crossover, prescribed wins 1–11 |
+| E28 | Dim sweep full | Push-T syn | syn | 3 | 30 | 200 | NO crossover, prescribed wins 1–11 (own-latent ratio, not interpretable as quality: Ф77, Ф80) |
 | E29 | Noise control | Push-T syn | syn | 3 | 30 | 200 | drift≠noise, drift≠shift, free=222× |
 | E30 | Critical window | Push-T gym | gym | 3 | 30 | 200 | 136× cliff: ~99% of the damage in epoch 1 |
 | E31 | Sub-epoch freeze | Push-T syn | syn | 5 | 20 | 100 | SLOPE not a threshold (linear 2.2× best-step) |
@@ -1002,7 +1002,7 @@ Result (Ф79): O4 PROVISIONAL. GMR 0.915 [0.828, 1.010]; median convergence 0.91
 - Possibly: normalization, a difference in the dynamics, or the presence of "extra" (agent) coordinates in Push-T
 
 **П2. ~~E13 (dim sweep: crossover at dim=4) vs E25 (prescribed_5d wins by 66×)~~ CLOSED**
-- E28 (full parameters) confirms: NO crossover. Prescribed wins at dim 1–11.
+- E28 (full parameters) confirms: NO crossover. Prescribed wins at dim 1–11. [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - E13 was underpowered (100 ep, 20 epochs, 2 seeds, predictor hidden=128).
 - dim=5 in E28 matches E25 exactly (66.3× vs 66.2×).
 
