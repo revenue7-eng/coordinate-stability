@@ -26,7 +26,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E41**: variance decomposition, encoder init x head init at a fixed data seed, frozen at step 0 (COMPLETE 2026-09-14, Ф65, Ф66, Ф67).
 - **E42**: candidate-predictor sweep for Г27, 30 encoders at data seed 42 plus 8-10 at a second seed, one head each, four pre-registered candidates computed before training, Bonferroni 0.0125 (PRE-REGISTERED 2026-09-14).
 - **E43**: external-target sweep over the E42 encoders, one head per encoder trained on PE of the true state, three pre-registered predictors, Bonferroni 0.0167, noise floor on encoder 1 (PRE-REGISTERED 2026-09-28).
-- **E44**: common-target comparison at the E28 dim-5 point (Ф77), PRE-REGISTERED.
+- **E44**: common-target comparison at the E28 dim-5 point (Ф77), COMPLETE: O4 PROVISIONAL (Ф78).
 - **E45+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
@@ -744,6 +744,8 @@ Scope: dim 5 and E28's synthetic dynamics only. Ф17 (dim 11) and the other Ф18
 Code: E44_common_target/code/e44_lib.py, run_e44.py (runs only if this commit is an ancestor of HEAD, holds this block, touches the three code files, and the code is unchanged since), analyze_e44.py. Results: E44_common_target/results/cells/seed_<s>.json, analysis.json.
 
 Cost, from acceptance.log: prescribed cell (both stages) 456 s, free_raw stage 1 461 s. Per seed about 2 x 456 + 4 x 461 = 2756 s (46 min). Ten seeds on four workers (3, 3, 2, 2 seeds): about 2.3 h wall if the processes do not slow each other.
+
+Result (Ф78): O4 PROVISIONAL. GMR 1.146 [0.937, 1.402]; median convergence 0.863 and 0.873, below 0.95. Workers ran with one thread each (see Ф78).
 
 ### PreE30. Coordinate drift on DINOv2 (production-scale vision SSL)
 - **Environment:** CIFAR-100 test split (random subset N=500), 32×32 → 224×224
