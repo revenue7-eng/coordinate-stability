@@ -142,6 +142,7 @@ Protocol:
 - Experiment E28 (15.04.2026)
 
 **Ф19. Prescribed does not win at any dim (1–5)**
+- STATUS: not interpretable (own-latent loss, no regulariser against collapse); see Ф80.
 - Free is better at every dimension
 - Prescribed and free receive the same 2D input
 - 100 episodes, 20 epochs, 3 seeds
@@ -173,6 +174,7 @@ Protocol:
 ### Environment: double pendulum (4 degrees of freedom: θ1, ω1, θ2, ω2)
 
 **Ф20. ~~Prescribed wins only at dim=1~~ REFUTED — normalization settles it**
+- STATUS: not interpretable (own-latent loss, no regulariser against collapse); see Ф80.
 - Original (no normalization): prescribed loses to free at dim ≥ 2
 - **With [0,1] normalization prescribed beats free at ALL dims 1–8:**
   - dim=1: 9.8×, dim=2: 16.8×, dim=3: 12.3×, dim=4: 19.1×
@@ -301,6 +303,7 @@ Protocol:
 - Tier 3 / T9a, T9b
 
 **Ф36. 5D prescribed (all coordinates, no selection) works — gap 66×**
+- STATUS at dim 5: corrected by Ф78; E25 shares the E28 encoders and metric, see Ф80.
 - STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.
 - prescribed_5d = normalize(all 5 coordinates), free_5d = MLP 5→5
 - Prescribed does NOT pick a subspace — it takes everything
@@ -314,6 +317,7 @@ Protocol:
 ### Verified from the Paper 1 archive (15.04.2026)
 
 **Ф37. Gauge fixing the free encoder does not help (1.08× ≈ free)**
+- STATUS: not interpretable (raw-state free encoder, own-latent loss); see Ф80.
 - prescribed: 0.000472, free: 0.011614, gauge_fixed_free: 0.012581
 - linear_free: 16009 (blow-up)
 - Gauge fixing (pinning the symmetry through training) does not solve drift
@@ -323,6 +327,7 @@ Protocol:
 - Was not previously included in the fact registry
 
 **Ф38. At 500 episodes the free encoder beats prescribed by 695,000×**
+- STATUS: probable collapse artefact (own-latent loss, no regulariser against collapse); see Ф80.
 - prescribed: 8.513×10⁻⁴ (3 seeds, std 8.4×10⁻⁷)
 - random_fixed: 8.514×10⁻⁴ (9 runs: 3 rotation seeds × 3 training seeds, std 2.1×10⁻⁶)
 - free_3d: 1.225×10⁻⁹ (3 seeds, std 3.7×10⁻¹⁰)
@@ -335,6 +340,7 @@ Protocol:
 - Paper 1, random_axes_control/RESULTS.md
 
 **Ф39. random_fixed ≈ prescribed at both data scales**
+- STATUS: stands (both latents fixed and in the same units); see Ф80.
 - 200 ep: random 0.61× (slightly better than prescribed) — 3 seeds, 30 epochs
 - 500 ep: random 1.00× (identical) — 9 runs vs 3 runs
 - Axis semantics are secondary at any amount of data
@@ -342,6 +348,7 @@ Protocol:
 - Paper 1, random_axes_control/RESULTS.md
 
 **Ф40. Isotropic normalization (zero-mean, unit-variance) degrades by 15×**
+- STATUS: the ratio is a change of units of the latent, not a degradation; see Ф80.
 - prescribed_iso: 0.010250 vs prescribed: 0.000673 (15.2×)
 - random_fixed_iso: 0.007019 vs random_fixed: 0.000408 (17.2×)
 - Min-max [0,1] normalization is critical; standardization hurts
@@ -1085,3 +1092,12 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - INTERPRETATION: the ratio moved from 1.146 (E44, 30 epochs) to 0.915 (E45, 90 epochs), toward and past 1, with the upper bound of its interval at 1.010. Neither experiment met its convergence criterion, so by the registered rules neither class is a programme fact. Within that limit the data show no prescribed advantage at dim 5 once the free encoder reads a range-normalised input, and no sign of one emerging with longer training. A criterion of 0.95 over 10 epochs may be unreachable under a constant learning rate with no schedule [INFERENCE]; a future test of this question should register the stability of the ratio across training length rather than the convergence of each loss.
 - CORRECTS the Ф78 INTERPRETATION: "the remaining prescribed advantage lies between none and about 1.4x on final" holds at 30 epochs; at 90 epochs the interval is [0.828, 1.010].
 - NEXT: nothing registered on this point.
+
+## Ф80: audit of the older prescribed-vs-free comparisons for the Ф76 and Ф77 confounds
+- Ф36 (E25, Tier 3) [verified: E25_5d_latent/code/tier3_highdim.py:97-130, 237-241]: Free5D reads the raw state; Prescribed5D and RandomFixed5Dto5D divide by the range; the loss is on each encoder's own latent, with SIGReg. Same system as E28 (Ф18: 66.3x against 66.2x at dim 5), so Ф78 applies at dim 5.
+- Ф37 (E05b) [verified: E05b_gauge_fix/code/gauge_fix_experiments.py:131-181, 220-226; restored from the archive, see PROVENANCE.md; its output directory gauge_fix_results is the source named in Ф37]: PrescEnc divides by the range, FreeEnc and LinearFreeEnc read the raw state, the loss is on the own latent, with SIGReg. The 24.6x against prescribed is not interpretable. The 1.08x compares two free variants that share both confounds and does not support "the problem is coordinate drift". The linear_free value 16009 is what a linear map of coordinates of order hundreds gives on its own latent [INFERENCE].
+- Ф38 [verified: E05a_random_axes_scaling/code/run_random_axes_control.py:5, 92-97, 167-174, 192-197; no SIGReg in the script]: every condition reads a normalised state, so Ф76 does not apply. The free encoder is trained and validated on its own output with no regulariser against collapse. A loss of 1e-9 is what a collapsed latent gives [INFERENCE: no weights were kept, the latent variance cannot be checked]. The reading "prescribed axes buy sample efficiency, not an absolute advantage" rests on it and is withdrawn.
+- Ф39 [verified: same script, lines 127-132]: prescribed and random_fixed are fixed latents related by an orthogonal map, so their losses are in the same units. The comparison stands and agrees with Ф78 (prescribed_rotated / prescribed 1.002).
+- Ф40 [verified: E05a_random_axes_scaling/code/run_isotropic_control.py:57-64]: the z-score is applied to context and target, so it rescales the latent in which the loss is measured. For a uniform variable, z-scoring instead of min-max stretches each axis about 3.5 times and the MSE about 12 times [INFERENCE: arithmetic, not measured on these data]; the observed 15.2x and 17.2x are close to that. Not evidence that standardisation degrades the model.
+- Ф19, Ф20 (E16) [verified: E16_double_pendulum/code/run_double_pendulum.py:120-133, 172-174, 181-183]: the free encoder reads a normalised state (angles over pi, velocities over 5), so Ф76 does not apply. It is trained and validated on its own latent with no regulariser against collapse, and the best epoch is selected. Not interpretable; the direction of the bias is not determined.
+- П1 ("normalization gives a 37-166x improvement to prescribed"): with a fixed latent and a loss in its units, dividing the features by a constant c divides the MSE by c^2 with no change in the model [INFERENCE, from how the metric is built]. Not interpretable as an improvement.
