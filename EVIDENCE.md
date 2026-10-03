@@ -2,7 +2,7 @@
 
 Andrey Lazarev | Independent Researcher
 
-Last updated: 11 September 2026 (Ф61/Ф62 added, Ф46/Ф60 caveats amended; earlier: Ф57, Н1/Н2 refuted, Г25 rewritten) — merge of the April branch (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) with the July branch (Ф45, Ф46, Г16–Г18). April E- and Г-numbers were reassigned, July ones kept. See MAPPING TABLES at the end of the file.
+Last updated: 4 October 2026 (Г10, Г25, open questions 4, 5 and 7 and the E35 mapping row aligned with Ф58, Ф77, Ф78, Ф79 and Ф81; earlier: 11 September, Ф61/Ф62 added, Ф46/Ф60 caveats amended; earlier: Ф57, Н1/Н2 refuted, Г25 rewritten) — merge of the April branch (LLM → E33, EB-JEPA → E34/E35, Ф47–Ф55, Н1–Н4, Г19–Г25) with the July branch (Ф45, Ф46, Г16–Г18). April E- and Г-numbers were reassigned, July ones kept. See MAPPING TABLES at the end of the file.
 
 Protocol:
 - **Facts (Ф)** — experimentally verified results, ours or from sources we have studied. For ours: code, environment, parameters and seeds are given. For external ones: the source is given (book, paper with DOI/arXiv, page or section). Admitting an external fact to the registry is a curatorial decision: it counts as established once independent work confirms it, or once it is adopted as a working basis for the current programme.
@@ -713,7 +713,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
   - The "17× stability" was an artefact of one particular random_fixed implementation
 - The correct decomposition: subspace selection + normalization + freeze
 - Alignment of the axes within the subspace is not a factor
-- Status: REFUTED (the decomposition, not the thesis)
+- Status: REFUTED (the decomposition). The earlier note "not the thesis" rested on the dim-5 gap of Ф18; at dim 5 that gap is mostly the input defect (Ф78), and on a common target with range-normalised input no prescribed advantage is seen (Ф79, class O4 PROVISIONAL).
 
 **Г11. The free-encoder problem is optimization lag (solved by scheduler/LR)**
 - diffLR 100× helps by 72%, but a 62× gap remains (Ф26)
@@ -841,8 +841,8 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Independent standing comes from Push-T, where the composition of the prescribed coordinates demonstrably matters (Ф21-Ф23, Г9). Two Rooms was to be the first test in an environment with obstacles; that test has not taken place
 - Ф56 does not settle it either way. The free encoder linearly encodes wall_x (R2 0.969) while prescribed_2 encodes nothing beyond the agent, and the planning result is the same. That refutes "an obstacle coordinate in the latent improves planning", which is a stronger claim than this hypothesis makes
 - Falsifier: NOT DEFINED. The original one - prescribed_4 giving SR near 0% - was written against a baseline of 0% that turned out to be an evaluation artefact. Against a baseline of 0.55 the criterion has to be quantitative, and it cannot be written until the metric is known to resolve differences in latent content at all (see below)
-- Test: E35 prescribed_4 is suspended, not cancelled. Planning SR at n=20 does not distinguish an encoder that holds the wall coordinate from one that holds nothing about the obstacle (Ф56 with Ф57), so it has no demonstrated power to detect what E35 would add. Committing 60-100 h CPU to it before the metric question is settled would buy an uninterpretable number
-- Status: OPEN, untested. Support in this environment withdrawn; the assigned test is on hold pending a metric with established sensitivity
+- Test (superseded): E35 was run at n=168 (Ф58). Per Ф81 it compares input modality (oracle state against pixels) on one training seed, so it does not isolate coordinate completeness and does not bear on Г25. Original note: E35 prescribed_4 is suspended, not cancelled. Planning SR at n=20 does not distinguish an encoder that holds the wall coordinate from one that holds nothing about the obstacle (Ф56 with Ф57), so it has no demonstrated power to detect what E35 would add. Committing 60-100 h CPU to it before the metric question is settled would buy an uninterpretable number
+- Status: OPEN, untested. Support in this environment withdrawn; no assigned test (E35 does not isolate completeness, see Ф81)
 
 **Г26. What the result depends on is the immobility of the representation, not its informativeness**
 - Inside the opening window the two move in opposite directions: linear information about the true state rises monotonically in 5/5 seeds while best_vp gets worse (Ф63). A random untrained encoder carrying roughly a third of the linearly extractable information performs on a par with a parameter-free readout carrying all of it (Ф31, Ф60, Ф63).
@@ -874,7 +874,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 | Obstacles in the environment | No | No | No | Yes (a wall with a door) |
 | Downstream task | Prediction loss | Prediction loss | Prediction loss | Goal-conditioned planning (MPPI) |
 
-Two Rooms is the first environment in the programme with (a) obstacles and (b) a downstream metric other than prediction loss. Both differences may affect the result. Neither has yet been shown to: the branches are indistinguishable on the downstream metric (Ф57), and that metric does not separate an encoder holding the wall coordinate from one holding nothing about the obstacle (Ф56 with Ф57). Whether coordinate completeness helps here is untested, and E35 is on hold until the metric question is settled (Г25).
+Two Rooms is the first environment in the programme with (a) obstacles and (b) a downstream metric other than prediction loss. Both differences may affect the result. Neither has yet been shown to: the branches are indistinguishable on the downstream metric (Ф57), and that metric does not separate an encoder holding the wall coordinate from one holding nothing about the obstacle (Ф56 with Ф57). Whether coordinate completeness helps here is untested, and E35, run since at n=168 (Ф58), compares input modality and does not answer it (Ф81).
 
 ---
 
@@ -902,10 +902,10 @@ Two Rooms is the first environment in the programme with (a) obstacles and (b) a
 1. ~~Is selection (feature selection) rather than fixing the true cause of the prescribed advantage on Push-T?~~ → Partly answered: Push-T 5D prescribed (without selection) works (Ф36). Selection is not the only factor. But the pendulums without selection do not work — the difference needs explaining (П1)
 2. Why does Push-T 5D prescribed work while pendulum prescribed on the full input does not? (П1) → E16 is being rerun with normalization
 3. ~~Why do the dim sweep (Ф18) and Tier 3 (Ф36) give different results at dim=5?~~ → SOLVED (П2): E13 was underpowered. E28 confirmed that prescribed wins at 1–11.
-4. ~~Why does even sinθ (same subspace) degrade things by 4.8×?~~ → The context has changed: prescribed wins at every dim; the degradation is a loss of gap magnitude, not a defeat
-5. ~~Do the facts Ф17–Ф23 reproduce on full data?~~ → Ф17 updated (E28): prescribed_11 now beats free_11 (42×) given the right predictor capacity. Ф21–Ф23 (fragility) need a rerun with the max(128, dim*8) predictor.
+4. ~~Why does even sinθ (same subspace) degrade things by 4.8×?~~ → The context has changed: prescribed wins at every dim; the degradation is a loss of gap magnitude, not a defeat. Superseded: at dim 5 there is no prescribed advantage on a common target with range-normalised input (Ф78, Ф79, class O4 PROVISIONAL); at other dims the gap is not interpretable as a quality difference (Ф77)
+5. ~~Do the facts Ф17–Ф23 reproduce on full data?~~ → Ф17 updated (E28): prescribed_11 now beats free_11 (42×) given the right predictor capacity. Superseded: Ф17 is not interpretable as a quality gap until both encoders are scored on a common target with equally scaled input (Ф77). Ф21–Ф23 (fragility) need a rerun with the max(128, dim*8) predictor.
 6. How does prescribed behave in environments with dim_state > dim_internal, under normalization? → Partly: E16 is being rerun
-7. Does the prescribed advantage carry over to environments with obstacles (where the downstream task is planning, not prediction loss)? → Still open, and now without an assigned test. The 0% that motivated E35 was an evaluation artefact; re-evaluated, prescribed_2 and free are indistinguishable at 0.55 (Ф57). E35 prescribed_4 = (x_a, y_a, wall_x, door_y) is suspended pending a metric with established sensitivity. Related to Г25.
+7. Does the prescribed advantage carry over to environments with obstacles (where the downstream task is planning, not prediction loss)? → Still open, and now without an assigned test. The 0% that motivated E35 was an evaluation artefact; re-evaluated, prescribed_2 and free are indistinguishable at 0.55 (Ф57). E35 prescribed_4 = (x_a, y_a, wall_x, door_y) was run at n=168 (Ф58); it compares input modality on one training seed and does not test this (Ф81). Related to Г25.
 8. ~~What is in the latent space of the Two Rooms free encoder — did it implicitly learn wall_x/door_y from pixels?~~ → ANSWERED (Ф56, B1, local CPU run): wall_x yes (R² 0.969, above the 0.7 threshold), door_y almost not (R² 0.211, below 0.3 but above its floor). The split was not anticipated by the question, which assumed both coordinates would move together. The reading of this in terms of Н1 is withdrawn: there is no contrast between conditions to explain (Ф57). What the pair Ф56+Ф57 now shows is about the metric - holding wall_x at R² 0.969 buys nothing over holding nothing about the obstacle, so planning SR at n=20 does not respond to this difference in latent content. How free reaches the opening while encoding its position so weakly is a new open question (see 9).
 9. How does the free encoder reach the door while encoding door_y at only R² 0.211 linearly (Ф56)? Candidates: the door is represented nonlinearly (separable by an MLP probe on the same latents but not by ridge); it is represented locally rather than as a global coordinate, so a single frame near the agent carries it only when the agent is close; or planning does not use a door representation at all and MPPI finds the opening reactively. The first is cheap to test on the existing checkpoint, the third needs the planner.
 
@@ -933,7 +933,7 @@ The April and July branches of the registry developed in parallel and independen
 | E30 (PLANNED) | **E36** | Full coordinate drift on vision SSL. Planned. |
 | E31 | **E33** | Step 1 PCA: last-token confound and pole stability on 5 LLMs. Ф47–Ф55, Г19–Г24. |
 | E32 | **E34** | EB-JEPA Two Rooms — prescribed_2 vs free planning. Н1–Н4 (single seed, NOT facts). |
-| E33 | **E35** | EB-JEPA Two Rooms — prescribed_4 (wall and door coordinates). ON HOLD (Г25, metric sensitivity). |
+| E33 | **E35** | EB-JEPA Two Rooms — prescribed_4 (wall and door coordinates). COMPLETE single-seed (Ф58); compares input modality, see Ф81. |
 | E34 (DEFERRED) | **E37** | CARLA prescribed safety axes. Deferred. |
 
 The July E30, E31, E32 (critical window, sub-epoch freeze synthetic, sub-epoch freeze real) keep their numbers. PreE30 (the DINOv2 pilot) has no collision. E38 onward are free.
