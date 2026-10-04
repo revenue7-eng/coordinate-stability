@@ -28,8 +28,9 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E43**: external-target sweep over the E42 encoders, one head per encoder trained on PE of the true state, three pre-registered predictors, Bonferroni 0.0167, noise floor on encoder 1 (PRE-REGISTERED 2026-09-28).
 - **E44**: common-target comparison at the E28 dim-5 point (Ф77), COMPLETE: O4 PROVISIONAL (Ф78).
 - **E45**: E44 at 90 epochs, prescribed against free_scaled (Ф78), COMPLETE: O4 PROVISIONAL (Ф79).
-- **E46**: low data (Г-a) and the basis of the prescribed latent (Г-b) on the E44 protocol, PRE-REGISTERED.
-- **E47+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
+- **E46**: low data (Г-a) and the basis of the prescribed latent (Г-b), COMPLETE: Г-a refuted for plain prescribed (O5 PROVISIONAL at 25); standardising removes the early free advantage (Ф83).
+- **E47**: standardised prescribed against free_scaled at 25, 50, 200 episodes, 90 epochs, PRE-REGISTERED.
+- **E48+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
 
@@ -782,6 +783,23 @@ Part A (Г-a). prescribed and free_scaled, both stages exactly as E44 run_arm, a
 Part B (Г-b). At 200 episodes, stage 2 only (encoder fixed, fresh predictor on the common target, same seed and loop as E44 stage 2). Arms: prescribed_gate (plain prescribed); prescribed_sincos = (x_a, y_a, x_b, y_b)/512 and sin, cos of the angle (6 dims; the predictor output layer is 5 wide); prescribed_std = the five prescribed features standardised with mean and std of the seed's training split. Reference: E44 free_scaled stage 2 of the same seed. Registered statistic per arm: early = mean over stage-2 epochs 1 to 10 of ln(free_scaled / arm), GMR over seeds with 95% t interval. "Early free advantage removed" if the upper bound is at least 1, "present" if below 1. For E44 prescribed this is computed for reference. Final-epoch GMR and class are reported, not deciding.
 
 Gates, the campaign is void if any fails: every seed file carries this pre-registration commit; in part A prescribed stage 2 equals stage 1 bit for bit; the encoder is tensor-equal before and after every stage 2; prescribed_gate stage 2 equals E44 prescribed stage 2 bit for bit on every seed.
+
+Cost: not estimated in advance; the monitor reports the measured rate.
+
+Result: all gates true. Г-a: 25 episodes O5 PROVISIONAL, 50 episodes O4 PROVISIONAL (plain prescribed); refuted as registered. Г-b: prescribed_std early free advantage removed, prescribed_sincos early free advantage present. See Ф83.
+### E47. Standardised prescribed against free_scaled on the common target at 25, 50 and 200 episodes (synthetic Push-T): PRE-REGISTERED
+
+Question. Ф83: with the prescribed features standardised, is there a prescribed advantage on the common target, and is it larger at low data?
+
+Arms. prescribed_std: the five prescribed features standardised with mean and std of the training split of that seed and size; encoder fixed, stage 2 only (as E46 part B). free_scaled: both stages as E45, 90 epochs each, at 25 and 50 episodes; at 200 episodes taken from E45 cells (same seeds, data and code path). Common target and loop as E44. 90 epochs per stage. Seeds 42, 123, 777, 1001 to 1007 (n = 10). OMP_NUM_THREADS=1 per worker. Fewer episodes at fixed epochs also means fewer optimiser steps; not separated.
+
+Code: E47_std_prescribed/code/run_e47.py (imports e44_lib.py unchanged), analyze_e47.py.
+
+Registered statistic per size: L = ln(final2 free_scaled / final2 prescribed_std), GMR with 95% t interval (df 9), classes O1 to O5 as E44. Convergence: conv = mean(stage-2 loss, epochs 86 to 90) / mean(epochs 81 to 85); PROVISIONAL if the median over seeds for either arm is below 0.95. Г-g (a standardised fixed basis is better on the common target) is supported if the class at 200 episodes is O1, O2 or O3 and refuted if O4 or O5. Г-a' (the advantage is larger at low data): paired difference ln-ratio(25) minus ln-ratio(200) over seeds with 95% t interval; "larger at 25" if the lower bound is above 0, "smaller at 25" if the upper bound is below 0, otherwise not resolved.
+
+Named, not deciding: GMR at epoch 60 against epoch 90 per size (ratio stability, Ф79 INTERPRETATION); the 50-episode class.
+
+Gates, the campaign is void if any fails: every seed file carries this pre-registration commit; the encoder is tensor-equal before and after every stage 2; on seed 42 plain prescribed stage 2 at 200 episodes and 90 epochs equals E45 prescribed s2_hist bit for bit; every E45 free_scaled history has 90 epochs.
 
 Cost: not estimated in advance; the monitor reports the measured rate.
 

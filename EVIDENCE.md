@@ -1077,6 +1077,7 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - At dim 5, Ф78 decomposes the E28 ratio: about 37x is the input defect (free_raw / free_scaled on the common target) and about 1.4x the units (60x own-latent best against about 42x common-target final; the two use different epoch selections, so the split is approximate).
 
 ## Ф78: E44, on a common target the E28 dim-5 gap reduces to the input defect; registered class O4 PROVISIONAL
+- STATUS (Ф83): the prescribed arm here is range-normalised, not standardised; its scale handicaps the predictor. Does not test fixation as such.
 - [verified: python3 E44_common_target/code/analyze_e44.py over E44_common_target/results/cells/seed_*.json; pre-registration 483f39e] 10 seeds, four arms. Gates all true: one pre-registration commit, ancestor of HEAD; prescribed stage 2 equal to stage 1 on every seed; encoder state unchanged by stage 2 in every cell.
 - Registered statistic: GMR of final2(free_scaled) / final2(prescribed) 1.146, 95% CI [0.937, 1.402], t-test p 0.159. Class O4. Median convergence 0.863 (prescribed) and 0.873 (free_scaled), below 0.95: the class is PROVISIONAL and is not read as a difference in quality. Both arms were still improving at epoch 30, at similar rates.
 - [verified: same] Named contrasts: free_raw / free_scaled 36.6 [29.5, 45.4]; prescribed_rotated / prescribed 1.002 [0.853, 1.178]; E28-style free_raw / prescribed on stage-1 best 60.2 [48.6, 74.4] (E28: 66x); registered statistic on best 1.238 [1.122, 1.367], class O2.
@@ -1086,6 +1087,7 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - NEXT: E45, pre-registered in EXPERIMENTS.md: prescribed and free_scaled at 90 epochs per stage.
 
 ## Ф79: E45, at 90 epochs free_scaled is no worse than prescribed on the common target; registered class O4 PROVISIONAL
+- STATUS (Ф83): the prescribed arm here is range-normalised, not standardised; its scale handicaps the predictor. Does not test fixation as such.
 - [verified: python3 E45_long_training/code/analyze_e45.py over E45_long_training/results/cells/seed_*.json; pre-registration 4cbf9a6, pushed before the first cell] 10 seeds, prescribed and free_scaled, 90 epochs per stage, one thread per worker. Gates all true, including the first 30 stage-1 epochs equal to E44 bit for bit on every seed and arm.
 - Registered statistic: GMR of final2(free_scaled) / final2(prescribed) 0.915, 95% CI [0.828, 1.010], t-test p 0.073. Class O4. Median convergence 0.916 (prescribed) and 0.940 (free_scaled), below 0.95: PROVISIONAL. On best: 0.939 [0.861, 1.025], class O4.
 - [verified: same] Extra training, E44 final at 30 epochs over E45 final at 90: prescribed 1.789 [1.467, 2.183], free_scaled 2.243 [1.821, 2.763]. free_scaled has the lower final2 on 7 of 10 seeds.
@@ -1124,3 +1126,12 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - Stand: Ф13 [verified: E08 random_fixed_full.py:138-146, R = ortho_group.rvs, forward (s * sc) @ R.T]: prescribed and random_fixed share units, as in Ф39. Ф41i [verified: E29 noise_control.py:144-185, noise is added only in training and evaluation returns the clean prescribed latent]: noisy and clean prescribed are scored in the same units, so the 851x stands as a comparison inside prescribed. The noise side of Ф43i (1.3x) stands for the same reason.
 - Not audited here: E34 (EB-JEPA, pixel input, own-latent prediction loss; the Н1 probe precedent), Г6 and E12 (prescribed_11 against prescribed_3, two fixed latents of different content; the persistence observation of Ф77 suggests caution).
 - CONSEQUENCE: apart from Ф13, Ф39 and the comparisons inside prescribed, no prescribed-vs-free loss ratio on Push-T or the pendulums is interpretable as a difference in quality. The common-metric comparisons are E44 and E45 (Ф78, Ф79, class O4 PROVISIONAL) and E35 (Ф58, which compares input modality, Ф81).
+
+## Ф83: E46, plain prescribed loses at low data; standardising the prescribed features removes the early free advantage and puts prescribed ahead at 200 episodes
+
+- Gates all true: one pre-registration commit, prescribed stage 2 equals stage 1 at 25 and 50 episodes, encoders unchanged in every stage 2, prescribed_gate equals E44 prescribed stage 2 bit for bit on every seed. [verified: E46_low_data_basis/results/analysis.json]
+- Г-a as registered, GMR free_scaled / plain prescribed on final2, n = 10: 25 episodes 0.375 [0.283, 0.495], class O5 PROVISIONAL; 50 episodes 0.865 [0.613, 1.222], class O4 PROVISIONAL; 200 episodes (E44) 1.146 [0.937, 1.402]. By the registered rule (O4 or O5 at 25) Г-a is refuted for range-normalised prescribed. [verified: analysis.json]
+- Г-b, early GMR free_scaled / arm over stage-2 epochs 1 to 10 at 200 episodes: plain prescribed (E44) 0.427 [0.367, 0.498]; prescribed_sincos 0.262 [0.238, 0.289], early free advantage present; prescribed_std 1.233 [1.154, 1.316], early free advantage removed. [verified: analysis.json]
+- Final at 200 episodes, reported and not deciding (no convergence check registered for part B): prescribed_std 1.218 [1.096, 1.352], class O2; prescribed_sincos 0.512 [0.441, 0.594], class O5. [verified: analysis.json]
+- INTERPRETATION: the early free advantage recorded as EXPLORATORY under Ф79 is the scale of the range-normalised prescribed features (values in [0, 1], small variance), not the wrap of the angle. This is the mirror of Ф76 on the prescribed side [INFERENCE, from the std arm; mechanism not isolated further]. E44, E45 and the Г-a verdict above compare a poorly scaled prescribed latent with a well scaled free one; their classes do not test fixation as such.
+- NEXT: E47, standardised prescribed against free_scaled at 25, 50 and 200 episodes, 90 epochs.

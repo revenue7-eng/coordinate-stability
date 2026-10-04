@@ -1,0 +1,76 @@
+{
+ "gates": {
+  "prereg_single": true,
+  "prescribed_s2_equals_s1_lowdata": true,
+  "encoders_unchanged": true,
+  "gate_arm_equals_e44": true
+ },
+ "lowdata": {
+  "200 (E44)": {
+   "gmr": 1.1464706081158123,
+   "lo": 0.9372275246946534,
+   "hi": 1.4024287813161134,
+   "class": "O4",
+   "median_conv": null
+  },
+  "50": {
+   "gmr": 0.8653175829305587,
+   "lo": 0.6127052919163236,
+   "hi": 1.222079406213197,
+   "class": "O4 PROVISIONAL",
+   "median_conv": 0.7954824540378194
+  },
+  "25": {
+   "gmr": 0.37454530258730556,
+   "lo": 0.28343014510057546,
+   "hi": 0.49495152902820655,
+   "class": "O5 PROVISIONAL",
+   "median_conv": 0.7692585551837721
+  }
+ },
+ "basis": {
+  "prescribed (E44)": {
+   "early_gmr": [
+    0.4274871884082858,
+    0.36710547907729046,
+    0.49780051420792326
+   ],
+   "final_gmr": [
+    1.1464706081158123,
+    0.9372275246946534,
+    1.4024287813161134
+   ],
+   "final_class": "O4",
+   "early_verdict": "early free advantage present"
+  },
+  "prescribed_sincos": {
+   "early_gmr": [
+    0.26246308130864604,
+    0.23840437598532194,
+    0.28894968376868285
+   ],
+   "final_gmr": [
+    0.5119464001170903,
+    0.4413659794638017,
+    0.5938135896002897
+   ],
+   "final_class": "O5",
+   "early_verdict": "early free advantage present"
+  },
+  "prescribed_std": {
+   "early_gmr": [
+    1.2326498090792803,
+    1.1542197388480628,
+    1.3164092595917714
+   ],
+   "final_gmr": [
+    1.217553878710449,
+    1.0964019119124926,
+    1.3520930887260048
+   ],
+   "final_class": "O2",
+   "early_verdict": "early free advantage removed"
+  }
+ },
+ "valid": true
+}
