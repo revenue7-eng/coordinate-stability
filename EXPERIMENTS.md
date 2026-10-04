@@ -30,8 +30,9 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E45**: E44 at 90 epochs, prescribed against free_scaled (Ф78), COMPLETE: O4 PROVISIONAL (Ф79).
 - **E46**: low data (Г-a) and the basis of the prescribed latent (Г-b), COMPLETE: Г-a refuted for plain prescribed (O5 PROVISIONAL at 25); standardising removes the early free advantage (Ф83).
 - **E47**: standardised prescribed against free_scaled at 25, 50, 200 episodes, COMPLETE: O2 at every size, larger at 25 (Ф84).
-- **E48**: E47 on a nonlinear target, PRE-REGISTERED.
-- **E49+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
+- **E48**: E47 on a nonlinear target, COMPLETE: O2 at 200 and 25 episodes (Ф85).
+- **E49**: completeness of the JEPA latent and an end-to-end learned encoder, PRE-REGISTERED.
+- **E50+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
 
@@ -818,6 +819,25 @@ Registered statistic, classes, convergence rule and paired low-data difference e
 Named, not deciding: GMR on the nonlinear target divided by the E47 GMR at the same size (the share of the E47 advantage that the linear target carried); GMR at epoch 60.
 
 Gates, the campaign is void if any fails: every seed file carries this pre-registration commit; the encoder is tensor-equal before and after every stage 2; free_scaled stage 1 at 200 episodes equals E45 free_scaled s1_hist bit for bit on every seed.
+
+Cost: not estimated in advance; the monitor reports the measured rate.
+
+Result: all gates true. 200 episodes O2, 25 O2 PROVISIONAL; low-data difference not resolved. Г-i supported as registered. See Ф85.
+### E49. Completeness of the JEPA latent and an end-to-end learned encoder on the E48 target (synthetic Push-T): PRE-REGISTERED
+
+Question. Ф85: a standardised fixed basis beats the frozen JEPA latent of free_scaled on a nonlinear target. Is that because the JEPA latent loses state information (Г-j, completeness), or because the coordinates are fixed (Г-k)?
+
+Design, 200 episodes, 90 epochs, seeds 42, 123, 777, 1001 to 1007 (n = 10):
+1. free_scaled stage 1 (JEPA on its own latent), identical to E45 and E48 stage 1. Its frozen latent is probed for the state at the same step, targets (x_a, y_a, x_b, y_b)/512, sin theta, cos theta: linear probe (least squares with bias) and MLP probe (5-64-64-6, 100 epochs, Adam 1e-3), fitted on the training split, R2 per target on the validation split. The same probes on prescribed_std are a sanity check.
+2. free_e2e: FreeEncoderScaled trained end to end on the E48 target from the start (encoder not frozen, no JEPA stage), same loop and SIGReg weight.
+prescribed_std and the frozen JEPA free_scaled on the same target are taken from E48 cells (same seeds, data and code path).
+Code: E49_completeness/code/run_e49.py (imports e44_lib.py unchanged), analyze_e49.py.
+
+Registered statistics. Completeness: per target the median over seeds of the MLP probe R2 on the JEPA latent; "incomplete" if the minimum over the six targets is below 0.95, "complete" if at least 0.99, otherwise unresolved. End to end: GMR free_e2e / prescribed_std on the final epoch, 95% t interval, classes O1 to O5 as E44.
+Verdict: completeness (Г-j) if incomplete and free_e2e is O4 or O5; fixation (Г-k) if complete and free_e2e is O1, O2 or O3; otherwise mixed, reported as such.
+Named, not deciding: linear probe R2; probes of the end-to-end encoder; GMR of frozen JEPA free_scaled over free_e2e.
+
+Gates, the campaign is void if any fails: every seed file carries this pre-registration commit; JEPA stage 1 equals E45 free_scaled s1_hist bit for bit on every seed; on prescribed_std the linear probe R2 of the four positions is at least 0.999 on every seed.
 
 Cost: not estimated in advance; the monitor reports the measured rate.
 

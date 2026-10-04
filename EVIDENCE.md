@@ -1145,3 +1145,12 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - Known asymmetry (E44 block): the common target is the prescribed features of s(t+3), an affine function of the prescribed_std latent, so its predictor receives the target coordinates in its input while free_scaled must also decode them. The comparison is an upper bound in favour of prescribed. Axis alignment alone does not carry it (Ф78, rotated arm 1.00x), linear availability of the target is not excluded.
 - INTERPRETATION: with both inputs well scaled, fixing the full state as the latent beats a learned encoder on the same input by about 1.25x at 200 episodes and 1.7x at 25, when the target is linear in the fixed coordinates. The old claim of sample efficiency holds in direction, at tens of percent rather than orders of magnitude. Synthetic dynamics, dim 5, fully observed state.
 - NEXT: E48, the same comparison on a target nonlinear in the prescribed coordinates.
+
+## Ф85: E48, the advantage of a standardised fixed basis survives a target nonlinear in the fixed coordinates
+
+- Gates all true: one pre-registration commit; encoders unchanged in every stage 2; free_scaled stage 1 at 200 episodes equals E45 bit for bit on every seed. [verified: E48_nonlinear_target/results/analysis.json]
+- Target g(s_t+3) = (agent-block distance, sin theta, cos theta, agent position in the block frame). GMR free_scaled / prescribed_std on final2, n = 10, 90 epochs: 200 episodes 1.436 [1.256, 1.642], class O2; 25 episodes 1.681 [1.358, 2.082], class O2 PROVISIONAL. [verified: analysis.json]
+- Г-i as registered (class at 200 is O1, O2 or O3): supported. Paired ln-ratio(25) minus ln-ratio(200): +0.158 [-0.097, +0.413], not resolved. [verified: analysis.json]
+- Named: GMR on the nonlinear target divided by the E47 GMR, 200 episodes 1.147, 25 episodes 1.000. [verified: analysis.json]
+- INTERPRETATION: the linear availability of the target named in Ф84 does not carry the advantage; the advantage is as large or larger when the predictor must compute a nonlinear function of the fixed coordinates. The low-data increase of Ф84 is not reproduced as resolved on this target. Synthetic dynamics, dim 5, fully observed state.
+- NEXT: E49, whether the frozen JEPA latent of free_scaled loses state information (completeness) and whether the same encoder trained end to end on the target closes the gap.

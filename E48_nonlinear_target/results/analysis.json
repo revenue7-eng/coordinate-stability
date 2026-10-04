@@ -1,0 +1,44 @@
+{
+ "gates": {
+  "prereg_single": true,
+  "encoders_unchanged": true,
+  "free_s1_equals_e45": true
+ },
+ "sizes": {
+  "25": {
+   "gmr": 1.6813567053306273,
+   "lo": 1.357740371941026,
+   "hi": 2.0821067333505288,
+   "class": "O2 PROVISIONAL",
+   "median_conv_prescribed_std": 0.9513529319932061,
+   "median_conv_free_scaled": 0.9453511838948415,
+   "gmr_ep60": [
+    1.5858838784600404,
+    1.2344437107468855,
+    2.037377366066998
+   ],
+   "ratio_to_e47_linear": 1.000095245500803
+  },
+  "200": {
+   "gmr": 1.4358659449589783,
+   "lo": 1.255747121592203,
+   "hi": 1.6418202171778256,
+   "class": "O2",
+   "median_conv_prescribed_std": 0.958815172314053,
+   "median_conv_free_scaled": 0.9669981189137001,
+   "gmr_ep60": [
+    1.2522082095504958,
+    1.1206306497937712,
+    1.39923479725833
+   ],
+   "ratio_to_e47_linear": 1.1473564010658184
+  }
+ },
+ "low_data_difference": {
+  "mean": 0.15783291703293353,
+  "lo": -0.09735141325719418,
+  "hi": 0.4130172473230612,
+  "verdict": "not resolved"
+ },
+ "valid": true
+}
