@@ -29,8 +29,9 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E44**: common-target comparison at the E28 dim-5 point (Ф77), COMPLETE: O4 PROVISIONAL (Ф78).
 - **E45**: E44 at 90 epochs, prescribed against free_scaled (Ф78), COMPLETE: O4 PROVISIONAL (Ф79).
 - **E46**: low data (Г-a) and the basis of the prescribed latent (Г-b), COMPLETE: Г-a refuted for plain prescribed (O5 PROVISIONAL at 25); standardising removes the early free advantage (Ф83).
-- **E47**: standardised prescribed against free_scaled at 25, 50, 200 episodes, 90 epochs, PRE-REGISTERED.
-- **E48+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
+- **E47**: standardised prescribed against free_scaled at 25, 50, 200 episodes, COMPLETE: O2 at every size, larger at 25 (Ф84).
+- **E48**: E47 on a nonlinear target, PRE-REGISTERED.
+- **E49+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
 
@@ -800,6 +801,23 @@ Registered statistic per size: L = ln(final2 free_scaled / final2 prescribed_std
 Named, not deciding: GMR at epoch 60 against epoch 90 per size (ratio stability, Ф79 INTERPRETATION); the 50-episode class.
 
 Gates, the campaign is void if any fails: every seed file carries this pre-registration commit; the encoder is tensor-equal before and after every stage 2; on seed 42 plain prescribed stage 2 at 200 episodes and 90 epochs equals E45 prescribed s2_hist bit for bit; every E45 free_scaled history has 90 epochs.
+
+Cost: not estimated in advance; the monitor reports the measured rate.
+
+Result: all gates true. 200 episodes O2, 50 O2, 25 O2 PROVISIONAL; low-data difference larger at 25. Г-g and Г-a' supported as registered. See Ф84.
+### E48. E47 on a target nonlinear in the prescribed coordinates (synthetic Push-T): PRE-REGISTERED
+
+Question. Ф84 names the linear availability of the common target to prescribed_std as not excluded. Does the advantage of a standardised fixed basis survive when the target is nonlinear in the prescribed coordinates?
+
+Target. g(s_{t+3}) = (d, sin theta, cos theta, u, v): d the agent-block distance, (u, v) the agent position relative to the block in the block's frame, positions divided by 512. Every component is nonlinear in the prescribed features. Stage 1 (own latent) is unchanged.
+
+Arms and protocol as E47: prescribed_std (stage 2 only), free_scaled (both stages), 90 epochs per stage, at 25 and 200 episodes; free_scaled at 200 is rerun because its stage 2 target changes. Seeds 42, 123, 777, 1001 to 1007 (n = 10). Code: E48_nonlinear_target/code/run_e48.py (imports e44_lib.py unchanged; the world model's external target is replaced in a subclass), analyze_e48.py.
+
+Registered statistic, classes, convergence rule and paired low-data difference exactly as E47. Г-i (the advantage survives a nonlinear target) is supported if the class at 200 episodes is O1, O2 or O3 and refuted if O4 or O5.
+
+Named, not deciding: GMR on the nonlinear target divided by the E47 GMR at the same size (the share of the E47 advantage that the linear target carried); GMR at epoch 60.
+
+Gates, the campaign is void if any fails: every seed file carries this pre-registration commit; the encoder is tensor-equal before and after every stage 2; free_scaled stage 1 at 200 episodes equals E45 free_scaled s1_hist bit for bit on every seed.
 
 Cost: not estimated in advance; the monitor reports the measured rate.
 
