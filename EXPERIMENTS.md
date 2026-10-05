@@ -31,8 +31,9 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E46**: low data (Г-a) and the basis of the prescribed latent (Г-b), COMPLETE: Г-a refuted for plain prescribed (O5 PROVISIONAL at 25); standardising removes the early free advantage (Ф83).
 - **E47**: standardised prescribed against free_scaled at 25, 50, 200 episodes, COMPLETE: O2 at every size, larger at 25 (Ф84).
 - **E48**: E47 on a nonlinear target, COMPLETE: O2 at 200 and 25 episodes (Ф85).
-- **E49**: completeness of the JEPA latent and an end-to-end learned encoder, PRE-REGISTERED.
-- **E50+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
+- **E49**: completeness of the JEPA latent and an end-to-end learned encoder, COMPLETE: latent complete, verdict fixation with named limits (Ф86).
+- **E50**: fixation or geometry (fixed warped encoder; fair end-to-end learned encoder), PRE-REGISTERED.
+- **E51+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
 
@@ -838,6 +839,25 @@ Verdict: completeness (Г-j) if incomplete and free_e2e is O4 or O5; fixation (�
 Named, not deciding: linear probe R2; probes of the end-to-end encoder; GMR of frozen JEPA free_scaled over free_e2e.
 
 Gates, the campaign is void if any fails: every seed file carries this pre-registration commit; JEPA stage 1 equals E45 free_scaled s1_hist bit for bit on every seed; on prescribed_std the linear probe R2 of the four positions is at least 0.999 on every seed.
+
+Cost: not estimated in advance; the monitor reports the measured rate.
+
+Result: all gates true. Latent complete; free_e2e O2. Registered verdict: fixation, with two named limits. See Ф86.
+### E50. Fixation or geometry: a fixed, nonlinearly warped, complete encoder on the E48 target (synthetic Push-T): PRE-REGISTERED
+
+Question. Ф86: is the advantage of prescribed_std that its coordinates are fixed (Г-k) or that the state is laid out simply in them (Г-l)?
+
+Arms, 200 episodes, E48 target, seeds 42, 123, 777, 1001 to 1007 (n = 10):
+1. fixed_warped: frozen encoder f -> f Q1 -> h + A tanh(B h) -> Q2 -> h + A tanh(B h) -> Q3, then standardised on the training split; f the standardised prescribed features; A = 1.5, B = 2 (each step strictly monotone, so the map is invertible); Q1, Q2, Q3 random orthogonal from a private generator seeded 50000 + seed. Fixed like prescribed_std, complete, nonlinearly laid out like the learned latent. Stage 2 only, 90 epochs, E44 loop with SIGReg weight 0.09. Probed as in E49.
+2. free_e2e_fair: FreeEncoderScaled trained end to end on the target for 180 epochs (the total budget of frozen JEPA), SIGReg weight 0, otherwise the E44 loop.
+prescribed_std and frozen JEPA free_scaled are taken from E48 cells (same seeds, data, target).
+Code: E50_fixation_vs_geometry/code/run_e50.py (imports e44_lib.py unchanged), analyze_e50.py.
+
+Registered statistics: GMR fixed_warped / prescribed_std and GMR frozen JEPA (E48) / fixed_warped on the final epoch, 95% t interval, classes O1 to O5 as E44.
+Verdict: fixation (Г-k) if fixed_warped / prescribed_std is O4 and frozen JEPA / fixed_warped is O1, O2 or O3; geometry (Г-l) if fixed_warped / prescribed_std is O1, O2 or O3 and frozen JEPA / fixed_warped is O4 or O5; otherwise mixed. The verdict is not deciding if the warp is too weak: minimum over the four positions of the median linear probe R2 of fixed_warped is at least 0.99.
+Named, not deciding: GMR free_e2e_fair / prescribed_std and / frozen JEPA; linear and MLP probes of fixed_warped; median convergence ratios.
+
+Gates, the campaign is void if any fails: every seed file carries this pre-registration commit; the fixed_warped encoder is tensor-equal before and after training; fixed_warped is complete (minimum median MLP probe R2 at least 0.99).
 
 Cost: not estimated in advance; the monitor reports the measured rate.
 

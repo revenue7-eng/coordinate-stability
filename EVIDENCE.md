@@ -1154,3 +1154,13 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - Named: GMR on the nonlinear target divided by the E47 GMR, 200 episodes 1.147, 25 episodes 1.000. [verified: analysis.json]
 - INTERPRETATION: the linear availability of the target named in Ф84 does not carry the advantage; the advantage is as large or larger when the predictor must compute a nonlinear function of the fixed coordinates. The low-data increase of Ф84 is not reproduced as resolved on this target. Synthetic dynamics, dim 5, fully observed state.
 - NEXT: E49, whether the frozen JEPA latent of free_scaled loses state information (completeness) and whether the same encoder trained end to end on the target closes the gap.
+
+## Ф86: E49, the frozen JEPA latent is complete but nonlinearly laid out; the registered verdict is fixation, with two named limits
+
+- Gates all true: one pre-registration commit; JEPA stage 1 equals E45 bit for bit on every seed; on prescribed_std the linear probe R2 of the four positions is at least 0.999. [verified: E49_completeness/results/analysis.json]
+- Probes of the frozen JEPA latent of free_scaled, median over 10 seeds. MLP R2: x_a 0.999, y_a 0.999, x_b 0.999, y_b 0.999, sin 0.999, cos 1.000. Linear R2: x_a 0.980, y_a 0.982, x_b 0.985, y_b 0.988, sin 0.558, cos 0.023. Completeness as registered: complete (minimum median MLP R2 0.999). [verified: analysis.json]
+- free_e2e / prescribed_std on final: 2.622 [2.219, 3.100], class O2. Frozen JEPA (E48) / prescribed_std: 1.436 [1.256, 1.642], class O2. Frozen JEPA / free_e2e: 0.548 [0.461, 0.650]. [verified: analysis.json]
+- Registered verdict: fixation: the JEPA latent is complete and even a target-trained learned encoder stays behind.
+- LIMITS, named after the data: (1) free_e2e had 90 epochs in total against 90 + 90 for frozen JEPA, and kept the SIGReg term; that it loses even to frozen JEPA points to under-training, so it is a weak upper bound for a learned encoder. (2) The design does not separate fixed coordinates from a simple (affine, well conditioned) layout of the state: prescribed_std is both. The probes show the learned latent differs from it in layout, not in information.
+- INTERPRETATION: the advantage is not a loss of information in the learned latent. Whether it is fixation as such (Г-k) or the simple geometry of the state in the latent (Г-l) is open; Ф39 (a random fixed linear basis matches prescribed) is consistent with either.
+- NEXT: E50, a fixed but nonlinearly warped complete encoder, and the learned encoder end to end on an equal budget without SIGReg.
