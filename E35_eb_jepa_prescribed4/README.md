@@ -1,7 +1,7 @@
 # Experiment 35: EB-JEPA Two Rooms — prescribed_4 (coordinate completeness)
 
 ## Status
-ON HOLD (24-25.08.2026). The premise this experiment was designed against does not hold: re-evaluated with a shared eval path, prescribed_2 and free both give 0.55 planning SR on the same twenty episodes (Ф57). The 0% for prescribed_2 was an evaluation artefact. Planning SR at n=20 also fails to separate the free encoder, which holds wall_x at R2 0.969 (Ф56), from prescribed_2, which holds nothing about the obstacle - so the metric has no demonstrated power to detect what prescribed_4 would add. Resuming requires a metric with established sensitivity and a quantitative falsifier; neither exists yet. Implementation exists (`code/run_experiment_v4_windows.py`); no condition has been trained to completion.
+COMPLETE, one training seed (EVIDENCE Ф58). prescribed_4 SR 0.577 (97/168) against free SR 0.470 (79/168), paired McNemar b = 40, c = 22, exact two-sided p = 0.030. Per Ф81 the two arms are a trained encoder on oracle state and a trained pixel encoder, so the comparison is between input modalities and does not test fixed axes or coordinate completeness. Evaluation results are in `results/`; the two checkpoints are kept out of git (MD5 prescribed_4 a97248a8db4c02fdc162fb99db726fc2, free 8344448ed0da4437f0d91ab4e73afd71). The sections below describe the design as it stood before the run.
 
 ## What this tests
 As designed: E34 appeared to show prescribed_2 = (x_a, y_a) reaching 0% planning SR against 55% for the free pixel encoder, and this experiment adds the missing state, prescribed_4 = (x_a, y_a, wall_x, door_y).

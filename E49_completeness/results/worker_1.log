@@ -1,0 +1,544 @@
+nohup: ignoring input
+seed 42 free_scaled jepa epoch  1/90    114 s
+seed 42 free_scaled jepa epoch  2/90    195 s
+seed 42 free_scaled jepa epoch  3/90    281 s
+seed 42 free_scaled jepa epoch  4/90    374 s
+seed 42 free_scaled jepa epoch  5/90    473 s
+seed 42 free_scaled jepa epoch  6/90    665 s
+seed 42 free_scaled jepa epoch  7/90    814 s
+seed 42 free_scaled jepa epoch  8/90    916 s
+seed 42 free_scaled jepa epoch  9/90    993 s
+seed 42 free_scaled jepa epoch 10/90   1069 s
+seed 42 free_scaled jepa epoch 11/90   1138 s
+seed 42 free_scaled jepa epoch 12/90   1259 s
+seed 42 free_scaled jepa epoch 13/90   1358 s
+seed 42 free_scaled jepa epoch 14/90   1446 s
+seed 42 free_scaled jepa epoch 15/90   1541 s
+seed 42 free_scaled jepa epoch 16/90   1638 s
+seed 42 free_scaled jepa epoch 17/90   1893 s
+seed 42 free_scaled jepa epoch 18/90   2008 s
+seed 42 free_scaled jepa epoch 19/90   2136 s
+seed 42 free_scaled jepa epoch 20/90   2216 s
+seed 42 free_scaled jepa epoch 21/90   2298 s
+seed 42 free_scaled jepa epoch 22/90   2372 s
+seed 42 free_scaled jepa epoch 23/90   2444 s
+seed 42 free_scaled jepa epoch 24/90   2513 s
+seed 42 free_scaled jepa epoch 25/90   2577 s
+seed 42 free_scaled jepa epoch 26/90   2648 s
+seed 42 free_scaled jepa epoch 27/90   2729 s
+seed 42 free_scaled jepa epoch 28/90   2858 s
+seed 42 free_scaled jepa epoch 29/90   3088 s
+seed 42 free_scaled jepa epoch 30/90   3210 s
+seed 42 free_scaled jepa epoch 31/90   3377 s
+seed 42 free_scaled jepa epoch 32/90   3533 s
+seed 42 free_scaled jepa epoch 33/90   3699 s
+seed 42 free_scaled jepa epoch 34/90   3789 s
+seed 42 free_scaled jepa epoch 35/90   3884 s
+seed 42 free_scaled jepa epoch 36/90   3997 s
+seed 42 free_scaled jepa epoch 37/90   4122 s
+seed 42 free_scaled jepa epoch 38/90   4256 s
+seed 42 free_scaled jepa epoch 39/90   4523 s
+seed 42 free_scaled jepa epoch 40/90   4734 s
+seed 42 free_scaled jepa epoch 41/90   4917 s
+seed 42 free_scaled jepa epoch 42/90   5185 s
+seed 42 free_scaled jepa epoch 43/90   5363 s
+seed 42 free_scaled jepa epoch 44/90   5595 s
+seed 42 free_scaled jepa epoch 45/90   5719 s
+seed 42 free_scaled jepa epoch 46/90   5847 s
+seed 42 free_scaled jepa epoch 47/90   5951 s
+seed 42 free_scaled jepa epoch 48/90   6050 s
+seed 42 free_scaled jepa epoch 49/90   6198 s
+seed 42 free_scaled jepa epoch 50/90   6311 s
+seed 42 free_scaled jepa epoch 51/90   6503 s
+seed 42 free_scaled jepa epoch 52/90   6670 s
+seed 42 free_scaled jepa epoch 53/90   6732 s
+seed 42 free_scaled jepa epoch 54/90   6784 s
+seed 42 free_scaled jepa epoch 55/90   6849 s
+seed 42 free_scaled jepa epoch 56/90   6910 s
+seed 42 free_scaled jepa epoch 57/90   6975 s
+seed 42 free_scaled jepa epoch 58/90   7034 s
+seed 42 free_scaled jepa epoch 59/90   7105 s
+seed 42 free_scaled jepa epoch 60/90   7157 s
+seed 42 free_scaled jepa epoch 61/90   7220 s
+seed 42 free_scaled jepa epoch 62/90   7306 s
+seed 42 free_scaled jepa epoch 63/90   7375 s
+seed 42 free_scaled jepa epoch 64/90   7442 s
+seed 42 free_scaled jepa epoch 65/90   7514 s
+seed 42 free_scaled jepa epoch 66/90   7594 s
+seed 42 free_scaled jepa epoch 67/90   7668 s
+seed 42 free_scaled jepa epoch 68/90   7738 s
+seed 42 free_scaled jepa epoch 69/90   7810 s
+seed 42 free_scaled jepa epoch 70/90   7932 s
+seed 42 free_scaled jepa epoch 71/90   8005 s
+seed 42 free_scaled jepa epoch 72/90   8208 s
+seed 42 free_scaled jepa epoch 73/90   8296 s
+seed 42 free_scaled jepa epoch 74/90   8381 s
+seed 42 free_scaled jepa epoch 75/90   8463 s
+seed 42 free_scaled jepa epoch 76/90   8533 s
+seed 42 free_scaled jepa epoch 77/90   8621 s
+seed 42 free_scaled jepa epoch 78/90   8717 s
+seed 42 free_scaled jepa epoch 79/90   8786 s
+seed 42 free_scaled jepa epoch 80/90   8856 s
+seed 42 free_scaled jepa epoch 81/90   8923 s
+seed 42 free_scaled jepa epoch 82/90   8992 s
+seed 42 free_scaled jepa epoch 83/90   9064 s
+seed 42 free_scaled jepa epoch 84/90   9195 s
+seed 42 free_scaled jepa epoch 85/90   9261 s
+seed 42 free_scaled jepa epoch 86/90   9319 s
+seed 42 free_scaled jepa epoch 87/90   9388 s
+seed 42 free_scaled jepa epoch 88/90   9465 s
+seed 42 free_scaled jepa epoch 89/90   9540 s
+seed 42 free_scaled jepa epoch 90/90   9607 s
+seed 42 free_e2e epoch  1/90     69 s
+seed 42 free_e2e epoch  2/90    164 s
+seed 42 free_e2e epoch  3/90    253 s
+seed 42 free_e2e epoch  4/90    331 s
+seed 42 free_e2e epoch  5/90    398 s
+seed 42 free_e2e epoch  6/90    469 s
+seed 42 free_e2e epoch  7/90    537 s
+seed 42 free_e2e epoch  8/90    608 s
+seed 42 free_e2e epoch  9/90    676 s
+seed 42 free_e2e epoch 10/90    745 s
+seed 42 free_e2e epoch 11/90    811 s
+seed 42 free_e2e epoch 12/90    877 s
+seed 42 free_e2e epoch 13/90    944 s
+seed 42 free_e2e epoch 14/90   1086 s
+seed 42 free_e2e epoch 15/90   1156 s
+seed 42 free_e2e epoch 16/90   1233 s
+seed 42 free_e2e epoch 17/90   1306 s
+seed 42 free_e2e epoch 18/90   1372 s
+seed 42 free_e2e epoch 19/90   1439 s
+seed 42 free_e2e epoch 20/90   1513 s
+seed 42 free_e2e epoch 21/90   1579 s
+seed 42 free_e2e epoch 22/90   1649 s
+seed 42 free_e2e epoch 23/90   1715 s
+seed 42 free_e2e epoch 24/90   1781 s
+seed 42 free_e2e epoch 25/90   1850 s
+seed 42 free_e2e epoch 26/90   1927 s
+seed 42 free_e2e epoch 27/90   2000 s
+seed 42 free_e2e epoch 28/90   2068 s
+seed 42 free_e2e epoch 29/90   2132 s
+seed 42 free_e2e epoch 30/90   2200 s
+seed 42 free_e2e epoch 31/90   2271 s
+seed 42 free_e2e epoch 32/90   2331 s
+seed 42 free_e2e epoch 33/90   2397 s
+seed 42 free_e2e epoch 34/90   2467 s
+seed 42 free_e2e epoch 35/90   2526 s
+seed 42 free_e2e epoch 36/90   2595 s
+seed 42 free_e2e epoch 37/90   2661 s
+seed 42 free_e2e epoch 38/90   2769 s
+seed 42 free_e2e epoch 39/90   2832 s
+seed 42 free_e2e epoch 40/90   2906 s
+seed 42 free_e2e epoch 41/90   2988 s
+seed 42 free_e2e epoch 42/90   3055 s
+seed 42 free_e2e epoch 43/90   3122 s
+seed 42 free_e2e epoch 44/90   3190 s
+seed 42 free_e2e epoch 45/90   3262 s
+seed 42 free_e2e epoch 46/90   3331 s
+seed 42 free_e2e epoch 47/90   3399 s
+seed 42 free_e2e epoch 48/90   3469 s
+seed 42 free_e2e epoch 49/90   3547 s
+seed 42 free_e2e epoch 50/90   3612 s
+seed 42 free_e2e epoch 51/90   3679 s
+seed 42 free_e2e epoch 52/90   3745 s
+seed 42 free_e2e epoch 53/90   3814 s
+seed 42 free_e2e epoch 54/90   3882 s
+seed 42 free_e2e epoch 55/90   3949 s
+seed 42 free_e2e epoch 56/90   4018 s
+seed 42 free_e2e epoch 57/90   4123 s
+seed 42 free_e2e epoch 58/90   4195 s
+seed 42 free_e2e epoch 59/90   4428 s
+seed 42 free_e2e epoch 60/90   4543 s
+seed 42 free_e2e epoch 61/90   4640 s
+seed 42 free_e2e epoch 62/90   4726 s
+seed 42 free_e2e epoch 63/90   4800 s
+seed 42 free_e2e epoch 64/90   4869 s
+seed 42 free_e2e epoch 65/90   4948 s
+seed 42 free_e2e epoch 66/90   5035 s
+seed 42 free_e2e epoch 67/90   5118 s
+seed 42 free_e2e epoch 68/90   5198 s
+seed 42 free_e2e epoch 69/90   5268 s
+seed 42 free_e2e epoch 70/90   5343 s
+seed 42 free_e2e epoch 71/90   5407 s
+seed 42 free_e2e epoch 72/90   5471 s
+seed 42 free_e2e epoch 73/90   5533 s
+seed 42 free_e2e epoch 74/90   5607 s
+seed 42 free_e2e epoch 75/90   5681 s
+seed 42 free_e2e epoch 76/90   5747 s
+seed 42 free_e2e epoch 77/90   5809 s
+seed 42 free_e2e epoch 78/90   5875 s
+seed 42 free_e2e epoch 79/90   5939 s
+seed 42 free_e2e epoch 80/90   6003 s
+seed 42 free_e2e epoch 81/90   6069 s
+seed 42 free_e2e epoch 82/90   6131 s
+seed 42 free_e2e epoch 83/90   6195 s
+seed 42 free_e2e epoch 84/90   6266 s
+seed 42 free_e2e epoch 85/90   6340 s
+seed 42 free_e2e epoch 86/90   6413 s
+seed 42 free_e2e epoch 87/90   6483 s
+seed 42 free_e2e epoch 88/90   6566 s
+seed 42 free_e2e epoch 89/90   6794 s
+seed 42 free_e2e epoch 90/90   6880 s
+seed 42: written
+seed 1001 free_scaled jepa epoch  1/90     68 s
+seed 1001 free_scaled jepa epoch  2/90    133 s
+seed 1001 free_scaled jepa epoch  3/90    208 s
+seed 1001 free_scaled jepa epoch  4/90    285 s
+seed 1001 free_scaled jepa epoch  5/90    360 s
+seed 1001 free_scaled jepa epoch  6/90    431 s
+seed 1001 free_scaled jepa epoch  7/90    501 s
+seed 1001 free_scaled jepa epoch  8/90    580 s
+seed 1001 free_scaled jepa epoch  9/90    652 s
+seed 1001 free_scaled jepa epoch 10/90    726 s
+seed 1001 free_scaled jepa epoch 11/90    801 s
+seed 1001 free_scaled jepa epoch 12/90    877 s
+seed 1001 free_scaled jepa epoch 13/90    947 s
+seed 1001 free_scaled jepa epoch 14/90   1015 s
+seed 1001 free_scaled jepa epoch 15/90   1087 s
+seed 1001 free_scaled jepa epoch 16/90   1178 s
+seed 1001 free_scaled jepa epoch 17/90   1246 s
+seed 1001 free_scaled jepa epoch 18/90   1318 s
+seed 1001 free_scaled jepa epoch 19/90   1379 s
+seed 1001 free_scaled jepa epoch 20/90   1439 s
+seed 1001 free_scaled jepa epoch 21/90   1508 s
+seed 1001 free_scaled jepa epoch 22/90   1570 s
+seed 1001 free_scaled jepa epoch 23/90   1648 s
+seed 1001 free_scaled jepa epoch 24/90   1729 s
+seed 1001 free_scaled jepa epoch 25/90   1801 s
+seed 1001 free_scaled jepa epoch 26/90   1870 s
+seed 1001 free_scaled jepa epoch 27/90   1936 s
+seed 1001 free_scaled jepa epoch 28/90   2002 s
+seed 1001 free_scaled jepa epoch 29/90   2072 s
+seed 1001 free_scaled jepa epoch 30/90   2143 s
+seed 1001 free_scaled jepa epoch 31/90   2221 s
+seed 1001 free_scaled jepa epoch 32/90   2295 s
+seed 1001 free_scaled jepa epoch 33/90   2383 s
+seed 1001 free_scaled jepa epoch 34/90   2460 s
+seed 1001 free_scaled jepa epoch 35/90   2537 s
+seed 1001 free_scaled jepa epoch 36/90   2613 s
+seed 1001 free_scaled jepa epoch 37/90   2693 s
+seed 1001 free_scaled jepa epoch 38/90   2770 s
+seed 1001 free_scaled jepa epoch 39/90   2844 s
+seed 1001 free_scaled jepa epoch 40/90   2920 s
+seed 1001 free_scaled jepa epoch 41/90   2995 s
+seed 1001 free_scaled jepa epoch 42/90   3071 s
+seed 1001 free_scaled jepa epoch 43/90   3149 s
+seed 1001 free_scaled jepa epoch 44/90   3225 s
+seed 1001 free_scaled jepa epoch 45/90   3300 s
+seed 1001 free_scaled jepa epoch 46/90   3374 s
+seed 1001 free_scaled jepa epoch 47/90   3449 s
+seed 1001 free_scaled jepa epoch 48/90   3526 s
+seed 1001 free_scaled jepa epoch 49/90   3603 s
+seed 1001 free_scaled jepa epoch 50/90   3691 s
+seed 1001 free_scaled jepa epoch 51/90   3761 s
+seed 1001 free_scaled jepa epoch 52/90   3865 s
+seed 1001 free_scaled jepa epoch 53/90   3941 s
+seed 1001 free_scaled jepa epoch 54/90   4010 s
+seed 1001 free_scaled jepa epoch 55/90   4086 s
+seed 1001 free_scaled jepa epoch 56/90   4180 s
+seed 1001 free_scaled jepa epoch 57/90   4255 s
+seed 1001 free_scaled jepa epoch 58/90   4332 s
+seed 1001 free_scaled jepa epoch 59/90   4409 s
+seed 1001 free_scaled jepa epoch 60/90   4483 s
+seed 1001 free_scaled jepa epoch 61/90   4552 s
+seed 1001 free_scaled jepa epoch 62/90   4629 s
+seed 1001 free_scaled jepa epoch 63/90   4700 s
+seed 1001 free_scaled jepa epoch 64/90   4769 s
+seed 1001 free_scaled jepa epoch 65/90   4834 s
+seed 1001 free_scaled jepa epoch 66/90   4906 s
+seed 1001 free_scaled jepa epoch 67/90   4980 s
+seed 1001 free_scaled jepa epoch 68/90   5054 s
+seed 1001 free_scaled jepa epoch 69/90   5128 s
+seed 1001 free_scaled jepa epoch 70/90   5316 s
+seed 1001 free_scaled jepa epoch 71/90   5396 s
+seed 1001 free_scaled jepa epoch 72/90   5470 s
+seed 1001 free_scaled jepa epoch 73/90   5547 s
+seed 1001 free_scaled jepa epoch 74/90   5625 s
+seed 1001 free_scaled jepa epoch 75/90   5695 s
+seed 1001 free_scaled jepa epoch 76/90   5762 s
+seed 1001 free_scaled jepa epoch 77/90   5829 s
+seed 1001 free_scaled jepa epoch 78/90   5898 s
+seed 1001 free_scaled jepa epoch 79/90   5969 s
+seed 1001 free_scaled jepa epoch 80/90   6042 s
+seed 1001 free_scaled jepa epoch 81/90   6112 s
+seed 1001 free_scaled jepa epoch 82/90   6180 s
+seed 1001 free_scaled jepa epoch 83/90   6254 s
+seed 1001 free_scaled jepa epoch 84/90   6319 s
+seed 1001 free_scaled jepa epoch 85/90   6396 s
+seed 1001 free_scaled jepa epoch 86/90   6468 s
+seed 1001 free_scaled jepa epoch 87/90   6540 s
+seed 1001 free_scaled jepa epoch 88/90   6610 s
+seed 1001 free_scaled jepa epoch 89/90   6684 s
+seed 1001 free_scaled jepa epoch 90/90   6770 s
+seed 1001 free_e2e epoch  1/90     68 s
+seed 1001 free_e2e epoch  2/90    200 s
+seed 1001 free_e2e epoch  3/90    393 s
+seed 1001 free_e2e epoch  4/90    481 s
+seed 1001 free_e2e epoch  5/90    630 s
+seed 1001 free_e2e epoch  6/90    702 s
+seed 1001 free_e2e epoch  7/90    771 s
+seed 1001 free_e2e epoch  8/90    841 s
+seed 1001 free_e2e epoch  9/90    912 s
+seed 1001 free_e2e epoch 10/90    999 s
+seed 1001 free_e2e epoch 11/90   1071 s
+seed 1001 free_e2e epoch 12/90   1152 s
+seed 1001 free_e2e epoch 13/90   1232 s
+seed 1001 free_e2e epoch 14/90   1322 s
+seed 1001 free_e2e epoch 15/90   1397 s
+seed 1001 free_e2e epoch 16/90   1471 s
+seed 1001 free_e2e epoch 17/90   1579 s
+seed 1001 free_e2e epoch 18/90   1700 s
+seed 1001 free_e2e epoch 19/90   1785 s
+seed 1001 free_e2e epoch 20/90   1861 s
+seed 1001 free_e2e epoch 21/90   1941 s
+seed 1001 free_e2e epoch 22/90   2017 s
+seed 1001 free_e2e epoch 23/90   2095 s
+seed 1001 free_e2e epoch 24/90   2172 s
+seed 1001 free_e2e epoch 25/90   2249 s
+seed 1001 free_e2e epoch 26/90   2322 s
+seed 1001 free_e2e epoch 27/90   2396 s
+seed 1001 free_e2e epoch 28/90   2472 s
+seed 1001 free_e2e epoch 29/90   2548 s
+seed 1001 free_e2e epoch 30/90   2625 s
+seed 1001 free_e2e epoch 31/90   2701 s
+seed 1001 free_e2e epoch 32/90   2808 s
+seed 1001 free_e2e epoch 33/90   2884 s
+seed 1001 free_e2e epoch 34/90   2969 s
+seed 1001 free_e2e epoch 35/90   3055 s
+seed 1001 free_e2e epoch 36/90   3130 s
+seed 1001 free_e2e epoch 37/90   3206 s
+seed 1001 free_e2e epoch 38/90   3283 s
+seed 1001 free_e2e epoch 39/90   3370 s
+seed 1001 free_e2e epoch 40/90   3446 s
+seed 1001 free_e2e epoch 41/90   3522 s
+seed 1001 free_e2e epoch 42/90   3597 s
+seed 1001 free_e2e epoch 43/90   3673 s
+seed 1001 free_e2e epoch 44/90   3747 s
+seed 1001 free_e2e epoch 45/90   3823 s
+seed 1001 free_e2e epoch 46/90   3898 s
+seed 1001 free_e2e epoch 47/90   3972 s
+seed 1001 free_e2e epoch 48/90   4047 s
+seed 1001 free_e2e epoch 49/90   4123 s
+seed 1001 free_e2e epoch 50/90   4198 s
+seed 1001 free_e2e epoch 51/90   4274 s
+seed 1001 free_e2e epoch 52/90   4351 s
+seed 1001 free_e2e epoch 53/90   4426 s
+seed 1001 free_e2e epoch 54/90   4501 s
+seed 1001 free_e2e epoch 55/90   4576 s
+seed 1001 free_e2e epoch 56/90   4652 s
+seed 1001 free_e2e epoch 57/90   4726 s
+seed 1001 free_e2e epoch 58/90   4803 s
+seed 1001 free_e2e epoch 59/90   4879 s
+seed 1001 free_e2e epoch 60/90   4958 s
+seed 1001 free_e2e epoch 61/90   5035 s
+seed 1001 free_e2e epoch 62/90   5111 s
+seed 1001 free_e2e epoch 63/90   5187 s
+seed 1001 free_e2e epoch 64/90   5264 s
+seed 1001 free_e2e epoch 65/90   5341 s
+seed 1001 free_e2e epoch 66/90   5419 s
+seed 1001 free_e2e epoch 67/90   5495 s
+seed 1001 free_e2e epoch 68/90   5571 s
+seed 1001 free_e2e epoch 69/90   5650 s
+seed 1001 free_e2e epoch 70/90   5727 s
+seed 1001 free_e2e epoch 71/90   5804 s
+seed 1001 free_e2e epoch 72/90   5883 s
+seed 1001 free_e2e epoch 73/90   5961 s
+seed 1001 free_e2e epoch 74/90   6037 s
+seed 1001 free_e2e epoch 75/90   6114 s
+seed 1001 free_e2e epoch 76/90   6190 s
+seed 1001 free_e2e epoch 77/90   6268 s
+seed 1001 free_e2e epoch 78/90   6344 s
+seed 1001 free_e2e epoch 79/90   6422 s
+seed 1001 free_e2e epoch 80/90   6498 s
+seed 1001 free_e2e epoch 81/90   6575 s
+seed 1001 free_e2e epoch 82/90   6653 s
+seed 1001 free_e2e epoch 83/90   6732 s
+seed 1001 free_e2e epoch 84/90   6809 s
+seed 1001 free_e2e epoch 85/90   6885 s
+seed 1001 free_e2e epoch 86/90   6964 s
+seed 1001 free_e2e epoch 87/90   7040 s
+seed 1001 free_e2e epoch 88/90   7115 s
+seed 1001 free_e2e epoch 89/90   7191 s
+seed 1001 free_e2e epoch 90/90   7268 s
+seed 1001: written
+seed 1005 free_scaled jepa epoch  1/90     75 s
+seed 1005 free_scaled jepa epoch  2/90    154 s
+seed 1005 free_scaled jepa epoch  3/90    226 s
+seed 1005 free_scaled jepa epoch  4/90    290 s
+seed 1005 free_scaled jepa epoch  5/90    343 s
+seed 1005 free_scaled jepa epoch  6/90    401 s
+seed 1005 free_scaled jepa epoch  7/90    460 s
+seed 1005 free_scaled jepa epoch  8/90    514 s
+seed 1005 free_scaled jepa epoch  9/90    577 s
+seed 1005 free_scaled jepa epoch 10/90    633 s
+seed 1005 free_scaled jepa epoch 11/90    689 s
+seed 1005 free_scaled jepa epoch 12/90    748 s
+seed 1005 free_scaled jepa epoch 13/90    807 s
+seed 1005 free_scaled jepa epoch 14/90    876 s
+seed 1005 free_scaled jepa epoch 15/90    954 s
+seed 1005 free_scaled jepa epoch 16/90   1022 s
+seed 1005 free_scaled jepa epoch 17/90   1085 s
+seed 1005 free_scaled jepa epoch 18/90   1158 s
+seed 1005 free_scaled jepa epoch 19/90   1229 s
+seed 1005 free_scaled jepa epoch 20/90   1297 s
+seed 1005 free_scaled jepa epoch 21/90   1358 s
+seed 1005 free_scaled jepa epoch 22/90   1419 s
+seed 1005 free_scaled jepa epoch 23/90   1491 s
+seed 1005 free_scaled jepa epoch 24/90   1546 s
+seed 1005 free_scaled jepa epoch 25/90   1622 s
+seed 1005 free_scaled jepa epoch 26/90   1688 s
+seed 1005 free_scaled jepa epoch 27/90   1753 s
+seed 1005 free_scaled jepa epoch 28/90   1812 s
+seed 1005 free_scaled jepa epoch 29/90   1876 s
+seed 1005 free_scaled jepa epoch 30/90   1944 s
+seed 1005 free_scaled jepa epoch 31/90   2012 s
+seed 1005 free_scaled jepa epoch 32/90   2104 s
+seed 1005 free_scaled jepa epoch 33/90   2176 s
+seed 1005 free_scaled jepa epoch 34/90   2251 s
+seed 1005 free_scaled jepa epoch 35/90   2314 s
+seed 1005 free_scaled jepa epoch 36/90   2379 s
+seed 1005 free_scaled jepa epoch 37/90   2448 s
+seed 1005 free_scaled jepa epoch 38/90   2513 s
+seed 1005 free_scaled jepa epoch 39/90   2595 s
+seed 1005 free_scaled jepa epoch 40/90   2708 s
+seed 1005 free_scaled jepa epoch 41/90   2778 s
+seed 1005 free_scaled jepa epoch 42/90   2880 s
+seed 1005 free_scaled jepa epoch 43/90   2979 s
+seed 1005 free_scaled jepa epoch 44/90   3048 s
+seed 1005 free_scaled jepa epoch 45/90   3141 s
+seed 1005 free_scaled jepa epoch 46/90   3222 s
+seed 1005 free_scaled jepa epoch 47/90   3308 s
+seed 1005 free_scaled jepa epoch 48/90   3389 s
+seed 1005 free_scaled jepa epoch 49/90   3488 s
+seed 1005 free_scaled jepa epoch 50/90   3580 s
+seed 1005 free_scaled jepa epoch 51/90   3652 s
+seed 1005 free_scaled jepa epoch 52/90   3727 s
+seed 1005 free_scaled jepa epoch 53/90   3803 s
+seed 1005 free_scaled jepa epoch 54/90   3920 s
+seed 1005 free_scaled jepa epoch 55/90   4020 s
+seed 1005 free_scaled jepa epoch 56/90   4137 s
+seed 1005 free_scaled jepa epoch 57/90   4254 s
+seed 1005 free_scaled jepa epoch 58/90   4351 s
+seed 1005 free_scaled jepa epoch 59/90   4468 s
+seed 1005 free_scaled jepa epoch 60/90   4582 s
+seed 1005 free_scaled jepa epoch 61/90   4662 s
+seed 1005 free_scaled jepa epoch 62/90   4730 s
+seed 1005 free_scaled jepa epoch 63/90   4802 s
+seed 1005 free_scaled jepa epoch 64/90   4872 s
+seed 1005 free_scaled jepa epoch 65/90   5007 s
+seed 1005 free_scaled jepa epoch 66/90   5088 s
+seed 1005 free_scaled jepa epoch 67/90   5161 s
+seed 1005 free_scaled jepa epoch 68/90   5232 s
+seed 1005 free_scaled jepa epoch 69/90   5308 s
+seed 1005 free_scaled jepa epoch 70/90   5383 s
+seed 1005 free_scaled jepa epoch 71/90   5457 s
+seed 1005 free_scaled jepa epoch 72/90   5610 s
+seed 1005 free_scaled jepa epoch 73/90   5699 s
+seed 1005 free_scaled jepa epoch 74/90   5785 s
+seed 1005 free_scaled jepa epoch 75/90   5869 s
+seed 1005 free_scaled jepa epoch 76/90   5964 s
+seed 1005 free_scaled jepa epoch 77/90   6046 s
+seed 1005 free_scaled jepa epoch 78/90   6161 s
+seed 1005 free_scaled jepa epoch 79/90   6232 s
+seed 1005 free_scaled jepa epoch 80/90   6314 s
+seed 1005 free_scaled jepa epoch 81/90   6382 s
+seed 1005 free_scaled jepa epoch 82/90   6459 s
+seed 1005 free_scaled jepa epoch 83/90   6529 s
+seed 1005 free_scaled jepa epoch 84/90   6599 s
+seed 1005 free_scaled jepa epoch 85/90   6685 s
+seed 1005 free_scaled jepa epoch 86/90   6755 s
+seed 1005 free_scaled jepa epoch 87/90   6821 s
+seed 1005 free_scaled jepa epoch 88/90   6884 s
+seed 1005 free_scaled jepa epoch 89/90   6942 s
+seed 1005 free_scaled jepa epoch 90/90   6992 s
+seed 1005 free_e2e epoch  1/90    105 s
+seed 1005 free_e2e epoch  2/90    214 s
+seed 1005 free_e2e epoch  3/90    311 s
+seed 1005 free_e2e epoch  4/90    405 s
+seed 1005 free_e2e epoch  5/90    546 s
+seed 1005 free_e2e epoch  6/90    646 s
+seed 1005 free_e2e epoch  7/90    726 s
+seed 1005 free_e2e epoch  8/90    799 s
+seed 1005 free_e2e epoch  9/90    914 s
+seed 1005 free_e2e epoch 10/90    992 s
+seed 1005 free_e2e epoch 11/90   1063 s
+seed 1005 free_e2e epoch 12/90   1128 s
+seed 1005 free_e2e epoch 13/90   1190 s
+seed 1005 free_e2e epoch 14/90   1251 s
+seed 1005 free_e2e epoch 15/90   1329 s
+seed 1005 free_e2e epoch 16/90   1402 s
+seed 1005 free_e2e epoch 17/90   1475 s
+seed 1005 free_e2e epoch 18/90   1531 s
+seed 1005 free_e2e epoch 19/90   1592 s
+seed 1005 free_e2e epoch 20/90   1662 s
+seed 1005 free_e2e epoch 21/90   1727 s
+seed 1005 free_e2e epoch 22/90   1797 s
+seed 1005 free_e2e epoch 23/90   1879 s
+seed 1005 free_e2e epoch 24/90   1932 s
+seed 1005 free_e2e epoch 25/90   2067 s
+seed 1005 free_e2e epoch 26/90   2273 s
+seed 1005 free_e2e epoch 27/90   2333 s
+seed 1005 free_e2e epoch 28/90   2395 s
+seed 1005 free_e2e epoch 29/90   2458 s
+seed 1005 free_e2e epoch 30/90   2507 s
+seed 1005 free_e2e epoch 31/90   2568 s
+seed 1005 free_e2e epoch 32/90   2630 s
+seed 1005 free_e2e epoch 33/90   2697 s
+seed 1005 free_e2e epoch 34/90   2758 s
+seed 1005 free_e2e epoch 35/90   2823 s
+seed 1005 free_e2e epoch 36/90   2902 s
+seed 1005 free_e2e epoch 37/90   2978 s
+seed 1005 free_e2e epoch 38/90   3053 s
+seed 1005 free_e2e epoch 39/90   3121 s
+seed 1005 free_e2e epoch 40/90   3193 s
+seed 1005 free_e2e epoch 41/90   3254 s
+seed 1005 free_e2e epoch 42/90   3327 s
+seed 1005 free_e2e epoch 43/90   3407 s
+seed 1005 free_e2e epoch 44/90   3466 s
+seed 1005 free_e2e epoch 45/90   3518 s
+seed 1005 free_e2e epoch 46/90   3576 s
+seed 1005 free_e2e epoch 47/90   3646 s
+seed 1005 free_e2e epoch 48/90   3710 s
+seed 1005 free_e2e epoch 49/90   3763 s
+seed 1005 free_e2e epoch 50/90   3830 s
+seed 1005 free_e2e epoch 51/90   3914 s
+seed 1005 free_e2e epoch 52/90   3981 s
+seed 1005 free_e2e epoch 53/90   4049 s
+seed 1005 free_e2e epoch 54/90   4127 s
+seed 1005 free_e2e epoch 55/90   4207 s
+seed 1005 free_e2e epoch 56/90   4275 s
+seed 1005 free_e2e epoch 57/90   4354 s
+seed 1005 free_e2e epoch 58/90   4429 s
+seed 1005 free_e2e epoch 59/90   4496 s
+seed 1005 free_e2e epoch 60/90   4596 s
+seed 1005 free_e2e epoch 61/90   4672 s
+seed 1005 free_e2e epoch 62/90   4747 s
+seed 1005 free_e2e epoch 63/90   4821 s
+seed 1005 free_e2e epoch 64/90   4907 s
+seed 1005 free_e2e epoch 65/90   4977 s
+seed 1005 free_e2e epoch 66/90   5056 s
+seed 1005 free_e2e epoch 67/90   5109 s
+seed 1005 free_e2e epoch 68/90   5179 s
+seed 1005 free_e2e epoch 69/90   5272 s
+seed 1005 free_e2e epoch 70/90   5328 s
+seed 1005 free_e2e epoch 71/90   5386 s
+seed 1005 free_e2e epoch 72/90   5434 s
+seed 1005 free_e2e epoch 73/90   5487 s
+seed 1005 free_e2e epoch 74/90   5537 s
+seed 1005 free_e2e epoch 75/90   5589 s
+seed 1005 free_e2e epoch 76/90   5641 s
+seed 1005 free_e2e epoch 77/90   5682 s
+seed 1005 free_e2e epoch 78/90   5738 s
+seed 1005 free_e2e epoch 79/90   5775 s
+seed 1005 free_e2e epoch 80/90   5886 s
+seed 1005 free_e2e epoch 81/90   5968 s
+seed 1005 free_e2e epoch 82/90   6024 s
+seed 1005 free_e2e epoch 83/90   6103 s
+seed 1005 free_e2e epoch 84/90   6193 s
+seed 1005 free_e2e epoch 85/90   6284 s
+seed 1005 free_e2e epoch 86/90   6344 s
+seed 1005 free_e2e epoch 87/90   6403 s
+seed 1005 free_e2e epoch 88/90   6494 s
+seed 1005 free_e2e epoch 89/90   6590 s
+seed 1005 free_e2e epoch 90/90   6647 s
+seed 1005: written

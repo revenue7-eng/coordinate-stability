@@ -37,6 +37,7 @@ Protocol:
 - Paper 1, Experiment 2
 
 **Ф5. Random fixed axes (3D) ≈ prescribed**
+- STATUS: see Ф87. Rotation of the same coordinates; equality expected by construction.
 - Random fixed: 0.61× of prescribed (slightly better) at 200 ep
 - Random fixed: 1.00× at 500 ep
 - Free 3D same input: 4.47× worse than prescribed at 200 ep [Ф82: own-latent ratio, not interpretable as a quality gap.]
@@ -83,17 +84,20 @@ Protocol:
 - Paper 2, Section 5.1
 
 **Ф12. A random fixed encoder beats free by 17×** [Ф82: own-latent ratio, not interpretable as a quality gap.]
+- STATUS: see Ф87. Different units of the two latents (E08).
 - Random fixed: 0.000476, free: 0.008282
 - Random fixed = frozen random orthogonal projection, zero semantic content
 - Stability without alignment already gives an order-of-magnitude advantage
 - Paper 2, Section 5.4
 
 **Ф13. Prescribed beats random fixed by 13×**
+- STATUS: see Ф87. Different units of the two latents (E08).
 - Prescribed: 0.000036, random fixed: 0.000476
 - Alignment adds a further advantage on top of stability
 - Paper 2, Section 5.4
 
 **Ф14. Rotated prescribed ≈ prescribed (1.09×)**
+- STATUS: see Ф87. Rotation of the same coordinates; equality expected by construction.
 - Interpretability of the axes does not matter
 - What matters: fixedness + the right subspace
 - Paper 2, Section 5.4
@@ -149,6 +153,7 @@ Protocol:
 - Experiment, 15.04.2026
 
 **Ф21. An unpredictable axis destroys prescribed catastrophically (1106×)**
+- STATUS: see Ф87. The ratio equals the variance of an unpredictable target axis.
 - prescribed_4_noise (x, y, θ + frozen random): 0.021534
 - prescribed_3 (x, y, θ): 0.000019
 - The predictor is required to predict the unpredictable → total failure
@@ -156,6 +161,7 @@ Protocol:
 - Experiment 15.04.2026 (fragility test)
 
 **Ф22. Axes from the same subspace do less damage than axes from another**
+- STATUS: see Ф87. Losses on targets of different content.
 - prescribed_4_sin (x, y, θ + sinθ): 0.000093 (4.8× vs p3) — redundant, same subspace
 - prescribed_4_dist (x, y, θ + d_agent_block): 0.000160 (8.2× vs p3) — redundant, cross-subspace
 - prescribed_4_agent (x, y, θ + agent_x): 0.000154 (7.9× vs p3) — independent, cross-subspace
@@ -165,6 +171,7 @@ Protocol:
 - Experiment 15.04.2026 (fragility test)
 
 **Ф23. Redundancy vs independence of the 4th axis: the effect is the same cross-subspace**
+- STATUS: see Ф87. Losses on targets of different content.
 - prescribed_4_dist (redundant, cross-subspace): 0.000160 (8.2×)
 - prescribed_4_agent (independent, cross-subspace): 0.000154 (7.9×)
 - Under 5% apart → the issue is not redundancy as such but the widening of the subspace
@@ -189,6 +196,7 @@ Protocol:
 ### Tier 1 tests (critical tests of hypotheses, 15.04.2026)
 
 **Ф24. Early drift (ep 0→1) destroys information — even an MLP decoder breaks**
+- STATUS: see Ф87. Measures movement of the coordinates; the claim that information is destroyed is not supported.
 - Epoch 0→1: MLP decoder R² transfer = −283 (mean over 3 seeds)
 - Linear decoder R² transfer = −71 (mean over 3 seeds)
 - MLP self R²: 0.80–0.95 (well fitted at epoch t)
@@ -260,6 +268,7 @@ Protocol:
 - Tier 2 / T5
 
 **Ф31. Random fixed 3D (from block coordinates) ≈ prescribed = rotated prescribed**
+- STATUS: see Ф87. Rotation of the same coordinates; equality expected by construction.
 - prescribed: 0.000037
 - rotated_prescribed: 0.000039 (1.05×)
 - random_fixed_3d: 0.000036 (0.97×)
@@ -270,6 +279,7 @@ Protocol:
 - Tier 2 / T7
 
 **Ф32. Random fixed 5D (from all coordinates, unnormalized) blows up**
+- STATUS: see Ф87. Different units of the two latents.
 - random_fixed_5d: 376,053 (mean; per seed: 977K, 25K, 125K)
 - An unnormalized projection from the full space is unstable
 - The original "17× stability advantage" from Paper 2 (Ф12) was obtained on particular seeds with a different random_fixed implementation
@@ -385,6 +395,7 @@ Protocol:
 ### Critical window / sub-epoch (drift-hallucination branch, 03.07.2026)
 
 **Ф45. The critical window for damage to the free encoder lies inside the first epoch (E30)**
+- STATUS: see Ф87. Own-latent target; see also Ф82.
 - freeze@0 (random_fixed as proxy, Ф12 = 0.000476) → freeze@1 (0.06485, gym-pusht) = **136× cliff**
 - freeze@1 → unfrozen (0.08113) = **1.3×** (negligible against the cliff)
 - ~99% of the damage to the free encoder is done in the first epoch; the break is between epoch 0 and 1, not later
@@ -397,6 +408,7 @@ Protocol:
 - E30
 
 **Ф46. Within the first epoch the damage is a continuous SLOPE, not a discrete threshold (E31 synthetic → E32 real → E38 full budget, SOLID; onset reading revised)**
+- STATUS: see Ф87. Own-latent target; the rise may be a rise in latent spread [INFERENCE].
 - Question: inside epoch 1, does the damage appear at a sharp threshold (a discrete point of no return) or accumulate as a slope? The encoder is frozen at fractions of the batches of epoch 1.
 - **E31 (synthetic, 5 seeds):** verdict SLOPE (from analyze_shape.py). Linear-vs-step over the rise f≥0.25: the line is 2.2× better (SS 0.085 vs 0.186), linear R²=0.88. Monotone in 3/5 seeds (0 dips), 2/5 with a single noise dip.
 - **E32 (real gym-pusht, 5 seeds {7,42,123,777,2024}):** verdict SLOPE, CLEANER than synthetic. **5/5 seeds strictly monotone** (0 dips of any kind). Pooled linear-vs-step over the band f∈[0.25,0.60] (per-seed min-max normalized): **linear R²=0.977**; the best single-breakpoint step is **10.5×** worse (SS_step 1.047 vs SS_lin 0.100, breakpoint f=0.50). Raw per-seed curves are slightly convex (increments grow toward f=0.60). E30-style anchor on real data: freeze@1.0/@0.0 = **22.1×** (per seed 7.2–35.3×) — the same direction as E30's 136× cliff.
@@ -411,6 +423,7 @@ Protocol:
 - E31, E32, E38
 
 **Ф60. The onset of epoch 1 is NOT harmless: damage accumulates from the first optimizer steps (E38)**
+- STATUS: see Ф87. Own-latent target; the rise may be a rise in latent spread [INFERENCE].
 - Over f∈[0.00,0.25] best_vp rises by **5.8×, 9.8×, 11.0×, 11.2×, 17.1×** (seeds 7, 123, 42, 2024, 777). No seed shows a harmless opening segment.
 - Directly answers the sub-0.25 run requested in Ф46's [NOTE for cross-checking]. The answer is negative: the near-harmless onset was an artifact of a grid with no points between 0.00 and 0.25, whose endpoints were joined by a line.
 - Consequence for the bridge wording: "continuously-integrated divergence" starts at the first steps, not after a quiet quarter. Nothing about the SLOPE verdict changes; the onset claim attached to it does.
@@ -421,6 +434,7 @@ Protocol:
 - E38
 
 **Ф61. The JEPA initial-collapse confound does not explain the sub-epoch damage (E39)**
+- STATUS: see Ф87. Own-latent target.
 - Question: inside epoch 1, is the measured quantity coordinate-basis drift, or the collapse-then-recover transient that T-JEPA/I-JEPA report in the first iterations? E38's finest point (f=0.05) is optimizer step 8 of 160, so the whole opening window sat below its resolution.
 - Design: grid specified in optimizer steps {0,1,2,3,4,6,8} rather than fractions, f=(step+0.5)/n_batches so that floor(f*n_batches) lands on the intended step regardless of float representation. n_batches=160 (measured), EP=15/NEP=200, 5 seeds {42,123,777,2024,7}, real gym-pusht, local CPU.
 - Discriminating prediction: collapse-then-recover requires a recovery segment, a rise to a peak followed by a sustained fall. The encoder is frozen at step f and stays frozen for all remaining epochs, so it cannot recover from a dip, and such a segment would be visible. **No seed shows one.**
@@ -628,6 +642,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 ### Confirmed (on a single environment)
 
 **Г1. Fixing the axes matters more than the semantics of the axes**
+- STATUS: see Ф87. Rests on the rotation equality (Ф5, Ф31, Ф39) and on Ф12 (different units); not tested.
 - Confirmed: random fixed ≈ prescribed (Ф5, Ф12, Ф31)
 - Strengthened: random_fixed_3d ≈ prescribed ≈ rotated_prescribed (Ф31) — alignment within the subspace does not matter
 - Reproduced in 5D (Ф34: random ≈ prescribed, 0.92×)
@@ -636,6 +651,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: CONFIRMED on Push-T, with a caveat for high dimensions
 
 **Г2. Coordinate drift is the cause of free-encoder degradation**
+- STATUS: see Ф87. Coordinate movement stands (R2); degradation of the free encoder is measured on own latents and is not established on a common metric.
 - Confirmed: R² < −62 (Ф10), freeze@1 +20% (Ф11), aligned-but-drifting ≈ free (Ф15)
 - Strengthened (Tier 1):
   - Early drift destroys information — the MLP decoder breaks too (Ф24)
@@ -648,11 +664,13 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: CONFIRMED, strengthened
 
 **Г3. Rank collapse is not the main cause of free-encoder degradation**
+- STATUS: rests on Ф9, an own-latent ratio (Ф82); not interpretable.
 - Confirmed: full rank 2.99 + isotropy 0.86 → still 233× worse (Ф9) [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Environment: Push-T
 - Status: CONFIRMED on Push-T
 
 **Г4. Stability is the prerequisite, alignment an additional factor**
+- STATUS: rests on Ф15, Ф16, own-latent ratios (Ф80, Ф82); not interpretable.
 - Confirmed: 2×2 factorial (Ф16), aligned-but-drifting ≈ free (Ф15)
 - Refined (Tier 2): alignment *within the subspace* does not matter (Ф31)
 - Alignment = choosing the right subspace + normalization, not the orientation of the axes
@@ -682,6 +700,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: CONFIRMED on a single environment; needs further checking on more models and on controlled prompts (E33)
 
 **Г18. The critical window for free-encoder damage is inside the first epoch; the shape is a continuous slope, not a discrete threshold**
+- STATUS: see Ф87. Measured on an own-latent target; open.
 - Refines Г15 (the two-phase model): phase 1 is not "epochs 0–2" but "inside the first epoch".
 - Support: Ф45 (E30) — ~99% of the damage in the first epoch (freeze@0→@1 = 136× cliff vs freeze@1→unfrozen = 1.3×); Ф46 (E31 synthetic + E32 real) — inside the first epoch it is a slope (SLOPE verdict from code: E32 R²=0.977, step 10.5× worse, 5/5 monotone). [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - ~~The first quarter of the epoch (f≤0.25) is near-harmless; after that the damage integrates continuously, accelerating toward the end.~~ **REVISED by E38 (Ф60):** the damage rises from the first optimizer steps (f=0.00→0.25 gives 5.8–17.1×), is steepest over roughly the first 40% of the epoch, and then saturates. The SLOPE verdict is unaffected; only the onset and the "accelerating" reading are.
@@ -707,6 +726,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: REFUTED
 
 **Г10. The prescribed advantage is a pure stability effect (17× × 13× = 233× decomposition)**
+- STATUS: rests on Ф12, Ф13; see Ф87. Not interpretable.
 - The Paper 2 decomposition is invalid:
   - random_fixed_5d (from Ф12) is unstable — it blows up on new seeds (Ф32)
   - random_fixed_3d (from the correct subspace) ≈ prescribed (Ф31)
@@ -787,6 +807,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: REFUTED
 
 **Г9. Fragility of prescribed: one extra axis kills the advantage**
+- STATUS: see Ф87. The refutation rests on an own-latent ratio (E28) and the support on Ф21 to Ф23; open, not tested.
 - ~~Fact: dim=3→4 is a loss on Push-T (Ф18)~~ REFUTED: prescribed wins at dim=4 by 114× (E28) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - The mechanism from E17 (Ф21–Ф23) still holds: an unpredictable axis is catastrophic (1106×)
 - But: predictable extra axes degrade prescribed (228× → 42× over dim 3→11) without killing it
@@ -796,6 +817,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: PARTIALLY REFUTED — fragility to noise axes is real (Ф21), but extra predictable axes do not kill the prescribed advantage [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 
 **Г14. The prescribed advantage = fixing + [0,1] normalization of the coordinates**
+- STATUS: rests on own-latent ratios (Ф77, Ф80); not interpretable.
 - Based on all the experiments (Tier 1–3, E28, the E16 fix)
 - Prescribed wins when it: [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
   (a) fixes the coordinates (they do not drift)
@@ -845,6 +867,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: OPEN, untested. Support in this environment withdrawn; no assigned test (E35 does not isolate completeness, see Ф81)
 
 **Г26. What the result depends on is the immobility of the representation, not its informativeness**
+- STATUS: the negative part is corrected by Ф75: on an external target R2_readout orders the frozen encoders (r = -0.86).
 - Inside the opening window the two move in opposite directions: linear information about the true state rises monotonically in 5/5 seeds while best_vp gets worse (Ф63). A random untrained encoder carrying roughly a third of the linearly extractable information performs on a par with a parameter-free readout carrying all of it (Ф31, Ф60, Ф63).
 - The hypothesis is about movement rather than content: damage is done by the representation continuing to change under a downstream module that is adapting to it, and neither by a poor choice of axes nor by loss of information.
 - Falsifier: a controlled comparison in which best_vp tracks the initialisation's R2_readout. Across the five available points the two are, if anything, inversely ordered (seed 7 has the highest R2_readout at 0.444 and the worst best_vp at 0.00843), but those five points confound initialisation with data sample and are an observation, not a test.
@@ -1137,6 +1160,7 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - NEXT: E47, standardised prescribed against free_scaled at 25, 50 and 200 episodes, 90 epochs.
 
 ## Ф84: E47, a standardised fixed basis beats a learned encoder on the common target, by more at low data
+- STATUS (Н5): prescribed_std is the standardised state with no encoder. The result reads: a frozen JEPA latent of the full state is complete but laid out worse than the state itself. It does not test fixed coordinates of a learned representation.
 
 - Gates all true: one pre-registration commit; encoders unchanged in every stage 2; on seed 42 plain prescribed stage 2 at 200 episodes and 90 epochs equals E45 bit for bit; every E45 free_scaled history has 90 epochs. [verified: E47_std_prescribed/results/analysis.json]
 - GMR free_scaled / prescribed_std on final2, n = 10, 90 epochs: 200 episodes 1.251 [1.129, 1.388], class O2; 50 episodes 1.306 [1.150, 1.484], class O2; 25 episodes 1.681 [1.452, 1.947], class O2 PROVISIONAL. Median convergence ratios: 200 std 1.028, free 0.998; 25 std 0.947, free 0.956. [verified: analysis.json]
@@ -1147,6 +1171,7 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - NEXT: E48, the same comparison on a target nonlinear in the prescribed coordinates.
 
 ## Ф85: E48, the advantage of a standardised fixed basis survives a target nonlinear in the fixed coordinates
+- STATUS (Н5): prescribed_std is the standardised state with no encoder. The result reads: a frozen JEPA latent of the full state is complete but laid out worse than the state itself. It does not test fixed coordinates of a learned representation.
 
 - Gates all true: one pre-registration commit; encoders unchanged in every stage 2; free_scaled stage 1 at 200 episodes equals E45 bit for bit on every seed. [verified: E48_nonlinear_target/results/analysis.json]
 - Target g(s_t+3) = (agent-block distance, sin theta, cos theta, agent position in the block frame). GMR free_scaled / prescribed_std on final2, n = 10, 90 epochs: 200 episodes 1.436 [1.256, 1.642], class O2; 25 episodes 1.681 [1.358, 2.082], class O2 PROVISIONAL. [verified: analysis.json]
@@ -1156,6 +1181,7 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - NEXT: E49, whether the frozen JEPA latent of free_scaled loses state information (completeness) and whether the same encoder trained end to end on the target closes the gap.
 
 ## Ф86: E49, the frozen JEPA latent is complete but nonlinearly laid out; the registered verdict is fixation, with two named limits
+- STATUS (Н5): prescribed_std is the standardised state with no encoder. The result reads: a frozen JEPA latent of the full state is complete but laid out worse than the state itself. It does not test fixed coordinates of a learned representation.
 
 - Gates all true: one pre-registration commit; JEPA stage 1 equals E45 bit for bit on every seed; on prescribed_std the linear probe R2 of the four positions is at least 0.999. [verified: E49_completeness/results/analysis.json]
 - Probes of the frozen JEPA latent of free_scaled, median over 10 seeds. MLP R2: x_a 0.999, y_a 0.999, x_b 0.999, y_b 0.999, sin 0.999, cos 1.000. Linear R2: x_a 0.980, y_a 0.982, x_b 0.985, y_b 0.988, sin 0.558, cos 0.023. Completeness as registered: complete (minimum median MLP R2 0.999). [verified: analysis.json]
@@ -1164,3 +1190,21 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - LIMITS, named after the data: (1) free_e2e had 90 epochs in total against 90 + 90 for frozen JEPA, and kept the SIGReg term; that it loses even to frozen JEPA points to under-training, so it is a weak upper bound for a learned encoder. (2) The design does not separate fixed coordinates from a simple (affine, well conditioned) layout of the state: prescribed_std is both. The probes show the learned latent differs from it in layout, not in information.
 - INTERPRETATION: the advantage is not a loss of information in the learned latent. Whether it is fixation as such (Г-k) or the simple geometry of the state in the latent (Г-l) is open; Ф39 (a random fixed linear basis matches prescribed) is consistent with either.
 - NEXT: E50, a fixed but nonlinearly warped complete encoder, and the learned encoder end to end on an equal budget without SIGReg.
+
+## Ф87: audit of the fixed-latent comparisons, the fragility test and the critical-window branch for the own-latent confound
+- [verified: E17_fragility/code/run_fragility.py:94-98, 183-186] In E17 the fourth axis enters the target as well as the context: for prescribed_4_noise the target is base_next + [n_next], with n drawn U(0, 1) per (episode, timestep) from a fixed generator and unpredictable from the context. Its variance is 1/12 per coordinate, so the expected MSE averaged over four coordinates is at least 1/48 = 0.0208. Ф21 records 0.021534. The 1106x is the variance of an unpredictable target axis, not damage to prescribed. Ф22 and Ф23 compare losses on targets of different dimension and content.
+- [verified: E08_random_fixed/code/random_fixed_encoder.py:117-134] In E08 random_fixed is a frozen non-orthogonal linear map 5 to 3 with a bias and no input scaling, while prescribed divides by (512, 512, 2 pi) (Ф82). The latents are in different units, so Ф13 (13x) and Ф12 (17x) are not interpretable as quality. Ф32 (blow-up) is the same effect.
+- [verified: E05a_random_axes_scaling/code/run_random_axes_control.py:52-58, 220; E23_random_3d_vs_5d/code/tier2_confound_tests.py:126-141] In E05a and E23 random_fixed is an orthogonal rotation of the same scaled coordinates, and in E05a a single matrix (seed 9999). Equality with prescribed under an MSE loss is expected by construction [INFERENCE]. Ф5, Ф14, Ф31, Ф39 stand as measured, but do not test whether the meaning of the axes matters.
+- [verified: E07_freeze/code/freeze_test_standalone.py:117; E31_subepoch_freeze/code/subepoch_freeze.py:108; E32_subepoch_freeze_real/code/e32_lib.py:96; E39_subepoch_freeze_micro/code/e39_lib.py:97] The critical-window branch predicts emb[:, 3] of the same encoder from emb[:, :3]: the target is the encoder's own latent. By Ф73 such a loss largely tracks how far the latent spreads neighbouring states. A rise of best_vp from the first steps (Ф46, Ф60, Ф61) may be a rise in spread as the encoder trains rather than damage [INFERENCE]; this would also remove the apparent paradox of Ф63.
+- Ф24: the data show high self R2 (0.80 to 0.95) at each epoch and strongly negative transfer R2 between epochs. That measures movement of the coordinates, not loss of information; the title claim that information is destroyed is not supported, and Ф63 shows linear information rising in the same window.
+- Hypotheses resting on these entries: Г1, Г3, Г4, Г5 to Г11, Г13, Г14 rest on own-latent ratios or on the rotation equality; Г2 rests on coordinate movement (valid, R2) plus degradation measured on own latents; Г18 rests on the critical-window branch; the negative part of Г26 is corrected by Ф75.
+- Stand: the R2 measurements of coordinate movement (Ф10, Ф24 as movement, Ф25, Ф27, Ф35); the E29 noise control (Ф41i, Ф42i, Ф44i and the noise side of Ф43i), where noise enters only in training and evaluation is on the clean prescribed latent [verified: E29_noise_control/code/noise_control.py:144-185]; Ф30; Ф62.
+- Not audited here: Ф2 (pixel CNN, E03), Ф3 (speech, E04), Ф4 (Rico, E01), Ф33, Ф34.
+
+## Н5: E50, fixation or geometry: VOID (completeness gate failed); exploratory observations
+- Gates: one pre-registration commit, true; fixed_warped encoder tensor-equal before and after training, true; fixed_warped complete (minimum median MLP probe R2 at least 0.99), false: minimum 0.983. The campaign is void as registered. [verified: python3 E50_fixation_vs_geometry/code/analyze_e50.py; E50_fixation_vs_geometry/results/analysis.json]
+- Instrument defect: the 0.99 gate was set without checking that the probe can invert a warp of this strength; the analysis printed a verdict line although the gates failed. The gate is not rewritten after the data.
+- Probes of fixed_warped, median over 10 seeds. MLP R2: x_a 0.989, y_a 0.989, x_b 0.989, y_b 0.989, sin 0.983, cos 0.985. Linear R2: x_a 0.916, y_a 0.927, x_b 0.920, y_b 0.917, sin 0.606, cos 0.003.
+- Exploratory, not a verdict: fixed_warped / prescribed_std 7.507 [6.613, 8.522], O2; frozen JEPA (E48) / fixed_warped 0.191 [0.163, 0.224], O5; free_e2e_fair / prescribed_std 0.736 [0.639, 0.848], O5; free_e2e_fair / frozen JEPA 0.512 [0.449, 0.585], O5.
+- Reading: the warped fixed basis is far worse than prescribed_std and worse than the learned latent, which points to layout (Г-l) rather than fixation (Г-k); its warp is stronger than that of the JEPA latent (linear R2 of positions about 0.92 against about 0.98), so this is not a matched test. A learned encoder trained end to end on the target with an equal budget and no SIGReg is ahead of prescribed_std, so the E49 limit (1) was under-training, as named in Ф86.
+- Scope of the E46 to E50 series: on fully observed synthetic Push-T prescribed_std is the state itself, standardised, with no encoder. The series measures a frozen JEPA latent of the state against the state, not fixed coordinates of a learned representation. Hypotheses Г-a to Г-l were built adaptively, each after reading the previous campaign, on the same 10 seeds and one generator, without a multiplicity correction.

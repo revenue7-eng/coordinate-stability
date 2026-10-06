@@ -29,7 +29,7 @@ Three control experiments to isolate the mechanism behind prescribed axes advant
 
 ## Files
 ```
-code/           — Controls used same codebase as E03 (lewm_pusht_experiment.py)
+code/           — Controls used same codebase as E02 (lewm_pusht_experiment.py)
 results/        — Results published in Paper 1 (Section 4.6, reviewer response)
 ```
 
@@ -41,4 +41,4 @@ results/        — Results published in Paper 1 (Section 4.6, reviewer response
 - **exp5b_gauge_fix:** Gauge fixing as alternative to prescribed — does not help (Ф37)
 
 ## How to reproduce
-Same as E03, with additional conditions: `--condition random_fixed`, `--condition free_same_input`, `--no-sigreg`.
+Same as E02, with additional conditions: `--condition random_fixed`, `--condition free_same_input`, `--no-sigreg`.

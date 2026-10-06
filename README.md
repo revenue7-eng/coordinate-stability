@@ -1,96 +1,45 @@
 # Coordinate Stability in Learned Representation Spaces
 
-**Research question:** Does a learning system need a stable coordinate system to learn effectively — and what happens when it doesn't have one?
+**Research question:** does a representation whose coordinate system is fixed before training (prescribed axes) give a better world model than one whose coordinates are learned, and what does the movement of learned coordinates cost a downstream module?
 
-## Context
+## Where the programme stands
 
-Joint-Embedding Predictive Architectures (JEPA) learn by predicting masked representations from visible context. The standard approach: let the encoder discover its own representation space during training. We investigate what happens when the coordinate system is fixed before training instead.
+The early results (E01 to E29) reported prescribed axes ahead of learned encoders by 5x to 1820x. Those ratios do not survive the audit. Two measurement defects explain them: the free encoder read the raw state through a first layer that discards its scale (Ф76), and each encoder was scored on its own latent, so ratios across different latent geometries are not comparable (Ф77). The status of every older comparison is recorded in EVIDENCE Ф80, Ф82 and Ф87.
 
-## What we observe
+What stands, each in the scope stated in EVIDENCE:
 
-Across 35 experiments on multiple environments and modalities:
-
-1. **Fixed coordinates consistently outperform learned ones** in the low-data regime (5–222× improvement), regardless of whether the axes carry semantic meaning. Any frozen, normalized basis in the task-relevant subspace works equally well (random ≈ prescribed, ratio 0.97×).
-
-2. **The free encoder's coordinate system drifts** — it restructures so rapidly in early training that a linear decoder trained at epoch 0 produces outputs worse than random at epoch 1 (R² < −62). Standard geometric metrics (rank, isotropy) remain healthy throughout.
-
-3. **Drift is not generic noise.** Matched-amplitude i.i.d. noise is 4× more destructive than actual drift; matched-amplitude correlated noise (constant shift) is 167× less destructive. The free encoder's instability is a structured, data-dependent deformation between these extremes.
-
-4. **Standard remedies don't solve it.** Reducing encoder learning rate by 100× leaves a 62× gap. Extra predictor updates, EMA target encoders, and PCA alignment all fail. The instability is structural, not an optimization artifact. [Ratios are on each encoder's own latent and are not interpretable as quality: EVIDENCE Ф77, Ф82.]
-
-5. **Fixed coordinates have a ceiling.** With sufficient data (500 episodes), the free encoder surpasses prescribed by six orders of magnitude. Coordinate fixation provides sample efficiency, not absolute superiority.
+- On a common target with equally scaled input, a fixed and a learned encoder are not distinguishable at dim 5 (E44, E45; class O4 PROVISIONAL; Ф78, Ф79).
+- On fully observed synthetic Push-T the standardised state beats a frozen JEPA latent of the same state, by more at low data (Ф84, Ф85). The latent is complete but nonlinearly laid out (Ф86). There the prescribed arm is the state itself, so this measures JEPA self-supervision, not fixed coordinates of a learned representation (Н5). E50, built to separate fixation from geometry, is void; its exploratory numbers point to geometry and show an encoder trained end to end on the target ahead of the fixed basis.
+- Among fixed latents in the same units the comparisons stand (Ф13 aside, see Ф87). random_fixed matching prescribed (Ф5, Ф31, Ф39) is a rotation of the same coordinates, so it does not show that the meaning of the axes is irrelevant.
+- The coordinates of a learned encoder move strongly in the first epoch and less later, measured by decoder transfer R2 (Ф10, Ф24, Ф25, Ф27, Ф35).
+- Noise injected into a fixed latent during training harms the downstream module, and the harm depends on its structure (Ф41i, Ф42i, Ф44i).
+- The critical-window results (E30 to E32, E38, E39) score the predictor on the encoder's own latent; whether they measure damage or a growing spread of the latent is open (Ф87).
+- Among frozen random initialisations, linear readability of the state orders downstream quality on an external target (Ф75).
+- Two Rooms planning: E35 compares oracle-state input with pixels, both trained, on one seed (Ф58, Ф81); it does not test fixed axes.
+- LLM residual streams (E33): the leading principal components are a last-token artefact (Ф47 to Ф55).
 
 ## Papers
 
-- **Paper 1:** "The Space Matters More Than the Loss: JEPA Collapse as a Problem of Structure, Not Optimization" — [prescribed-axes repo](https://github.com/revenue7-eng/prescribed-axes)
-- **Paper 2:** "Semantic Drift, Not Rank Collapse: Why Stable Coordinates Matter for Learning in Joint-Embedding Spaces" — [prescribed-axes-drift repo](https://github.com/revenue7-eng/prescribed-axes-drift)
+- Paper 1: "The Space Matters More Than the Loss", [prescribed-axes](https://github.com/revenue7-eng/prescribed-axes)
+- Paper 2: "Semantic Drift, Not Rank Collapse", [prescribed-axes-drift](https://github.com/revenue7-eng/prescribed-axes-drift)
+
+Both predate the audit. Their quantitative prescribed-versus-free claims rest on own-latent ratios (Ф77, Ф82).
 
 ## Repository structure
 
-Each experiment follows a standard protocol:
-
 ```
 E{NN}_{name}/
-  code/        — scripts and notebooks
-  results/     — JSON data, figures
-  README.md    — goal, conditions, metrics, hypothesis, results
+  code/        scripts and notebooks
+  results/     JSON data, logs, figures
+  README.md    goal, conditions, metrics, status
 ```
 
-- [EXPERIMENTS.md](EXPERIMENTS.md) — Full registry of all experiments with parameters and key results
-- [EVIDENCE.md](EVIDENCE.md) — Verified facts (Ф), single-seed observations (Н), hypotheses with status (confirmed/refuted/open), and contradictions
+- [EXPERIMENTS.md](EXPERIMENTS.md): registry of all experiments, pre-registrations and a summary table with the current status of each
+- [EVIDENCE.md](EVIDENCE.md): facts (Ф), observations (Н), hypotheses (Г), contradictions (П); the registry is authoritative over this README
 
-## Experiments (35)
-
-| ID | Name | Environment | Key result |
-|---|---|---|---|
-| E01 | Speech JEPA | LibriSpeech | +18–20pp entropy |
-| E02 | LeWM State | Push-T | 38× prescribed advantage (own-latent ratio, not interpretable as quality: EVIDENCE Ф77, Ф82) |
-| E03 | LeWM Pixel | Push-T pixels | 14.8×, 37× fewer params |
-| E04 | Shov-JEPA Vision | Rico UI | +5% accuracy |
-| E05 | Controls | Push-T | random ≈ prescribed |
-| E06 | Covariance + Drift | Push-T | rank 2.99 → still 222× worse (own-latent ratio, not interpretable as quality: EVIDENCE Ф77, Ф82) |
-| E07 | Freeze test | Push-T | freeze@1 +20% |
-| E08 | Random fixed encoder | Push-T | 17× stability effect |
-| E09 | Aligned-but-drifting | Push-T | aligned ≈ free |
-| E10 | LR sweep + EMA | Push-T | prescribed wins at every LR (own-latent ratio, not interpretable as quality: EVIDENCE Ф77, Ф82) |
-| E11 | Rico drift | Rico UI | cross-modal drift confirmation |
-| E12–E14 | Dimension sweep | Push-T | prescribed wins dim 1–11 (own-latent ratios, not interpretable as quality: EVIDENCE Ф77, Ф80) |
-| E15 | Simple pendulum | Pendulum | free wins (boundary condition) |
-| E16 | Double pendulum | Double pendulum | normalization resolves |
-| E17 | Fragility test | Push-T | noise axis: 1106× degradation |
-| E18 | MLP decoder transfer | Push-T | two-phase drift model |
-| E19 | Update ratio + diffLR | Push-T | 62× gap remains at 100× slower (own-latent ratio, not interpretable as quality: EVIDENCE Ф77, Ф82) |
-| E20 | PCA canonicalization | Push-T | PCA worsens transfer |
-| E21–E22 | Confound tests | Push-T | optimizer/SIGReg confounds absent |
-| E23 | Random 3D vs 5D | Push-T | subspace selection critical |
-| E24–E26 | Dimensionality scaling | Push-T | 3D→16D: gap persists, drift scales (own-latent ratios, not interpretable as quality: EVIDENCE Ф77, Ф80) |
-| E27 | Drift correlation | Push-T | Pearson = 0.95 |
-| E28 | Full dim sweep | Push-T | NO crossover at any dimension |
-| E29 | Noise control | Push-T | drift ≠ noise ≠ shift |
-| E30 | Critical window | Push-T | 136× cliff: ~99% of damage in first epoch |
-| E31 | Sub-epoch freeze | Push-T | within epoch 1: SLOPE, not threshold |
-| E32 | Sub-epoch freeze (real) | Push-T | SLOPE confirmed on real physics (R²=0.977) |
-| E33 | Step 1 PCA on LLMs | 5 LLM residual streams | leading PCs are a last-token artefact |
-| E34 | EB-JEPA planning | Two Rooms | prescribed_2 ≈ free, both 0.55 SR (Ф57) |
-| E35 | EB-JEPA prescribed_4 | Two Rooms | on hold: metric does not resolve latent content |
-
-## Current status
-
-- Paper 1: published to GitHub, arxiv submission pending
-- Paper 2: in revision (incorporating E18–E29 results)
-- Drift / hallucination branch (E30–E32): the free-encoder's first-epoch damage is a
-  continuous slope, not a discrete irreversibility event (Ф45, Ф46; Г18). The drift-rate
-  "law" (Г16) is refuted — drift is a front-loaded, self-quenching transient, not steady
-  accumulation. The hallucination bridge lives in the LLM domain (Г17), kept on a leash
-  until the Push-T model system is closed.
-- EB-JEPA (planning task at realistic scale, E34/E35): the first result on this environment,
-  prescribed_2 at 0% against free at 55%, was an evaluation artefact. Re-evaluated through a
-  shared code path, both branches reach 0.55 and agree on 18 of 20 episodes (Ф57). The same
-  pair shows that planning success rate at this sample size does not separate an encoder that
-  holds the wall coordinate from one that holds nothing about the obstacle (Ф56), so E35 is on
-  hold pending a metric with established sensitivity.
+Model checkpoints (`*.pt`, `*.pth`, `*.pth.tar`) are not tracked; their MD5 sums are recorded in the experiment READMEs where they exist.
 
 ## Author
 
-Andrey Lazarev — Independent Researcher
+Andrey Lazarev, Independent Researcher
 lazarev@tactiqedge.com

@@ -1,13 +1,13 @@
 # Experiment registry: Prescribed Axes
 
 Author: Andrey Lazarev | Started: March 2026
-Last updated: 11 September 2026 — merge of the April and July branches of the registry.
+Last updated: E50 recorded (VOID), registry audit Ф87, E01 to E04 renumbered to match the directories.
 
 ---
 
 ## Numbering
 
-- **E01–E05**: Paper 1 (prescribed-axes)
+- **E01–E05**: Paper 1 (prescribed-axes). Numbered as the directories: E01 Shov-JEPA, E02 LeWM state, E03 LeWM pixel, E04 Speech JEPA.
 - **E06–E12**: Paper 2 (prescribed-axes-drift)
 - **E13–E18**: Dim sweep
 - **E19–E21**: Tier 1 critical tests
@@ -22,17 +22,18 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **E36**: Full coordinate drift on vision SSL (PLANNED, see PreE30). *Was E30.*
 - **E37**: CARLA prescribed safety axes (DEFERRED). *Was E34.*
 - **E38**: Sub-epoch freeze sweep, full budget + sub-0.25 resolution (COMPLETE 2026-09-11, Ф46 revised, Ф60).
+- **E39**: sub-epoch freeze micro-grid, five seeds (COMPLETE, Ф61, Ф62, Ф63).
 - **E40**: initialisation sweep at a fixed data seed, frozen at step 0 (COMPLETE 2026-09-11, Ф64, Г26 split, Г27).
 - **E41**: variance decomposition, encoder init x head init at a fixed data seed, frozen at step 0 (COMPLETE 2026-09-14, Ф65, Ф66, Ф67).
-- **E42**: candidate-predictor sweep for Г27, 30 encoders at data seed 42 plus 8-10 at a second seed, one head each, four pre-registered candidates computed before training, Bonferroni 0.0125 (PRE-REGISTERED 2026-09-14).
-- **E43**: external-target sweep over the E42 encoders, one head per encoder trained on PE of the true state, three pre-registered predictors, Bonferroni 0.0167, noise floor on encoder 1 (PRE-REGISTERED 2026-09-28).
+- **E42**: candidate-predictor sweep for Г27, four pre-registered candidates, Bonferroni 0.0125 (COMPLETE, Ф69 to Ф74).
+- **E43**: external-target sweep over the E42 encoders, three pre-registered predictors, Bonferroni 0.0167 (COMPLETE, Ф75).
 - **E44**: common-target comparison at the E28 dim-5 point (Ф77), COMPLETE: O4 PROVISIONAL (Ф78).
 - **E45**: E44 at 90 epochs, prescribed against free_scaled (Ф78), COMPLETE: O4 PROVISIONAL (Ф79).
 - **E46**: low data (Г-a) and the basis of the prescribed latent (Г-b), COMPLETE: Г-a refuted for plain prescribed (O5 PROVISIONAL at 25); standardising removes the early free advantage (Ф83).
-- **E47**: standardised prescribed against free_scaled at 25, 50, 200 episodes, COMPLETE: O2 at every size, larger at 25 (Ф84).
-- **E48**: E47 on a nonlinear target, COMPLETE: O2 at 200 and 25 episodes (Ф85).
-- **E49**: completeness of the JEPA latent and an end-to-end learned encoder, COMPLETE: latent complete, verdict fixation with named limits (Ф86).
-- **E50**: fixation or geometry (fixed warped encoder; fair end-to-end learned encoder), PRE-REGISTERED.
+- **E47**: standardised prescribed against free_scaled at 25, 50, 200 episodes, COMPLETE: O2 at every size, larger at 25 (Ф84). Reading revised by Н5: the prescribed arm is the state itself.
+- **E48**: E47 on a nonlinear target, COMPLETE: O2 at 200 and 25 episodes (Ф85). Reading revised by Н5: the prescribed arm is the state itself.
+- **E49**: completeness of the JEPA latent and an end-to-end learned encoder, COMPLETE: latent complete, verdict fixation with named limits (Ф86). Reading revised by Н5: the prescribed arm is the state itself.
+- **E50**: fixation or geometry (fixed warped encoder; fair end-to-end learned encoder), COMPLETE: VOID, completeness gate failed (Н5).
 - **E51+**: free. The nearest candidates are the n=30 replication of R2_readout on data seed 123 (Ф75 NEXT) and ECA / epiplexity (Г17).
 
 > **Numbering collision (discovered 20.08.2026).** The April and July branches of the registry developed in parallel and independently used the numbers E30–E34 and Г16–Г22. The July numbers are committed in `648f1fd` and are referenced by the experiment READMEs and by Ф45/Ф46 — so it is the April branch that was renumbered. The mapping table is at the end of this file and in `EVIDENCE.md`.
@@ -41,17 +42,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 
 ## Paper 1: The Space Matters More Than the Loss
 
-### E01. Speech JEPA: prescribed cluster anchors vs free
-- **Environment:** LibriSpeech
-- **Conditions:** 2×2 factorial {GMM, k-means} × {soft, hard} vs pure JEPA
-- **Metric:** Cluster entropy (codebook utilization)
-- **Result:** +18–20pp entropy for prescribed. Soft ≈ hard (Δ<0.03%). Frozen structure is the dominant factor.
-- **Parameters:** Pilot
-- **Facts:** Ф3
-- **Code:** prescribed-axes repo
-- **Data:** —
-
-### E02. Shov-JEPA: 3 prescribed axes vs 64 free (Rico UI, vision)
+### E01. Shov-JEPA: 3 prescribed axes vs 64 free (Rico UI, vision)
 - **Environment:** Rico dataset, 398 UI screenshots
 - **Conditions:** ShovJEPA (3 axes: position, functionality, depth) vs free 64D
 - **Metric:** Validation accuracy
@@ -61,7 +52,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Code:** prescribed-axes repo (shov-jepa)
 - **Data:** shov-jepa-report-ru.docx
 
-### E03. LeWM State: prescribed 3D vs free 3D (Push-T)
+### E02. LeWM State: prescribed 3D vs free 3D (Push-T)
 - **Environment:** Push-T (gym-pusht, pymunk physics)
 - **Conditions:** Prescribed = normalize(x_b, y_b, θ_b) vs free MLP 5→3 + SIGReg
 - **Metric:** Val prediction loss
@@ -71,7 +62,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Code:** prescribed-axes repo (lewm_state)
 - **Data:** lewm_state_results/
 
-### E04. LeWM Pixel: prescribed 3D vs free CNN (Push-T from pixels)
+### E03. LeWM Pixel: prescribed 3D vs free CNN (Push-T from pixels)
 - **Environment:** Push-T (96×96 pixel observations)
 - **Conditions:** Prescribed 3D (20K params) vs free CNN (744K params)
 - **Metric:** Val prediction loss
@@ -80,6 +71,16 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
 - **Facts:** Ф2
 - **Code:** prescribed-axes repo (lewm_pixels)
 - **Data:** lewm_pixels_results/
+
+### E04. Speech JEPA: prescribed cluster anchors vs free
+- **Environment:** LibriSpeech
+- **Conditions:** 2×2 factorial {GMM, k-means} × {soft, hard} vs pure JEPA
+- **Metric:** Cluster entropy (codebook utilization)
+- **Result:** +18–20pp entropy for prescribed. Soft ≈ hard (Δ<0.03%). Frozen structure is the dominant factor.
+- **Parameters:** Pilot
+- **Facts:** Ф3
+- **Code:** prescribed-axes repo
+- **Data:** —
 
 ### E05. Controls: random fixed, equal-input, SIGReg ablation (Push-T)
 - **Environment:** Push-T
@@ -430,7 +431,7 @@ Last updated: 11 September 2026 — merge of the April and July branches of the 
   - The free encoder sits between i.i.d. and correlated → a data-dependent deformation
   - Spectrum: prescribed (1×) < correlated (1.3×) < noise_mid (6.2×) < FREE (222×) < noise_early (851×)
 - **Parameters:** 3 seeds (42, 123, 777), 30 epochs, 200 episodes
-- **Facts:** Ф43i, Ф44i, Ф45i, Ф46i
+- **Facts:** Ф41i, Ф42i, Ф43i, Ф44i
 - **Code:** noise_control.py
 - **Data:** noise_control_results.json
 
@@ -861,6 +862,8 @@ Gates, the campaign is void if any fails: every seed file carries this pre-regis
 
 Cost: not estimated in advance; the monitor reports the measured rate.
 
+Result: VOID, completeness gate failed (minimum median MLP probe R2 of fixed_warped 0.983 against 0.99). Exploratory numbers and the reading are in EVIDENCE Н5. Data: E50_fixation_vs_geometry/results/cells, analysis.json.
+
 ### PreE30. Coordinate drift on DINOv2 (production-scale vision SSL)
 - **Environment:** CIFAR-100 test split (random subset N=500), 32×32 → 224×224
 - **Conditions:** facebook/dinov2-small (22M, 384D) vs facebook/dinov2-base (86M, 768D); CLS token from last_hidden_state; PCA equalization base→384D
@@ -981,52 +984,61 @@ Cost: not estimated in advance; the monitor reports the measured rate.
 
 ## Summary table
 
-| ID | Name | Environment | Data | Seeds | Epochs | Episodes | Key result |
-|---|---|---|---|---|---|---|---|
-| E01 | Speech JEPA | LibriSpeech | — | pilot | — | — | +18–20pp entropy |
-| E02 | Shov-JEPA vision | Rico UI | — | 1 | — | 398 | +5% accuracy |
-| E03 | LeWM State | Push-T gym | gym | 3 | 50 | 200 | 38× |
-| E04 | LeWM Pixel | Push-T pixel | gym | — | 50 | — | 14.8× |
-| E05 | Controls (Paper 1) | Push-T | gym | 3 | 50 | 200 | random≈prescribed |
-| E06 | Cov + drift | Push-T gym | gym | 3 | 30 | 200 | rank 2.99 → 233× worse (own-latent ratio, not interpretable as quality: Ф82) |
-| E07 | Freeze test | Push-T gym | gym | 3 | 30 | 200 | freeze@1 +20% |
-| E08 | Random fixed | Push-T syn | syn | 3 | 30 | 200 | 17× stability |
-| E09 | Aligned-drifting | Push-T syn | syn | 3 | 30 | 200 | aligned≈free |
-| E10 | LR sweep + EMA | Push-T syn | syn | 1 | 50 | — | 4.3–7.0× at all LR |
-| E11 | Rico drift | Rico UI | — | 1 | 100 | 398 | R²=0.93 |
-| E12 | 11 axes | Push-T syn | syn | 3 | 30 | 200 | 20× worse |
-| E13 | Dim sweep 3–15 | Push-T syn | syn | 3 | 20 | 100 | crossover 3→4 |
-| E14 | Lower boundary | Push-T syn | syn | 2–3 | 15–20 | 50–100 | dim=1: 78× |
-| E15 | Pendulum | Pendulum syn | syn | 3 | 20 | 100 | free always wins |
-| E16 | Double pendulum | Dbl pend syn | syn | 3 | 20 | 100 | prescribed@dim=1 only |
-| E17 | Fragility | Push-T syn | syn | 3 | 30 | 200 | noise: 1106× |
-| E18 | MLP decoder xfer | Push-T syn | syn | 3 | 30 | 200 | ep0→1: info destroyed |
-| E19 | Update ratio | Push-T syn | syn | 3 | 30 | 200 | 62× gap remains (own-latent ratio, not interpretable as quality: Ф82) |
-| E20 | PCA canonical | Push-T syn | syn | 3 | 30 | 200 | PCA worsens |
-| E21 | ±SIGReg aligned | Push-T syn | syn | 3 | 30 | 200 | SIGReg stabilizes |
-| E22 | Optimizer freeze | Push-T syn | syn | 3 | 30 | 200 | no confound |
-| E23 | Random 3D vs 5D | Push-T syn | syn | 3 | 30 | 200 | random_3d≈prescribed |
-| E24 | Baseline 3D | Push-T syn | syn | 3 | 30 | 200 | 169× |
-| E25 | 5D latent | Push-T syn | syn | 3 | 30 | 200 | 66×, random≈prescribed |
-| E26 | 16D latent | Push-T syn | syn | 3 | 30 | 200 | 50×, alignment emerges at 1.5× |
-| E27 | Drift correlation | Push-T gym | gym | 3 | 30 | 200 | Pearson=0.95 |
-| E28 | Dim sweep full | Push-T syn | syn | 3 | 30 | 200 | NO crossover, prescribed wins 1–11 (own-latent ratio, not interpretable as quality: Ф77, Ф80) |
-| E29 | Noise control | Push-T syn | syn | 3 | 30 | 200 | drift≠noise, drift≠shift, free=222× |
-| E30 | Critical window | Push-T gym | gym | 3 | 30 | 200 | 136× cliff: ~99% of the damage in epoch 1 |
-| E31 | Sub-epoch freeze | Push-T syn | syn | 5 | 20 | 100 | SLOPE not a threshold (linear 2.2× best-step) |
-| E32 | Sub-epoch freeze real | Push-T gym | gym | 5 | 4* | 50* | SLOPE, R²=0.977, 5/5 monotone, Ф46 solid |
-| E38 | Sub-epoch freeze full budget | Push-T gym | gym | 5 | 15 | 200 | SLOPE on [0.00,0.40] R²=0.880 5/5 monotone; onset 5.8–17.1× (Ф60); Ф46 onset reading revised |
-| E39 | Sub-epoch freeze micro-grid | Push-T gym | gym | 5 | 15 | 200 | JEPA initial-collapse confound closed: no recovery segment in any seed, 3/5 monotone, dips at different steps (Ф61); action_space seeding defect found (Ф62) |
-| E40 | Initialisation sweep, fixed data seed | Push-T gym | gym | 10 inits | 15 | 200 | corr(best_vp, R2_readout) = +0.060; best_vp spreads 7.31x across initialisations; prescribed inside the range (Ф64) |
-| PreE30 | Drift pilot DINOv2 | CIFAR-100 | — | 1 | — | — | R²=0.65, CKA=0.77 (pilot) |
-| E36 | Drift full DINOv2 | TBD | TBD | ≥5 | TBD | TBD | DEFERRED |
-| E33 | Step 1 PCA diagnostic | LLM activations | yadro_phase2 | — | — | 80 prompts | last-token confound on 5 LLMs, nodes unstable |
-| E34 | EB-JEPA Two Rooms prescribed_2 vs free | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | free SR=55%, prescribed SR=0% (single-seed observation); B1 probe: free wall_x R²=0.969, door_y R²=0.211 (Ф56) |
-| E35 | EB-JEPA Two Rooms prescribed_4 | EB-JEPA Two Rooms | LeCun config 100K | 1 | 12 | 100K | COMPLETE 2026-09-09 (Ф58) — testing Г25 |
-| E37 | CARLA prescribed safety axes | CARLA synthetic | 500 clips | 3 | 30 | — | DEFERRED |
-
-
----
+| ID | Name | Environment | Entries | Status |
+|---|---|---|---|---|
+| E01 | Shov-JEPA | Rico UI | Ф4 | pilot, 398 samples, one seed |
+| E02 | LeWM state | Push-T | Ф1 | own-latent ratio, not interpretable (Ф82) |
+| E03 | LeWM pixel | Push-T pixels | Ф2 | own-latent, not audited |
+| E04 | Speech JEPA | LibriSpeech | Ф3 | pilot, not audited |
+| E05 | Controls | Push-T | Ф5, Ф6, Ф7 | Ф5 rotation equality (Ф87); Ф6 not interpretable (Ф82) |
+| E05a | Random axes scaling | Push-T | Ф38, Ф39, Ф40 | Ф38 collapse artefact; Ф39 rotation equality; Ф40 change of units (Ф80) |
+| E05b | Gauge fixing | Push-T | Ф37 | not interpretable (Ф80) |
+| E06 | Covariance + drift | Push-T | Ф8, Ф9, Ф10 | Ф9 not interpretable (Ф82); Ф10 movement stands |
+| E07 | Freeze test | Push-T | Ф11 | not interpretable (Ф82) |
+| E08 | Random fixed encoder | Push-T | Ф12, Ф13, Ф14 | different units (Ф87) |
+| E09 | Aligned-but-drifting | Push-T | Ф15, Ф16 | not interpretable (Ф80, Ф82) |
+| E10 | LR sweep + EMA | Push-T | Paper 2 | not interpretable (Ф82) |
+| E11 | Rico drift | Rico UI | Paper 2 | movement observation |
+| E12 | 11 axes | Push-T | Ф17 | not interpretable (Ф77) |
+| E13 | Dim sweep 3 to 15 | Push-T | Ф18 | refuted, not interpretable (Ф77) |
+| E14 | Lower boundary | Push-T | Ф18 | not interpretable (Ф77) |
+| E15 | Pendulum | Pendulum | Ф19 | not interpretable (Ф80) |
+| E16 | Double pendulum | Double pendulum | Ф20 | not interpretable (Ф80) |
+| E17 | Fragility | Push-T | Ф21, Ф22, Ф23 | target variance, not damage (Ф87) |
+| E18 | MLP decoder transfer | Push-T | Ф24, Ф25 | movement stands; information loss not supported (Ф87) |
+| E19 | Update ratio + diffLR | Push-T | Ф26 | not interpretable (Ф82) |
+| E20 | PCA canonicalisation | Push-T | Ф27 | stands |
+| E21 | Aligned-drifting with SIGReg | Push-T | Ф29 | own-latent |
+| E22 | Optimizer freeze | Push-T | Ф30 | stands |
+| E23 | Random 3D vs 5D | Push-T | Ф31, Ф32 | rotation equality; units (Ф87) |
+| E24 | Baseline 3D | Push-T | Ф33 | own-latent, not audited |
+| E25 | 5D latent | Push-T | Ф33, Ф34, Ф36 | Ф36 corrected by Ф78 |
+| E26 | 16D latent | Push-T | Ф33, Ф34, Ф35 | Ф35 movement stands; gaps own-latent |
+| E27 | Drift correlation | Push-T | Ф28 | correlation with an own-latent loss |
+| E28 | Dim sweep full | Push-T | Ф17, Ф18 | not interpretable (Ф77) |
+| E29 | Noise control | Push-T | Ф41i to Ф44i | noise side stands (Ф87); free side not interpretable (Ф82) |
+| E30 | Critical window | Push-T | Ф45 | own-latent (Ф82, Ф87) |
+| E31 | Sub-epoch freeze | Push-T | Ф46 | own-latent target (Ф87) |
+| E32 | Sub-epoch freeze real | Push-T gym | Ф46 | own-latent target (Ф87) |
+| E33 | Step 1 PCA on LLMs | 5 LLMs | Ф47 to Ф55 | stands on one prompt set |
+| E34 | EB-JEPA planning | Two Rooms | Ф56, Ф57 | both 0.55 SR on 20 episodes |
+| E35 | EB-JEPA prescribed_4 | Two Rooms | Ф58, Ф59, Ф81 | 0.577 vs 0.470, n = 168, one seed; compares input modality |
+| E36 | Vision SSL drift | DINOv2 | - | planned, not run |
+| E37 | CARLA safety axes | CARLA | - | deferred, not run |
+| E38 | Sub-epoch freeze full | Push-T gym | Ф46, Ф60 | own-latent target (Ф87) |
+| E39 | Sub-epoch micro-grid | Push-T gym | Ф61, Ф62, Ф63 | Ф62 seeding bug stands |
+| E40 | Initialisation sweep | Push-T gym | Ф64 | null corrected by Ф75 |
+| E41 | Variance decomposition | Push-T gym | Ф65 to Ф68 | within an own-latent metric |
+| E42 | Candidate sweep | Push-T gym | Ф69 to Ф74 | persistence orders frozen inits (Ф73) |
+| E43 | External target | Push-T gym | Ф75 | R2_readout orders on an external target |
+| E44 | Common target | synthetic Push-T | Ф76, Ф77, Ф78 | O4 PROVISIONAL |
+| E45 | Long training | synthetic Push-T | Ф79 | O4 PROVISIONAL |
+| E46 | Low data, basis | synthetic Push-T | Ф83 | scale of the fixed latent matters |
+| E47 | Standardised prescribed | synthetic Push-T | Ф84 | state vs frozen JEPA latent (Н5) |
+| E48 | Nonlinear target | synthetic Push-T | Ф85 | state vs frozen JEPA latent (Н5) |
+| E49 | Completeness | synthetic Push-T | Ф86 | latent complete, laid out worse (Н5) |
+| E50 | Fixation or geometry | synthetic Push-T | Н5 | VOID |
+| PreE30 | DINOv2 drift pilot | CIFAR-100 | - | pilot |
 
 ## Data files
 
