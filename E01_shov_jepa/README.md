@@ -24,8 +24,8 @@ JEPA loss reduction: 73-85%.
 
 ## Files
 ```
-experiment_v4_vhgrid.ipynb              — 4 conditions: pixels, VH flat, VH grid JEPA (73.8%)
-experiment_v5_prescribed_vs_free.ipynb  — Prescribed 3D vs Free 64D (72.5% vs 67.5%)
+code/experiment_v4_vhgrid.ipynb              — 4 conditions: pixels, VH flat, VH grid JEPA (73.8%)
+code/experiment_v5_prescribed_vs_free.ipynb  — Prescribed 3D vs Free 64D (72.5% vs 67.5%)
 README.md                               — This file
 ```
 
@@ -39,6 +39,9 @@ JEPA structure (+1.3% over flat) both contribute independently.
 
 ## Reports
 ```
-shov-jepa-report.docx     — Full experiment report (English)
-shov-jepa-report-ru.docx  — Full experiment report (Russian)
+results/shov-jepa-report.docx     — Full experiment report (English)
 ```
+
+## Status
+
+See EVIDENCE Ф4 and Ф88: the comparison is label-supervised training against self-supervision plus a probe, not fixed against learned axes. Raw data and per-epoch results are not in the repository; the numbers are in the notebook outputs and the report.

@@ -986,10 +986,10 @@ Result: VOID, completeness gate failed (minimum median MLP probe R2 of fixed_war
 
 | ID | Name | Environment | Entries | Status |
 |---|---|---|---|---|
-| E01 | Shov-JEPA | Rico UI | Ф4 | pilot, 398 samples, one seed |
+| E01 | Shov-JEPA | Rico UI | Ф4 | label-supervised head against SSL plus probe (Ф88) |
 | E02 | LeWM state | Push-T | Ф1 | own-latent ratio, not interpretable (Ф82) |
-| E03 | LeWM pixel | Push-T pixels | Ф2 | own-latent, not audited |
-| E04 | Speech JEPA | LibriSpeech | Ф3 | pilot, not audited |
+| E03 | LeWM pixel | Push-T pixels | Ф2 | own latent; oracle state against pixels (Ф88) |
+| E04 | Speech JEPA | LibriSpeech | Ф3 | metric trained only in the prescribed arms (Ф88) |
 | E05 | Controls | Push-T | Ф5, Ф6, Ф7 | Ф5 rotation equality (Ф87); Ф6 not interpretable (Ф82) |
 | E05a | Random axes scaling | Push-T | Ф38, Ф39, Ф40 | Ф38 collapse artefact; Ф39 rotation equality; Ф40 change of units (Ф80) |
 | E05b | Gauge fixing | Push-T | Ф37 | not interpretable (Ф80) |
@@ -999,7 +999,7 @@ Result: VOID, completeness gate failed (minimum median MLP probe R2 of fixed_war
 | E09 | Aligned-but-drifting | Push-T | Ф15, Ф16 | not interpretable (Ф80, Ф82) |
 | E10 | LR sweep + EMA | Push-T | Paper 2 | not interpretable (Ф82) |
 | E11 | Rico drift | Rico UI | Paper 2 | movement observation |
-| E12 | 11 axes | Push-T | Ф17 | not interpretable (Ф77) |
+| E12 | 11 axes | Push-T | Ф17 | different targets, own latent (Ф88) |
 | E13 | Dim sweep 3 to 15 | Push-T | Ф18 | refuted, not interpretable (Ф77) |
 | E14 | Lower boundary | Push-T | Ф18 | not interpretable (Ф77) |
 | E15 | Pendulum | Pendulum | Ф19 | not interpretable (Ф80) |
@@ -1011,9 +1011,9 @@ Result: VOID, completeness gate failed (minimum median MLP probe R2 of fixed_war
 | E21 | Aligned-drifting with SIGReg | Push-T | Ф29 | own-latent |
 | E22 | Optimizer freeze | Push-T | Ф30 | stands |
 | E23 | Random 3D vs 5D | Push-T | Ф31, Ф32 | rotation equality; units (Ф87) |
-| E24 | Baseline 3D | Push-T | Ф33 | own-latent, not audited |
+| E24 | Baseline 3D | Push-T | Ф33 | own latent (Ф88) |
 | E25 | 5D latent | Push-T | Ф33, Ф34, Ф36 | Ф36 corrected by Ф78 |
-| E26 | 16D latent | Push-T | Ф33, Ф34, Ф35 | Ф35 movement stands; gaps own-latent |
+| E26 | 16D latent | Push-T | Ф33, Ф34, Ф35 | Ф35 movement stands; gaps own latent (Ф88) |
 | E27 | Drift correlation | Push-T | Ф28 | correlation with an own-latent loss |
 | E28 | Dim sweep full | Push-T | Ф17, Ф18 | not interpretable (Ф77) |
 | E29 | Noise control | Push-T | Ф41i to Ф44i | noise side stands (Ф87); free side not interpretable (Ф82) |
@@ -1021,7 +1021,7 @@ Result: VOID, completeness gate failed (minimum median MLP probe R2 of fixed_war
 | E31 | Sub-epoch freeze | Push-T | Ф46 | own-latent target (Ф87) |
 | E32 | Sub-epoch freeze real | Push-T gym | Ф46 | own-latent target (Ф87) |
 | E33 | Step 1 PCA on LLMs | 5 LLMs | Ф47 to Ф55 | stands on one prompt set |
-| E34 | EB-JEPA planning | Two Rooms | Ф56, Ф57 | both 0.55 SR on 20 episodes |
+| E34 | EB-JEPA planning | Two Rooms | Ф56, Ф57 | both 0.55 SR on 20 episodes; oracle coordinates against pixels (Ф88) |
 | E35 | EB-JEPA prescribed_4 | Two Rooms | Ф58, Ф59, Ф81 | 0.577 vs 0.470, n = 168, one seed; compares input modality |
 | E36 | Vision SSL drift | DINOv2 | - | planned, not run |
 | E37 | CARLA safety axes | CARLA | - | deferred, not run |

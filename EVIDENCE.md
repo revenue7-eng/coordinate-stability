@@ -21,10 +21,12 @@ Protocol:
 - Paper 1, Experiment 3 (LeWM State)
 
 **Ф2. Prescribed (3D, 20K params) vs free CNN (96×96 pixels, 744K params): prescribed better by 14.8×**
+- STATUS: not interpretable as quality (own latent; oracle state against pixels); see Ф88.
 - The CNN plateaus at epoch 7 of 50
 - Paper 1, Experiment 4 (LeWM Pixel)
 
 **Ф3. Speech JEPA: prescribed (frozen cluster anchors) beats free by +18–20pp entropy**
+- STATUS: not interpretable as quality (the metric is trained only in the prescribed arms); see Ф88.
 - 2×2 factorial: {GMM, k-means} × {soft, hard}
 - Every prescribed condition beats free
 - Dominant factor: frozen structure, not the clustering method
@@ -32,6 +34,7 @@ Protocol:
 - Paper 1, Experiment 1
 
 **Ф4. Shov-JEPA (vision): 3 prescribed axes beat 64 free ones, 72.5% vs 67.5%**
+- STATUS: not a test of fixed axes (label-supervised head against self-supervision plus probe); see Ф88.
 - Rico dataset, 398 UI screenshots
 - Pilot (398 samples, single seed, +5%)
 - Paper 1, Experiment 2
@@ -122,6 +125,7 @@ Protocol:
 - Paper 2, Section 5.5
 
 **Ф17. Prescribed 11D is 20× worse than prescribed 3D, but 42× better than free 11D**
+- STATUS (E12 part): different targets and own latent; see Ф88.
 - STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.
 - prescribed_3: 0.000036, prescribed_11: 0.000732 (20× worse than prescribed_3)
 - free_11: 0.030509 (42× worse than prescribed_11)
@@ -288,6 +292,7 @@ Protocol:
 ### Tier 3 tests (generalization, 15.04.2026)
 
 **Ф33. The prescribed vs free gap reproduces in 3D, 5D and 16D**
+- STATUS: not interpretable as quality (own latent, Ф76 free encoder); see Ф88.
 - 3D: prescribed 0.000050, free 0.008503, gap 169×
 - 5D: prescribed 0.000354, free 0.023431, gap 66×
 - 16D: prescribed 0.000747, free 0.037105, gap 50×
@@ -296,6 +301,7 @@ Protocol:
 - Tier 3 / T9a, T9b
 
 **Ф34. Random fixed ≈ prescribed in 5D (0.92×), starts to fall behind in 16D (1.53×)**
+- STATUS: 5D rotation equality, 16D different geometry; see Ф88.
 - 5D: random_fixed = 0.000324, prescribed = 0.000354 (random is slightly better)
 - 16D: random_fixed = 0.001142, prescribed = 0.000747 (prescribed better by 1.53×)
 - In 5D (linear coordinates) alignment within the subspace does not matter
@@ -715,6 +721,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 ### Refuted
 
 **Г5. The prescribed/free crossover equals the intrinsic dimension of the task**
+- STATUS: rests on E13, E28 (own-latent ratios, Ф77); neither confirmed nor refuted.
 - Push-T: ~~crossover 3→4~~ NO CROSSOVER on full data (E28). Prescribed wins at 1–11. [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - Pendulum: no crossover, intrinsic dim=2 — (data from Ф19, not verified with full parameters)
 - Double pendulum: crossover 1→2, intrinsic dim=4 — (data from Ф20, being rerun)
@@ -722,6 +729,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: REFUTED (no crossover exists on Push-T at full parameters)
 
 **Г6. 11 axes (by analogy with M-theory) will give a better result**
+- STATUS: rests on E12 (different targets, own latent, Ф88); neither confirmed nor refuted.
 - prescribed_11 is 20× worse than prescribed_3 (Ф17)
 - Status: REFUTED
 
@@ -736,6 +744,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: REFUTED (the decomposition). The earlier note "not the thesis" rested on the dim-5 gap of Ф18; at dim 5 that gap is mostly the input defect (Ф78), and on a common target with range-normalised input no prescribed advantage is seen (Ф79, class O4 PROVISIONAL).
 
 **Г11. The free-encoder problem is optimization lag (solved by scheduler/LR)**
+- STATUS: rests on Ф26 and the E10 rows, own-latent ratios (Ф82); not interpretable.
 - diffLR 100× helps by 72%, but a 62× gap remains (Ф26) [Ф82: own-latent ratio, not interpretable as a quality gap.]
 - Extra predictor steps (K=3) make it WORSE (Ф26)
 - EMA (decay=0.996) does not help (Paper 2, 6.1×)
@@ -747,6 +756,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - Status: REFUTED
 
 **Г13. SIGReg destroys the aligned initialization**
+- STATUS: rests on Ф29, an own-latent comparison; not interpretable.
 - SIGReg stabilizes aligned-drifting linear and prevents divergence (Ф29)
 - Without SIGReg: seed 123 → catastrophic divergence (1.39)
 - Status: REFUTED — SIGReg stabilizes, it does not destroy
@@ -793,12 +803,14 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 ### Open
 
 **Г7. ~~Prescribed works not because of fixing but because of information selection~~ REFUTED**
+- STATUS: the refutation rests on own-latent ratios (Ф20, Ф36; Ф80); not interpretable.
 - Push-T: prescribed wins at dim=5 (all coordinates, no selection) by 66× (E28) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - Double pendulum: prescribed_norm wins at dim=4 (all coordinates, no selection) by 19× (Ф20) [Not interpretable as a quality gap: own-latent ratio, see Ф77, Ф80.]
 - The original argument (pendulums do not work → selection is needed) was an artefact of missing normalization
 - Status: REFUTED — fixing + normalization suffices, selection is not needed
 
 **Г8. ~~Prescribed works because of the combination of fixing + selection~~ REFUTED**
+- STATUS: the refutation rests on own-latent ratios (Ф80); not interpretable.
 - Fixing without selection works on both environments given normalization:
   - Push-T dim=5 (all coordinates): 66× (E28)
   - Double pendulum dim=4 (all coordinates): 19× (Ф20 updated)
@@ -1200,6 +1212,15 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - Hypotheses resting on these entries: Г1, Г3, Г4, Г5 to Г11, Г13, Г14 rest on own-latent ratios or on the rotation equality; Г2 rests on coordinate movement (valid, R2) plus degradation measured on own latents; Г18 rests on the critical-window branch; the negative part of Г26 is corrected by Ф75.
 - Stand: the R2 measurements of coordinate movement (Ф10, Ф24 as movement, Ф25, Ф27, Ф35); the E29 noise control (Ф41i, Ф42i, Ф44i and the noise side of Ф43i), where noise enters only in training and evaluation is on the clean prescribed latent [verified: E29_noise_control/code/noise_control.py:144-185]; Ф30; Ф62.
 - Not audited here: Ф2 (pixel CNN, E03), Ф3 (speech, E04), Ф4 (Rico, E01), Ф33, Ф34.
+
+## Ф88: audit of the remaining comparisons named as not audited in Ф82 and Ф87
+- [verified: E03_lewm_pixel/code/lewm_pixels_full.ipynb, PrescribedEncoder and the training cell, tgt = emb[:, H]] Ф2 (E03): the prescribed arm ignores the pixels and reads the oracle state, the free arm is a CNN on pixels, and both are scored on their own latent. Not interpretable as quality; as in Ф81 the arms also differ in input modality.
+- [verified: E04_speech_jepa/code/speech_jepa_2x2_v6.ipynb, train_jepa and evaluate_clustering] Ф3 (E04): the metric is the entropy of the argmax of the cluster head. The prescribed arms train that head against frozen GMM or k-means targets; in Pure JEPA the cluster loss and its weight are zero, so the head is never trained. The metric is optimised in one arm only; not interpretable as representation quality.
+- [verified: E01_shov_jepa/code/experiment_v5_prescribed_vs_free.ipynb, ShovJEPA.forward and the training cell] Ф4 (E01): the three Shov coordinates are a trained head (Linear, GELU, Linear, Sigmoid) fitted to targets derived from the class labels, end to end with the encoder; the free arm is a self-supervised JEPA with a linear probe trained afterwards. This compares label-supervised training with self-supervision plus a probe, not fixed against learned axes. Both arms report the best validation accuracy over epochs.
+- [verified: E24_baseline_3d/code/tier3_highdim.py:107-115, 118-130, 184-198, 237; identical in E25 and E26 by md5 5cd9e6ad3edd8ccae87e198eba892e32] Ф33: the free encoders read the raw state through Linear, LayerNorm (the Ф76 network) and every arm is scored on its own latent. Not interpretable as quality. Ф34: in 5D random_fixed is an orthogonal rotation of the scaled state (equality expected, Ф87); in 16D it is a non-orthogonal map 5 to 16, so the 1.53x is a difference of latent geometry and units.
+- [verified: E12_11axes/code/run_11axes.py:134-146, 149-163, 280-288] E12, Г6 and the E12 part of Ф17: prescribed_11 and prescribed_3 predict different targets (11 against 3 coordinates of different content), and free_11 is scored on its own latent (target = free_encoder(next state)). Not interpretable as quality.
+- E34: the planning SR comparison (Ф57) is on a common metric; as in Ф81 it compares oracle agent coordinates with pixels, both trained. The probe-loss comparison was already withdrawn.
+- With this entry every prescribed-against-free comparison in the registry has been audited. CONSEQUENCE as in Ф82: apart from comparisons inside fixed latents in the same units, no prescribed-against-free ratio in E01 to E43 is interpretable as a difference in quality.
 
 ## Н5: E50, fixation or geometry: VOID (completeness gate failed); exploratory observations
 - Gates: one pre-registration commit, true; fixed_warped encoder tensor-equal before and after training, true; fixed_warped complete (minimum median MLP probe R2 at least 0.99), false: minimum 0.983. The campaign is void as registered. [verified: python3 E50_fixation_vs_geometry/code/analyze_e50.py; E50_fixation_vs_geometry/results/analysis.json]

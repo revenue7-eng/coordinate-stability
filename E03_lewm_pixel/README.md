@@ -30,8 +30,13 @@ results/results.json               — Final numbers
 results/results.png                — Training curves
 results/history_prescribed.json    — Per-epoch prescribed
 results/history_free_cnn.json      — Per-epoch free CNN
+results/lewm-pixel-report.docx     Experiment report
 ```
 
 ## How to reproduce
 Upload `code/lewm_pixels_v2.ipynb` to Colab, select T4 GPU, Run All.
 Data downloads automatically. Runtime: ~30 min on T4.
+
+## Status
+
+See EVIDENCE Ф2 and Ф88: both arms are scored on their own latent, and the prescribed arm reads the oracle state while the free arm reads pixels.

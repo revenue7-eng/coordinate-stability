@@ -4,7 +4,7 @@
 
 ## Where the programme stands
 
-The early results (E01 to E29) reported prescribed axes ahead of learned encoders by 5x to 1820x. Those ratios do not survive the audit. Two measurement defects explain them: the free encoder read the raw state through a first layer that discards its scale (Ф76), and each encoder was scored on its own latent, so ratios across different latent geometries are not comparable (Ф77). The status of every older comparison is recorded in EVIDENCE Ф80, Ф82 and Ф87.
+The early results (E01 to E29) reported prescribed axes ahead of learned encoders by 5x to 1820x. Those ratios do not survive the audit. Two measurement defects explain them: the free encoder read the raw state through a first layer that discards its scale (Ф76), and each encoder was scored on its own latent, so ratios across different latent geometries are not comparable (Ф77). The status of every older comparison is recorded in EVIDENCE Ф80, Ф82, Ф87 and Ф88.
 
 What stands, each in the scope stated in EVIDENCE:
 
