@@ -40,3 +40,11 @@ pip install gym-pusht torch numpy
 python code/lewm_pusht_experiment.py --episodes 200 --epochs 50 --seed 42
 ```
 Or use `--synthetic` for no-dependency mode.
+
+## Facts
+Ф1
+
+## Status
+Summary table: own-latent ratio, not interpretable (Ф82).
+
+- Ф1: no correction recorded in the registry; stands as recorded

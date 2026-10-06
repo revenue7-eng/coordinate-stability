@@ -27,3 +27,8 @@ results/tier2_results.json      — Results (3KB, T5 key)
 
 ## Facts
 Ф30
+
+## Status
+Summary table: stands.
+
+- Ф30: no correction recorded in the registry; stands as recorded

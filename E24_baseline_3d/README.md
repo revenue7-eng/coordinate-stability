@@ -25,3 +25,8 @@ results/tier3_results.json      — Results (5KB, baseline_3d key)
 
 ## Facts
 Included in Ф33
+
+## Status
+Summary table: own latent (Ф88).
+
+- Ф33: STATUS: not interpretable as quality (own latent, Ф76 free encoder); see Ф88.

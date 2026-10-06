@@ -36,3 +36,8 @@ Preliminary data (100 episodes, 20 epochs). Contradicts E25 (prescribed_5d wins 
 ## Data provenance
 JSON contains only 2 seeds (42, 123). README mentions 3 seeds — third seed missing from data.
 Being superseded by p2_dim_sweep_full.py (E28) with 3 seeds × 200ep × 30 epochs.
+
+## Status
+Summary table: refuted, not interpretable (Ф77).
+
+- Ф18: REFUTED; STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.

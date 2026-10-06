@@ -30,3 +30,9 @@ results/aligned_drifting_results.json       — Results (49KB)
 
 ## Facts
 Ф15, Ф16
+
+## Status
+Summary table: not interpretable (Ф80, Ф82).
+
+- Ф15: no correction recorded in the registry; stands as recorded
+- Ф16: no correction recorded in the registry; stands as recorded

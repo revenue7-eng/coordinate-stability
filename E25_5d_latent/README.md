@@ -33,3 +33,10 @@ results/tier3_results.json      — Results (5KB, T9a_5d key)
 
 ## Significance
 Critical result — contradicts E13 dim sweep (crossover at dim=4) and challenges the information selection hypothesis. See П2 in EVIDENCE.md.
+
+## Status
+Summary table: Ф36 corrected by Ф78.
+
+- Ф33: STATUS: not interpretable as quality (own latent, Ф76 free encoder); see Ф88.
+- Ф34: STATUS: 5D rotation equality, 16D different geometry; see Ф88.
+- Ф36: STATUS at dim 5: corrected by Ф78; E25 shares the E28 encoders and metric, see Ф80.; STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.

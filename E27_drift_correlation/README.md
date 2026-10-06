@@ -32,3 +32,8 @@ results/all_results.json    — Data from E06 (142KB)
 
 ## Note
 This is an analysis experiment — no new training runs. Uses existing data from E06.
+
+## Status
+Summary table: correlation with an own-latent loss.
+
+- Ф28: no correction recorded in the registry; stands as recorded

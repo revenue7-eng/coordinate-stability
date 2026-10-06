@@ -28,3 +28,9 @@ results/tier1_results.json  — Results (30KB, T1 key)
 
 ## Facts
 Ф24, Ф25
+
+## Status
+Summary table: movement stands; information loss not supported (Ф87).
+
+- Ф24: STATUS: see Ф87. Measures movement of the coordinates; the claim that information is destroyed is not supported.
+- Ф25: no correction recorded in the registry; stands as recorded

@@ -1,5 +1,8 @@
 # E32 — Sub-epoch freeze sweep on REAL data (Ф46 confirmation)
 
+## What this tests
+Whether the within-epoch shape of the damage found in E31 (a slope, not a threshold) reproduces on real gym-pusht physics.
+
 **Date:** 2026-07-03 · **Branch:** drift / hallucination (Paper 2 line)
 **Purpose:** Reproduce the E31 sub-epoch freeze sweep on **real gym-pusht physics**
 instead of `synth()`, to remove the single SYNTHETIC caveat blocking Ф46 from
@@ -44,7 +47,7 @@ shape).
 
 [INFERENCE] This tightens the bridge wording. The curve being a continuous, mildly-convex
 ramp is direct evidence *against* a discrete lock-in moment and *for* continuously
-integrated divergence. The word "необратимое"/"irreversible" in the handoff's bridge
+integrated divergence. The word "irreversible" in the handoff's bridge
 statement should not be read as discreteness: irreversibility is the property of the
 epoch-1-terminal state relative to later training (E30/Ф45), reached by continuous
 accumulation (E31/Ф46, now E32). "Early, continuously-integrated divergence that later
@@ -113,3 +116,11 @@ raw sweeps (`results/seed_{7,42,123,777,2024}.json`), which `analyze_shape.py` c
 are regenerated deterministically by running `code/run_seed.py` for each seed (reduced
 budget EP=4, NEP=50; resume-safe, one JSON per seed). They are not checked in to keep the
 repo lightweight; re-run to reproduce, then `python code/analyze_shape.py`.
+
+## Facts
+Ф46
+
+## Status
+Summary table: own-latent target (Ф87).
+
+- Ф46: STATUS: see Ф87. Own-latent target; the rise may be a rise in latent spread [INFERENCE].

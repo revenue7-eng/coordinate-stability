@@ -31,3 +31,8 @@ results/lr_sweep_results.json       — Results (104KB)
 
 ## Facts
 Paper 2, Section 5.6–5.7
+
+## Status
+Summary table: not interpretable (Ф82).
+
+- No registry entry carries this experiment's numbers.

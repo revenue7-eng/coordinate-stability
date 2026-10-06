@@ -40,3 +40,6 @@ Data downloads automatically. Runtime: ~30 min on T4.
 ## Status
 
 See EVIDENCE Ф2 and Ф88: both arms are scored on their own latent, and the prescribed arm reads the oracle state while the free arm reads pixels.
+
+## Facts
+Ф2

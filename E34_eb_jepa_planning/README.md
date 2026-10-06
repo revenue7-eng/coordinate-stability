@@ -123,3 +123,12 @@ python experiments/prescribed_axes/run_experiment_v3_windows.py --mode prescribe
 # 4. Planning eval (requires GPU, use Colab notebook)
 # Upload checkpoints to Drive, run eb_jepa_planning_eval.ipynb
 ```
+
+## Facts
+Ф56, Ф57
+
+## Status
+Summary table: both 0.55 SR on 20 episodes; oracle coordinates against pixels (Ф88).
+
+- Ф56: no correction recorded in the registry; stands as recorded
+- Ф57: no correction recorded in the registry; stands as recorded

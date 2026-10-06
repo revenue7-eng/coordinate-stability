@@ -78,3 +78,8 @@ exp7_freeze (Ф11), exp30_critical_window (Ф45 candidate).
 ## Proposed follow-up
 E32: same sweep on real gym-pusht data (exp6 pipeline) to remove the synthetic caveat and
 confirm SLOPE under Ф30 data-dependence.
+
+## Status
+Summary table: own-latent target (Ф87).
+
+- Ф46: STATUS: see Ф87. Own-latent target; the rise may be a rise in latent spread [INFERENCE].

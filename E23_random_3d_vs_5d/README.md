@@ -34,3 +34,9 @@ results/tier2_results.json      — Results (3KB, T7 key)
 
 ## Note
 This result invalidates the original E08 decomposition (17× × 13× = 233×). The "17× stability" in E08 was an artifact of a specific random_fixed implementation.
+
+## Status
+Summary table: rotation equality; units (Ф87).
+
+- Ф31: STATUS: see Ф87. Rotation of the same coordinates; equality expected by construction.
+- Ф32: STATUS: see Ф87. Different units of the two latents.

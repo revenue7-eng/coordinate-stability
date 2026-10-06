@@ -62,3 +62,8 @@ Sufficient to show the methodology works on production models, that the directio
 - E22 — SIGReg confounds absent
 - E27 — drift to val_loss correlation
 - E36 — production-scale drift test (PLANNED; this pilot motivates its design)
+
+## Status
+Summary table: pilot.
+
+- No registry entry carries this experiment's numbers.

@@ -30,3 +30,8 @@ results/tier1_results.json  — Results (30KB, T2 key)
 
 ## Facts
 Ф26
+
+## Status
+Summary table: not interpretable (Ф82).
+
+- Ф26: Ф82: own-latent ratio, not interpretable as a quality gap.

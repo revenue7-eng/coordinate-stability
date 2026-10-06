@@ -29,3 +29,10 @@ results/tier3_results.json      — Results (5KB, T9b_16d key)
 
 ## Facts
 Ф33, Ф34, Ф35
+
+## Status
+Summary table: Ф35 movement stands; gaps own latent (Ф88).
+
+- Ф33: STATUS: not interpretable as quality (own latent, Ф76 free encoder); see Ф88.
+- Ф34: STATUS: 5D rotation equality, 16D different geometry; see Ф88.
+- Ф35: no correction recorded in the registry; stands as recorded

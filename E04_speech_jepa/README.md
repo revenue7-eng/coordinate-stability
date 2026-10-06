@@ -31,9 +31,9 @@ Factorial: Soft vs Hard Δ=0.0%, GMM vs KM Δ=-2.2%, Anchored vs Pure Δ=+19.4%
 ## Files
 ```
 code/speech_jepa_2x2_v6.ipynb       — Complete notebook with execution outputs
-results/final_results.pkl      — All metrics + training history (not in the repository: *.pkl is not tracked)
-results/eval_results.pkl       — Per-condition metrics (not in the repository: *.pkl is not tracked)
-results/calibration.pkl        — Temperature calibration (not in the repository: *.pkl is not tracked)
+results/final_results.pkl      — All metrics + training history
+results/eval_results.pkl       — Per-condition metrics
+results/calibration.pkl        — Temperature calibration
 results/cluster_metrics.png    — Entropy + active clusters + distribution
 results/factorial_heatmap.png  — 2×2 factorial heatmap
 results/training_curves.png    — Loss curves
@@ -46,3 +46,6 @@ All outputs are preserved in the notebook.
 ## Status
 
 See EVIDENCE Ф3 and Ф88: the entropy metric is trained only in the prescribed arms, so it does not measure representation quality.
+
+## Facts
+Ф3

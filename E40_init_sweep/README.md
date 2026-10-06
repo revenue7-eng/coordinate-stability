@@ -59,3 +59,29 @@ python code/run_e40.py 10
 Resume-safe: initialisations already present in `sweep.json` are skipped. About
 two minutes per initialisation on an idle machine, plus one data collection and
 one prescribed reference run.
+
+## Key results
+From EVIDENCE.md, verbatim; the registry is authoritative.
+
+**Ф64. What a fixed initialisation carries does not predict how good a coordinate system it is (E40)**
+- Design: the data seed is held at 42 and only the encoder initialisation varies (10 initialisations). The encoder is frozen at step 0, so it never trains. The DataLoader stream is restored after construction, so batch order is identical across initialisations and only the parameters differ. This is the first measurement in the line that separates initialisation from data sample.
+- best_vp by initialisation 1 to 10: 0.00314, 0.00399, 0.00386, 0.00483, 0.00189, 0.00273, 0.00893, 0.00354, 0.00122, 0.00352. R2_readout over the same: 0.2385, 0.3377, 0.4094, 0.4716, 0.2494, 0.5156, 0.4115, 0.5137, 0.4972, 0.3886.
+- **corr(best_vp, R2_readout) = +0.060** over a two-fold range of R2_readout (0.239 to 0.516). Informativeness of a frozen initialisation does not predict the downstream result. The inverse ordering visible in the five E39 seeds was an appearance produced by initialisation and data sample varying together.
+- best_vp nevertheless spreads **7.31x** across initialisations (0.00122 to 0.00893) at a fixed data sample. Fixed bases differ strongly from each other; what separates them is not what they carry.
+- The prescribed encoder scores 0.00261 on the same data, inside the range of the random ones, with 2 of 10 initialisations better than it. The prescribed coordinate readout is not distinguished among frozen random bases (strengthens Ф31, Ф60).
+- corr(best_vp, eff_rank) = -0.287, in the direction of higher rank being better, but not significant at n=10. Recorded as a lead, not a claim.
+- Environment: Push-T real gym-pusht, data seed 42, EP=15/NEP=200, freeze at step 0, e40_lib (init_seed separable), local CPU.
+- Caveats: one data sample only, so the 7.31x spread is within-sample across initialisations and its dependence on the sample is unmeasured. n=10 supports the null on R2_readout but not a claim about eff_rank.
+- Artefact: E40_init_sweep/ (README + code + results/sweep.json)
+- E40
+
+---
+---
+
+## Facts
+Ф64
+
+## Status
+Summary table: null corrected by Ф75.
+
+- Ф64: no correction recorded in the registry; stands as recorded

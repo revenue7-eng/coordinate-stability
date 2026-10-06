@@ -33,3 +33,14 @@ dim=5 matches Tier 3 E25 exactly: 66.3× vs 66.2×.
 
 ## Resolves
 П2 (dim sweep vs Tier 3 contradiction) — CLOSED
+
+## Files
+- `code/__pycache__`
+- `code/p2_dim_sweep_full.py`
+- `results/p2_dim_sweep_results.json`
+
+## Status
+Summary table: not interpretable (Ф77).
+
+- Ф17: STATUS (E12 part): different targets and own latent; see Ф88.; STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.
+- Ф18: REFUTED; STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.

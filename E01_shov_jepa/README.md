@@ -45,3 +45,6 @@ results/shov-jepa-report.docx     — Full experiment report (English)
 ## Status
 
 See EVIDENCE Ф4 and Ф88: the comparison is label-supervised training against self-supervision plus a probe, not fixed against learned axes. Raw data and per-epoch results are not in the repository; the numbers are in the notebook outputs and the report.
+
+## Facts
+Ф4

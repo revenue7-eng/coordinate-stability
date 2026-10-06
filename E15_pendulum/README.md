@@ -85,3 +85,8 @@ python code/run_e15.py
 # ~4 minutes on CPU, resumes from checkpoint
 # Output: e15_results.json (same directory)
 ```
+
+## Status
+Summary table: not interpretable (Ф80).
+
+- Ф19: STATUS: not interpretable (own-latent loss, no regulariser against collapse); see Ф80.

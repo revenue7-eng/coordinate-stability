@@ -31,3 +31,10 @@ results/random_fixed_v2_results.json        — Results (39KB)
 
 ## Facts
 Ф12, Ф13, Ф14
+
+## Status
+Summary table: different units (Ф87).
+
+- Ф12: STATUS: see Ф87. Different units of the two latents (E08).; Ф82: own-latent ratio, not interpretable as a quality gap.
+- Ф13: STATUS: see Ф87. Different units of the two latents (E08).
+- Ф14: STATUS: see Ф87. Rotation of the same coordinates; equality expected by construction.

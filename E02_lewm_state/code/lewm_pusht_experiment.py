@@ -14,7 +14,7 @@ Run:
   # Or without gym-pusht:
   python lewm_pusht_experiment.py --synthetic
 
-Author: Andrew + Claude (Ядро project)
+Author: Andrew + Claude (Yadro project)
 """
 
 import os, time, json, argparse
@@ -258,7 +258,7 @@ def main():
     d = (f-p)/p*100 if p>0 else 0
     print(f"  Prescribed: {p:.6f}  ({res['prescribed']['params']:,} params)")
     print(f"  Free:       {f:.6f}  ({res['free']['params']:,} params)")
-    print(f"  Delta: {d:+.1f}% ({'prescribed лучше' if d>0 else 'free лучше'})")
+    print(f"  Delta: {d:+.1f}% ({'prescribed better' if d>0 else 'free better'})")
 
     out = Path(cfg.out); out.mkdir(parents=True,exist_ok=True)
     with open(out/"results.json","w") as fh:

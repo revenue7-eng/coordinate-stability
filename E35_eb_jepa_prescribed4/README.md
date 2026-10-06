@@ -218,3 +218,19 @@ door_padding change.
 Not applicable to B1: that control ran on the prescribed_dim=2 checkpoint
 (experiment_mode.txt = "prescribed"; encoder.projection.0.weight has shape (256, 2)),
 which never received wall_x or door_y. Ф56 is unaffected by this finding.
+
+## Key results
+From EVIDENCE.md, verbatim; the registry is authoritative.
+
+## Ф58 — E35: prescribed_4 vs free, paired SR (Two Rooms, MPPI, n=168)
+- STATUS (Ф81): input-modality comparison on one training seed; does not test fixed axes.
+- [verified: python McNemar over /mnt/d/e35_backup/{prescribed_4,free}/planning_eval_results_n168.json, 2026-09-09] n=168, seed=1. prescribed_4 SR=97/168=0.577, free SR=79/168=0.470. Paired diff +0.107 [95% CI +0.017..+0.198].
+- [verified: same table] Discordant pairs b(prescribed-only)=40, c(free-only)=22; concordant a=57, d=49.
+- [verified: exact binomial McNemar, two-sided] p=0.0300 (chi2 cont.corr=4.66, df=1). Significant at alpha=0.05.
+- [verified: geometry compare, rounded-3 mismatches=0 over 168] Episode pairing confirmed: wall_x/hole_y/goal identical across all 168; only final_position (the outcome) differs. McNemar valid. (GEOM strict == was False only because final_position differs; not a pairing break.)
+- [verified: eval logs this session] eval speed prescribed ~84s/ep, free ~90s/ep (single run). 336-ep campaign ~8h.
+- VERDICT (Г25): EXPERIMENTS.md pre-registers NO quantitative falsifier for E35 (it was ON HOLD precisely because n=20 planning SR had no power; the +0.20 threshold existed only in handoffs, not in the protocol). This run supplies the missing power (n=168, paired): prescribed_4 significantly beats free (diff +0.107, McNemar p=0.030). This RESOLVES the ON-HOLD (power now exists) and is a significant positive effect in the predicted direction. It does NOT map to a pre-registered pass/fail line because none was defined; magnitude interpretation is open. [protocol: EXPERIMENTS.md line ~558-564, metric=planning SR, prescribed_4=(x_a,y_a,wall_x,door_y); we ran n=168 vs the pre-registered 20.]
+- free checkpoint md5=8344448ed0da4437f0d91ab4e73afd71 (seed=1, 12ep). [verified: md5sum, 3 copies] (prescribed_4 md5=a97248... already in EVIDENCE from prior session.)
+
+## Facts
+Ф58, Ф59, Ф81

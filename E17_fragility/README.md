@@ -31,3 +31,10 @@ results/results.json            — Results (1KB)
 
 ## Facts
 Ф21, Ф22, Ф23
+
+## Status
+Summary table: target variance, not damage (Ф87).
+
+- Ф21: STATUS: see Ф87. The ratio equals the variance of an unpredictable target axis.
+- Ф22: STATUS: see Ф87. Losses on targets of different content.
+- Ф23: STATUS: see Ф87. Losses on targets of different content.

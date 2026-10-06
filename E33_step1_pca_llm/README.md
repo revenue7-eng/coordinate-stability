@@ -89,3 +89,16 @@ Methodological consequence for the next step: the current dataset (80 prompts wi
 ## Related experiments
 - E27 — drift to quality correlation (methodologically related: reanalysis of existing data)
 - Controlled-prompt Step 0, planned, unnumbered — motivated by the conclusions above
+
+## Status
+Summary table: stands on one prompt set.
+
+- Ф47: no correction recorded in the registry; stands as recorded
+- Ф48: no correction recorded in the registry; stands as recorded
+- Ф49: no correction recorded in the registry; stands as recorded
+- Ф50: no correction recorded in the registry; stands as recorded
+- Ф51: no correction recorded in the registry; stands as recorded
+- Ф52: no correction recorded in the registry; stands as recorded
+- Ф53: no correction recorded in the registry; stands as recorded
+- Ф54: no correction recorded in the registry; stands as recorded
+- Ф55: no correction recorded in the registry; stands as recorded

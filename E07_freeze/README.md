@@ -35,3 +35,8 @@ results/all_results.json        — Shared results file with E06
 ```bash
 python code/freeze_test_standalone.py
 ```
+
+## Status
+Summary table: not interpretable (Ф82).
+
+- Ф11: Ф82: own-latent ratio, not interpretable as a quality gap.

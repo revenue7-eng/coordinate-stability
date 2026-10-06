@@ -42,3 +42,10 @@ results/        — Results published in Paper 1 (Section 4.6, reviewer response
 
 ## How to reproduce
 Same as E02, with additional conditions: `--condition random_fixed`, `--condition free_same_input`, `--no-sigreg`.
+
+## Status
+Summary table: Ф5 rotation equality (Ф87); Ф6 not interpretable (Ф82).
+
+- Ф5: STATUS: see Ф87. Rotation of the same coordinates; equality expected by construction.
+- Ф6: Ф82: own-latent ratio, not interpretable as a quality gap.
+- Ф7: no correction recorded in the registry; stands as recorded

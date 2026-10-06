@@ -31,3 +31,8 @@ results/tier2_results.json      — Results (3KB, T4 key)
 
 ## Facts
 Ф29
+
+## Status
+Summary table: own-latent.
+
+- Ф29: no correction recorded in the registry; stands as recorded

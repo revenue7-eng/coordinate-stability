@@ -36,3 +36,8 @@ results/results.json            — Original results (scalar, no per-seed, no no
 
 ## Resolves
 П1 (Push-T vs pendulums contradiction) — CLOSED
+
+## Status
+Summary table: not interpretable (Ф80).
+
+- Ф20: REFUTED; STATUS: not interpretable (own-latent loss, no regulariser against collapse); see Ф80.

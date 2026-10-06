@@ -32,3 +32,8 @@ Included in Ф18
 ## Data provenance
 Only output.txt from console. No JSON, no per-seed data.
 Numbers verified against output.txt but not independently reproducible from saved data.
+
+## Status
+Summary table: not interpretable (Ф77).
+
+- Ф18: REFUTED; STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.

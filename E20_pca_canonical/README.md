@@ -23,3 +23,8 @@ results/tier1_results.json  — Results (30KB, T3 key)
 
 ## Facts
 Ф27
+
+## Status
+Summary table: stands.
+
+- Ф27: no correction recorded in the registry; stands as recorded

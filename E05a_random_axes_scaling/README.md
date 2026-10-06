@@ -54,3 +54,10 @@ results/random_fixed_200ep.json     — 200ep results
 
 ## Verification
 All numbers verified against JSON: all_results_500ep.json (18 runs, per-run best_val_loss).
+
+## Status
+Summary table: Ф38 collapse artefact; Ф39 rotation equality; Ф40 change of units (Ф80).
+
+- Ф38: STATUS: probable collapse artefact (own-latent loss, no regulariser against collapse); see Ф80.
+- Ф39: STATUS: see Ф87. Rotation of the same coordinates by a single matrix; equality expected by construction.; STATUS: stands (both latents fixed and in the same units); see Ф80.
+- Ф40: STATUS: the ratio is a change of units of the latent, not a degradation; see Ф80.

@@ -65,3 +65,8 @@ the critical window closes within epoch 1 (freeze@0→@1 = 136× vs freeze@1→u
 E31: sub-epoch freeze sweep (freeze at 25%/50%/75% of epoch 1) to locate the window
 boundary inside the first epoch. This is the only test that can resolve "within epoch 1"
 into a specific point.
+
+## Status
+Summary table: own-latent (Ф82, Ф87).
+
+- Ф45: STATUS: see Ф87. Own-latent target; see also Ф82.

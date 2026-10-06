@@ -31,3 +31,8 @@ results/results.json        — Results (2KB)
 
 ## Facts
 Ф17
+
+## Status
+Summary table: different targets, own latent (Ф88).
+
+- Ф17: STATUS (E12 part): different targets and own latent; see Ф88.; STATUS: not interpretable as a quality gap between encoders until both are scored on a common target with equally scaled input; not refuted. See Ф77.

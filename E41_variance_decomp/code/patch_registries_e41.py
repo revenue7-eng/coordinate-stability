@@ -2,7 +2,7 @@
 """Register E41 in EVIDENCE.md and EXPERIMENTS.md.
 
 Cyrillic identifiers are built from escape sequences, never typed literally:
-a previous session lost an anchor to a Г/У confusion in truncated output.
+a previous session lost an anchor to a confusion between two look-alike Cyrillic letters in truncated output.
 """
 G, F = "\u0413", "\u0424"
 EV = "/mnt/d/coordinate-stability/EVIDENCE.md"

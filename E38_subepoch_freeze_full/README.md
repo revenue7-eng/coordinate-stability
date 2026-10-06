@@ -1,5 +1,8 @@
 # E38 — Sub-epoch freeze sweep, full budget + sub-0.25 resolution
 
+## What this tests
+Whether the E32 slope holds at the full budget (EP=15, NEP=200) and with resolution below f = 0.25.
+
 **Date:** 2026-09-11 · **Branch:** drift / hallucination (Paper 2 line)
 **Purpose:** Close the three open items E32 left behind: the forced compute budget
 (EP=4, NEP=50), the missing resolution below f=0.25, and the absent per-seed raw
@@ -157,3 +160,9 @@ Extends E31 (Ф46 candidate, synthetic), E32 (Ф46 on real data, reduced budget)
 Supersedes both on budget and grid resolution; does not supersede their designs.
 E30's 136× cliff remains the proxy-based estimate; this experiment's 9.8–75.6×
 range is the measured one.
+
+## Status
+Summary table: own-latent target (Ф87).
+
+- Ф46: STATUS: see Ф87. Own-latent target; the rise may be a rise in latent spread [INFERENCE].
+- Ф60: STATUS: see Ф87. Own-latent target; the rise may be a rise in latent spread [INFERENCE].

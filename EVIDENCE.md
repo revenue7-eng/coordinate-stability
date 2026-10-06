@@ -356,6 +356,7 @@ Protocol:
 - Paper 1, random_axes_control/RESULTS.md
 
 **Ф39. random_fixed ≈ prescribed at both data scales**
+- STATUS: see Ф87. Rotation of the same coordinates by a single matrix; equality expected by construction.
 - STATUS: stands (both latents fixed and in the same units); see Ф80.
 - 200 ep: random 0.61× (slightly better than prescribed) — 3 seeds, 30 epochs
 - 500 ep: random 1.00× (identical) — 9 runs vs 3 runs
@@ -796,7 +797,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
   - [INFERENCE] The INS/GNSS dead-reckoning analogy is false: in an INS the error grows without bound over time, here it self-extinguishes. There is nothing to build "drift-rate × t → threshold" on.
   - [INFERENCE] The data support Ф24/Ф25 (the two-phase model), NOT Г16.
   - Caveat: "log R²=0.977" ≠ "a logarithmic law" — it is an artefact of front-loading; prescribed=0 is degenerate.
-  - Artefact: E30_critical_window/finding_drift_rate.docx
+  - Artefact: E30_critical_window/results/finding_drift_rate.docx
 - Status: **REFUTED** — the rate form (a constant/characterizable rate) is not supported by the data; the drift is a front-loaded decaying transient (phase 1 of Ф24/Ф25). The drift→hallucination horizon conjecture loses its kinematic support in this form.
 
 
@@ -1146,7 +1147,7 @@ The July Г16 (drift-rate law, refuted), Г17 (epiplexity ⊥ identifiability, o
 - Both encoders are trained: one AdamW over jepa.parameters(), gradient clipping on jepa.encoder.parameters(); no freeze or requires_grad in the file. [verified: E35_eb_jepa_prescribed4/code/run_experiment_v4_windows.py:496, 600, 668]
 - PrescribedEncoder is an MLP 4 -> 256 -> 256 -> 512 with a final LayerNorm. Its input (x_a, y_a, wall_x, door_y) is z-scored with the dataset location statistics. [verified: run_experiment_v4_windows.py:57-95, 430-475]
 - At planning time the prescribed arm reads the agent position, the goal position, wall_x and hole_y from the environment at every step. The free arm reads normalised images. [verified: E35_eb_jepa_prescribed4/code/planning_eval_v4.py:185-240]
-- ImpalaEncoder: convolutional ResNet stacks (16, 32, 32) on 2 x 65 x 65 input, layer_norm=False by default, LayerNorm only on the 512-d output. No Ф76 analogue. [verified: eb_jepa/architectures.py:311 in the copy under Downloads/Эксперименты и наука/eb_jepa_free; that this copy is the version used for training is UNVERIFIED]
+- ImpalaEncoder: convolutional ResNet stacks (16, 32, 32) on 2 x 65 x 65 input, layer_norm=False by default, LayerNorm only on the 512-d output. No Ф76 analogue. [verified: eb_jepa/architectures.py:311 in the copy under Downloads/<local research archive>/eb_jepa_free; that this copy is the version used for training is UNVERIFIED]
 - Both arms use the same jepa.unroll loss; only the locations argument differs. SR is a common metric, so Ф77 does not apply to the verdict. [verified: run_experiment_v4_windows.py:636-665]
 - INTERPRETATION: the +0.107 SR of Ф58 compares input modality (oracle low-dimensional state against pixels), with one training seed (seed=1). The paired McNemar over 168 episodes does not cover training-seed variance, which E41 found to dominate on Push-T. It does not test prescribed axes as a fixed coordinate system. The only common-metric comparison of a fixed against a learned coordinate system with equal information remains E44/E45 (Ф78, Ф79), class O4 PROVISIONAL.
 - NEXT: if the thesis is to be tested on planning, a Two Rooms analogue of E44: a frozen fixed projection of the four z-scored coordinates against a learned MLP on the same input, both scored on SR, at least 3 training seeds. Not decided.

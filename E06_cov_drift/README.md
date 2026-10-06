@@ -41,3 +41,10 @@ results/all_results.json                — Complete results (142KB)
 pip install gym-pusht torch numpy
 python code/paper2_full_analysis.py
 ```
+
+## Status
+Summary table: Ф9 not interpretable (Ф82); Ф10 movement stands.
+
+- Ф8: no correction recorded in the registry; stands as recorded
+- Ф9: Ф82: own-latent ratio, not interpretable as a quality gap.
+- Ф10: no correction recorded in the registry; stands as recorded

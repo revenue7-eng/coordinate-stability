@@ -27,3 +27,8 @@ results/rico_drift_v2_results.json      — Results (53KB)
 
 ## Facts
 Paper 2, Section 5.8
+
+## Status
+Summary table: movement observation.
+
+- No registry entry carries this experiment's numbers.
