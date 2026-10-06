@@ -480,6 +480,7 @@ Protocol:
 - E39
 
 **Ф64. What a fixed initialisation carries does not predict how good a coordinate system it is (E40)**
+- STATUS: corrected by Ф75. The null is a property of the self-referential metric (the target is the encoder's own latent); on an external target R2_readout orders the frozen encoders (r = -0.86, n = 30, one data seed). On the own-latent metric the frozen initialisations are ordered by persistence (Ф73).
 - Design: the data seed is held at 42 and only the encoder initialisation varies (10 initialisations). The encoder is frozen at step 0, so it never trains. The DataLoader stream is restored after construction, so batch order is identical across initialisations and only the parameters differ. This is the first measurement in the line that separates initialisation from data sample.
 - best_vp by initialisation 1 to 10: 0.00314, 0.00399, 0.00386, 0.00483, 0.00189, 0.00273, 0.00893, 0.00354, 0.00122, 0.00352. R2_readout over the same: 0.2385, 0.3377, 0.4094, 0.4716, 0.2494, 0.5156, 0.4115, 0.5137, 0.4972, 0.3886.
 - **corr(best_vp, R2_readout) = +0.060** over a two-fold range of R2_readout (0.239 to 0.516). Informativeness of a frozen initialisation does not predict the downstream result. The inverse ordering visible in the five E39 seeds was an appearance produced by initialisation and data sample varying together.
@@ -889,6 +890,7 @@ The EB-JEPA Two Rooms environment (Meta FAIR, 2602.03604): goal-conditioned navi
 - E39, E40
 
 **Г27. Something other than linear informativeness distinguishes one frozen basis from another**
+- STATUS: tested by E42 and E43. On the own-latent metric the property that orders the frozen bases is persistence, a cheap property of the untrained encoder (Ф73). On an external target linear informativeness orders them (Ф75, R2_readout, r = -0.86, one data seed), so the premise taken from Ф64 does not hold there and the hypothesis is refuted on that metric. Open: replication of Ф75 at n >= 30 on data seed 123 (Ф75 NEXT).
 - At a fixed data sample, frozen random initialisations spread in best_vp while their linear readout of the true state is uncorrelated with that spread (Ф64). The spread is 7.31x over the ten initialisations of E40 and 4.72x over the eight of them carried into E41; the head-averaged encoder levels spread 3.87x (Ф65). The quantity that orders them is not identified.
 - The effective rank of the representation is not a confirmed lead: the correlation moves from -0.70 to +0.39 depending on which single initialisation of the ten is left out, so its direction is set by the choice of points rather than by the data (Ф67). eff_rank does vary by initialisation in E39 (1.61 to 2.70 of a maximum 3) and is close to flat across the opening window (Ф63), so it is a property of the initialisation rather than of training.
 - Falsifier: a sweep with enough initialisations to settle whether eff_rank, or any other cheap property of the untrained encoder, predicts best_vp. If none does, the property that orders the bases is not a cheap one; attributing the spread to the interaction with the downstream module is no longer available as an explanation (Ф65).

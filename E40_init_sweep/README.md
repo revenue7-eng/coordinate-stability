@@ -64,6 +64,7 @@ one prescribed reference run.
 From EVIDENCE.md, verbatim; the registry is authoritative.
 
 **Ф64. What a fixed initialisation carries does not predict how good a coordinate system it is (E40)**
+- STATUS: corrected by Ф75. The null is a property of the self-referential metric (the target is the encoder's own latent); on an external target R2_readout orders the frozen encoders (r = -0.86, n = 30, one data seed). On the own-latent metric the frozen initialisations are ordered by persistence (Ф73).
 - Design: the data seed is held at 42 and only the encoder initialisation varies (10 initialisations). The encoder is frozen at step 0, so it never trains. The DataLoader stream is restored after construction, so batch order is identical across initialisations and only the parameters differ. This is the first measurement in the line that separates initialisation from data sample.
 - best_vp by initialisation 1 to 10: 0.00314, 0.00399, 0.00386, 0.00483, 0.00189, 0.00273, 0.00893, 0.00354, 0.00122, 0.00352. R2_readout over the same: 0.2385, 0.3377, 0.4094, 0.4716, 0.2494, 0.5156, 0.4115, 0.5137, 0.4972, 0.3886.
 - **corr(best_vp, R2_readout) = +0.060** over a two-fold range of R2_readout (0.239 to 0.516). Informativeness of a frozen initialisation does not predict the downstream result. The inverse ordering visible in the five E39 seeds was an appearance produced by initialisation and data sample varying together.
@@ -84,4 +85,4 @@ From EVIDENCE.md, verbatim; the registry is authoritative.
 ## Status
 Summary table: null corrected by Ф75.
 
-- Ф64: no correction recorded in the registry; stands as recorded
+- Ф64: STATUS: corrected by Ф75. The null is a property of the self-referential metric (the target is the encoder's own latent); on an external target R2_readout orders the frozen encoders (r = -0.86, n = 30, one data seed). On the own-latent metric the frozen initialisations are ordered by persistence (Ф73).
